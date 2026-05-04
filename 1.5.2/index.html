@@ -1,75 +1,52 @@
+<!DOCTYPE html>
 <html>
 <head>
+<title>eagler</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Eaglercraft is real Minecraft 1.5.2 that you can play in any regular web browser. That includes school chromebooks, it works on all chromebooks. It supports both singleplayer and multiplayer with no extensions." />
+<meta name="keywords" content="minecraft, eaglercraft, singleplayer, applet, replit, browser, html5, javascript, chromebook, lax1dude, games, eagler" />
+<meta name="author" content="lax1dude" />
+<meta property="og:title" content="Eaglercraft" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:type" content="website" />
+<!-- Change this: <meta property="og:image" content="https://media.discordapp.net/attachments/378764518081429506/932053915061587978/thumbnail2.png" /> -->
+<meta property="og:description" content="Eaglercraft is real Minecraft 1.5.2 that you can play in any regular web browser. That includes school chromebooks, it works on all chromebooks. It supports both singleplayer and multiplayer with no extensions." />
+<!-- Change this: <meta property="og:url" content="https://g.eags.us/eaglercraft/" /> -->
+<script type="text/javascript" src="classes.js"></script>
+<script type="text/javascript" src="eagswebrtc.js"></script>
+<script type="text/javascript">
+if(document.location.href.startsWith("file:")) {
+alert("You cannot 'open' this file in your browser, the code doesn't work. Upload this folder to your HTTP(s) server and access it via the internet to launch the stable-download game. This is not a bug, please read the documentation");
+}else {
+window.addEventListener("load", function(){
+const relayId = Math.floor(Math.random() * 3);
+window.eaglercraftOpts = {
+container: "game_frame", assetsURI: "assets.epk", serverWorkerURI: "worker_bootstrap.js", worldsFolder: "MAIN",
+servers: [
+	{ serverName: "placeholder", serverAddress: "address here", hideAddress: false }
+],
+relays: [
+	{ addr: "wss://relay.deev.is/", name: "lax1dude relay #1", primary: relayId == 0 },
+	{ addr: "wss://relay.lax1dude.net/", name: "lax1dude relay #2", primary: relayId == 1 },
+	{ addr: "wss://relay.shhnowisnottheti.me/", name: "ayunami relay #1", primary: relayId == 2 }
+],
+mainMenu: { splashes: [
+"Darviglet!", "eaglerenophile!", "You Eagler!", "Yeeeeeee!", "yeee",
+"EEEEEEEEE!", "You Darvig!", "You Vigg!", ":>", "|>", "You Yumpster!"
+], eaglerLogo: false }};
+(function(){
+var q = window.location.search;
+if(typeof q === 'string' && q.startsWith("?")) {
+	q = new URLSearchParams(q);
+	var s = q.get("server");
+	if(s) window.eaglercraftOpts.joinServer = s;
+}
+})();
+main();
+});}
+</script>
 </head>
-<body style="margin:0px;width:100%;height:100%;overflow:hidden;background-color:#121212;" id="game_frame">
-    <div style="margin:0px;width:100%;height:100%;font-family:sans-serif;display:flex;align-items:center;user-select:none;" id="launch_countdown_screen">
-        <div style="margin:auto;text-align:center;color:#FFFFFF;">
-            <h1><span style="color:#FF5555;">Launching Eaglercraft</span></h1>
-            <h2>Time Remaining  <span id="launchCountdownNumber">5</span>...</h2>
-            <div style="border:2px solid #FFFFFF;width:400px;height:15px;padding:1px;margin:20px auto;">
-                <div id="launchCountdownProgress" style="background-color:#555555;width:0%;height:100%;transition:width 0.055s linear;"></div>
-            </div>
-            <button id="skipCountdown" autofocus style="padding:10px 20px;font-size:1rem;color:#FFFFFF;background-color:#333333;border:none;cursor:pointer;border-radius:5px;">Skip</button>
-        </div>
-    </div>
-
-    <script>
-        let countdown = 5;
-        let progress = -5;
-        const countdownElement = document.getElementById('launchCountdownNumber');
-        const progressBar = document.getElementById('launchCountdownProgress');
-        const skipButton = document.getElementById('skipCountdown');
-        const launchScreen = document.getElementById('launch_countdown_screen');
-
-        function updateCountdown() {
-            countdownElement.textContent = countdown;
-        }
-
-        function updateProgress() {
-            progress += 2;
-            progressBar.style.width = progress + '%';
-            
-            if (progress >= 100) {
-                clearInterval(progressInterval);
-                clearInterval(countdownInterval);
-                launchGame();
-            }
-        }
-
-        function launchGame() {
-            window.location.href = 'game.html';
-        }
-
-        // Update countdown every second
-        const countdownInterval = setInterval(() => {
-            countdown--;
-            if (countdown < 0) {
-                countdown = 0;
-                clearInterval(countdownInterval);
-            }
-            updateCountdown();
-        }, 1000);
-
-        // Update progress bar smoothly (50 times over 5 seconds = 100ms per update)
-        const progressInterval = setInterval(() => {
-            updateProgress();
-        }, 100);
-
-        // Skip button functionality
-        skipButton.addEventListener('click', () => {
-            clearInterval(countdownInterval);
-            clearInterval(progressInterval);
-            launchGame();
-        });
-
-        // Also allow Enter key to skip
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                clearInterval(countdownInterval);
-                clearInterval(progressInterval);
-                launchGame();
-            }
-        });
-    </script>
+<body style="margin:0px;width:100vw;height:100vh;" id="game_frame">
 </body>
 </html>

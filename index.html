@@ -180,16 +180,16 @@
               <img src="Resources/main.png" onerror="this.style.display='none'">
               <span>Beta 1.1</span>
             </div>
-            <div class="version-option" onclick="selectVersion('beta-1.0.2','Beta 1.0.2',true)">
+            <div class="version-option" onclick="selectVersion('beta-1.0.2','Beta 1.0.2 WASM',true)">
               <img src="Resources/main.png" onerror="this.style.display='none'">
-              <span>Beta 1.0.2</span>
+              <span>Beta 1.0.2</span><span class="version-badge wasm">WASM</span>
             </div>
             <div class="version-option" onclick="selectVersion('beta-1.0','Beta 1.0',false)">
               <img src="Resources/main.png" onerror="this.style.display='none'">
               <span>Beta 1.0</span>
             </div>
 
-            <div class="version-group-label">Alpha / Classic</div>
+            <div class="version-group-label">Alpha - Pre-Classic</div>
             <div class="version-option" onclick="selectVersion('alpha-1.2.6','Alpha 1.2.6',false)">
               <img src="Resources/main.png" onerror="this.style.display='none'">
               <span>Alpha 1.2.6</span>
@@ -202,10 +202,86 @@
               <img src="Resources/main.png" onerror="this.style.display='none'">
               <span>Indev</span>
             </div>
+            <div class="version-option" onclick="selectVersion('4K','4K',false)">
+              <img src="Resources/main.png" onerror="this.style.display='none'">
+              <span>4K</span>
+            </div>
             <div class="version-option" onclick="selectVersion('classic-0.3.0-wasm','Classic 0.3.0 WASM',true)">
               <img src="Resources/main.png" onerror="this.style.display='none'">
               <span>Classic 0.3.0</span><span class="version-badge wasm">WASM</span>
             </div>
+            <div class="version-option" onclick="selectVersion('classic-0.0.23a-01-wasm','Classic 0.0.23a_01 WASM',true)">
+  <img src="Resources/main.png" onerror="this.style.display='none'">
+  <span>Classic 0.0.23a_01</span><span class="version-badge wasm">WASM</span>
+</div>
+<div class="version-option" onclick="selectVersion('classic-0.0.22a-05-wasm','Classic 0.0.22a_05 WASM',true)">
+  <img src="Resources/main.png" onerror="this.style.display='none'">
+  <span>Classic 0.0.22a_05</span><span class="version-badge wasm">WASM</span>
+</div>
+<div class="version-option" onclick="selectVersion('classic-0.0.21a-wasm','Classic 0.0.21a WASM',true)">
+  <img src="Resources/main.png" onerror="this.style.display='none'">
+  <span>Classic 0.0.21a</span><span class="version-badge wasm">WASM</span>
+</div>
+<div class="version-option" onclick="selectVersion('classic-0.0.20a-02-wasm','Classic 0.0.20a_02 WASM',true)">
+  <img src="Resources/main.png" onerror="this.style.display='none'">
+  <span>Classic 0.0.20a_02</span><span class="version-badge wasm">WASM</span>
+</div>
+<div class="version-option" onclick="selectVersion('classic-0.0.19a-06-wasm','Classic 0.0.19a_06 WASM',true)">
+  <img src="Resources/main.png" onerror="this.style.display='none'">
+  <span>Classic 0.0.19a_06</span><span class="version-badge wasm">WASM</span>
+</div>
+<div class="version-option" onclick="selectVersion('classic-0.0.18a-02-wasm','Classic 0.0.18a_02 WASM',true)">
+  <img src="Resources/main.png" onerror="this.style.display='none'">
+  <span>Classic 0.0.18a_02</span><span class="version-badge wasm">WASM</span>
+</div>
+<div class="version-option" onclick="selectVersion('classic-0.0.17a-wasm','Classic 0.0.17a WASM',true)">
+  <img src="Resources/main.png" onerror="this.style.display='none'">
+  <span>Classic 0.0.17a</span><span class="version-badge wasm">WASM</span>
+</div>
+<div class="version-option" onclick="selectVersion('classic-0.0.16a-02-wasm','Classic 0.0.16a_02 WASM',true)">
+  <img src="Resources/main.png" onerror="this.style.display='none'">
+  <span>Classic 0.0.16a_02</span><span class="version-badge wasm">WASM</span>
+</div>
+<div class="version-option" onclick="selectVersion('classic-0.0.15a-wasm','Classic 0.0.15a WASM',true)">
+  <img src="Resources/main.png" onerror="this.style.display='none'">
+  <span>Classic 0.0.15a</span><span class="version-badge wasm">WASM</span>
+</div>
+<div class="version-option" onclick="selectVersion('classic-0.0.14a-08-wasm','Classic 0.0.14a_08 WASM',true)">
+  <img src="Resources/main.png" onerror="this.style.display='none'">
+  <span>Classic 0.0.14a_08</span><span class="version-badge wasm">WASM</span>
+</div>
+<div class="version-option" onclick="selectVersion('classic-0.0.13a-03-wasm','Classic 0.0.13a_03 WASM',true)">
+  <img src="Resources/main.png" onerror="this.style.display='none'">
+  <span>Classic 0.0.13a_03</span><span class="version-badge wasm">WASM</span>
+</div>
+<div class="version-option" onclick="selectVersion('classic-0.0.12a-03-wasm','Classic 0.0.12a_03 WASM',true)">
+  <img src="Resources/main.png" onerror="this.style.display='none'">
+  <span>Classic 0.0.12a_03</span><span class="version-badge wasm">WASM</span>
+</div>
+            <div class="version-option" onclick="selectVersion('classic-0.0.11a-wasm','Classic 0.0.11a WASM',true)">
+              <img src="Resources/main.png" onerror="this.style.display='none'">
+              <span>Classic 0.0.11a</span><span class="version-badge wasm">WASM</span>
+            </div>
+            <div class="version-option" onclick="selectVersion('pre-classic-rd-161348-wasm','Pre-Classic RD-161348 WASM',true)">
+<img src="Resources/main.png" onerror="this.style.display='none'">
+  <span>Pre-Classic RD-161348</span><span class="version-badge wasm">WASM</span>
+</div>
+<div class="version-option" onclick="selectVersion('pre-classic-rd-160052-wasm','Pre-Classic RD-160052 WASM',true)">
+  <img src="Resources/main.png" onerror="this.style.display='none'">
+  <span>Pre-Classic RD-160052</span><span class="version-badge wasm">WASM</span>
+</div>
+<div class="version-option" onclick="selectVersion('pre-classic-rd-132328-wasm','Pre-Classic RD-132328 WASM',true)">
+  <img src="Resources/main.png" onerror="this.style.display='none'">
+  <span>Pre-Classic RD-132328</span><span class="version-badge wasm">WASM</span>
+</div>
+<div class="version-option" onclick="selectVersion('pre-classic-rd-132211-wasm','Pre-Classic RD-132211 WASM',true)">
+  <img src="Resources/main.png" onerror="this.style.display='none'">
+  <span>Pre-Classic RD-132211</span><span class="version-badge wasm">WASM</span>
+</div>
+<div class="version-option" onclick="selectVersion('pre-classic-rd-131655-wasm','Pre-Classic RD-131655 WASM',true)">
+  <img src="Resources/main.png" onerror="this.style.display='none'">
+  <span>Pre-Classic RD-131655</span><span class="version-badge wasm">WASM</span>
+</div>
 
           </div>
         </div>
