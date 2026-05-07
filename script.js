@@ -215,7 +215,7 @@ function playGame() {
     if (!_selectedVersion) { showToast('Select a version first.', true); return; }
 
     const method = getCookie('launchMethod') || 'regular';
-    const relUrl = _selectedVersion + '/index.html';
+    const relUrl = 'game/' + _selectedVersion + '/index.html';
     const absUrl = new URL(relUrl, location.href).href;
     const popupFeatures = 'width=1280,height=720,toolbar=0,menubar=0,location=0,status=0';
     const wispOn = isWispEnabled();
