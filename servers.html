@@ -135,6 +135,16 @@
       flex: 1;
       overflow: hidden;
     }
+    .server-name {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: bold;
+      color: var(--text-bright, #fff);
+      letter-spacing: 0.06em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
     .server-ip {
       font-family: var(--mono);
       font-size: 10px;
@@ -187,6 +197,9 @@
       text-overflow: ellipsis;
       margin-bottom: 7px;
       min-height: 14px;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
     }
 
     /* Stats row */
@@ -412,6 +425,7 @@
 
     const els = {
       favicon:    card.querySelector('.server-favicon-wrap'),
+      name:       card.querySelector('.server-name'),
       ip:         card.querySelector('.server-ip'),
       version:    card.querySelector('.server-version'),
       dot:        card.querySelector('.server-online-dot'),
@@ -512,6 +526,14 @@
       els.favicon.innerHTML = `<div class="server-favicon-placeholder">⬛</div>`;
     }
 
+    if (online) {
+      if (data.name !== 'EaglercraftXServer') {
+        els.name.textContent = data.name;
+      } else {
+        els.name.textContent = state.host.split('://').pop();
+      }
+    }
+
     // IP stays as-is
     els.ip.textContent = state.host;
 
@@ -527,8 +549,15 @@
 
     // MOTD — strip §color codes
     if (online && data?.data?.motd) {
-      els.motd.textContent = data.data.motd.join(' ').replace(/§./g, '').trim();
+      if (data.data.motd[0].includes('\n')) data.data.motd = data.data.motd[0].split('\n');
+      for (const [i, line] of data.data.motd.entries()) {
+        if (i <= 1) {
+          const el = els.motd.querySelector('.server-motd-line-' + i);
+          el.textContent = line.replace(/§./g, '').trim();
+        }
+      }
     } else {
+      els.motd.innerHTML = '';
       els.motd.textContent = online ? '' : 'Could not connect to server.';
     }
 
@@ -619,13 +648,17 @@
           <div class="server-favicon-placeholder">⬛</div>
         </div>
         <div class="server-id-block">
+          <div class="server-name"></div>
           <div class="server-ip">${host}</div>
           <div class="server-version skeleton" style="width:80px;margin-top:4px;"></div>
         </div>
         <span class="server-online-dot down"></span>
         <button class="copy-btn">Copy IP</button>
       </div>
-      <div class="server-motd skeleton" style="height:10px;width:90%;margin-bottom:7px;"></div>
+      <div class="server-motd skeleton" style="height:10px;width:90%;margin-bottom:7px;">
+        <span class="server-motd-line-0"></span>
+        <span class="server-motd-line-1"></span>
+      </div>
       <div class="server-stats">
         <div class="stat-block">
           <div class="stat-label">Online</div>
