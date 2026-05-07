@@ -377,23 +377,21 @@
 (function () {
   // ── Config ─────────────────────────────────────────────────────────────────
   const SERVERS = [
-    'mc.arch.lol',
-    'zentic.cc',
-    'mc.zyth.me',
-    'asianf4rmer.minecraft.pe',
-    'sus.shhnowisnottheti.me',
-    'aeon-network.net',
-    'adderall.ir',
-    'mc.lamplifesteal.xyz',
-    'vanillamc.org',
-    'mc.voidsent.net',
-    'mc.dssx.uk',
-    'xena.wtf',
-    'tuff.ws'
+    'wss://mc.arch.lol',
+    'wss://zentic.cc',
+    'wss://mc.zyth.me',
+    'wss://play.webmc.fun',
+    'wss://asianf4rmer.minecraft.pe',
+    'wss://sus.shhnowisnottheti.me',
+    'wss://aeon-network.net',
+    'wss://adderall.ir',
+    'wss://mc.lamplifesteal.xyz',
+    'wss://vanillamc.org',
+    'wss://mc.voidsent.net',
+    'wss://mc.dssx.uk',
+    'wss://xena.wtf',
+    'wss://tuff.ws'
   ];
-
-  // mcsrvstat.us v3 API — free, no key needed, returns JSON with full server info
-  const API = host => `https://api.mcsrvstat.us/3/${host}`;
 
   // ── State ──────────────────────────────────────────────────────────────────
   let updateIntervalMs = 30000;
@@ -437,7 +435,7 @@
     serverStates.push(state);
 
     // Stagger initial fetches so we don't hammer the API all at once
-    setTimeout(() => fetchServer(state), serverStates.indexOf(state) * 400);
+    fetchServer(state);
   });
 
   // ── Fetch & render ─────────────────────────────────────────────────────────
@@ -445,13 +443,49 @@
     if (isPaused) return;
     const t0 = Date.now();
     try {
-      const res  = await fetch(API(state.host));
-      const data = await res.json();
-      const ping = Date.now() - t0;
-      state.lastData  = data;
-      state.lastFetch = new Date();
-      renderServer(state, data, ping);
+      const ws     = new WebSocket(state.host);
+
+      let json;
+      let icon;
+
+      ws.onopen    = () => {
+        ws.send('Accept: MOTD')
+      };
+
+      ws.onmessage = async (ev) => {
+        let render = true;
+
+        const ping = Date.now() - t0;
+
+        if (typeof ev.data === 'string') {
+          data = JSON.parse(ev.data);
+          state.lastData  = data;
+          state.lastFetch = new Date();
+          if (data?.data?.icon) render = false;
+        } else {
+          const buffer    = await ev.data.arrayBuffer();
+          const rgba      = new Uint8ClampedArray(buffer);
+          const canvas    = document.createElement('canvas');
+          canvas.width    = 64;
+          canvas.height   = 64;
+          const ctx       = canvas.getContext('2d');
+          const imageData = new ImageData(rgba, 64, 64);
+          ctx.putImageData(imageData, 0, 0);
+          const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+          icon       = URL.createObjectURL(blob);
+        }
+
+        if (render) {
+          renderServer(state, { ...data, icon, online: true }, ping);
+          ws.close();
+        }
+      };
+
+      ws.onerror   = () => {
+        renderOffline(state);
+      };
     } catch (e) {
+      console.error(e);
       renderOffline(state);
     }
   }
@@ -492,16 +526,16 @@
     els.dot.className = 'server-online-dot ' + (online ? 'up' : 'down');
 
     // MOTD — strip §color codes
-    if (online && data.motd && data.motd.clean && data.motd.clean.length) {
-      els.motd.textContent = data.motd.clean.join(' ').replace(/§./g, '').trim();
+    if (online && data?.data?.motd) {
+      els.motd.textContent = data.data.motd.join(' ').replace(/§./g, '').trim();
     } else {
       els.motd.textContent = online ? '' : 'Could not connect to server.';
     }
 
     // Players
-    if (online && data.players) {
-      const cur = data.players.online ?? 0;
-      const max = data.players.max   ?? 0;
+    if (online) {
+      const cur = data?.data?.online ?? 0;
+      const max = data?.data?.max   ?? 0;
       const pct = max > 0 ? Math.min((cur / max) * 100, 100) : 0;
       els.players.textContent    = cur;
       els.maxPlayers.textContent = max;
