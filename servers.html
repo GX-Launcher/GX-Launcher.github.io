@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GX-Launcher</title>
-  <link rel="icon" type="image/png" href="Resources/main.png">
+  <link rel="icon" type="image/png" href="resources/main.png">
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
   <style>
@@ -135,6 +135,16 @@
       flex: 1;
       overflow: hidden;
     }
+    .server-name {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: bold;
+      color: var(--text-bright, #fff);
+      letter-spacing: 0.06em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
     .server-ip {
       font-family: var(--mono);
       font-size: 10px;
@@ -187,6 +197,9 @@
       text-overflow: ellipsis;
       margin-bottom: 7px;
       min-height: 14px;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
     }
 
     /* Stats row */
@@ -377,23 +390,21 @@
 (function () {
   // ── Config ─────────────────────────────────────────────────────────────────
   const SERVERS = [
-    'mc.arch.lol',
-    'zentic.cc',
-    'mc.zyth.me',
-    'asianf4rmer.minecraft.pe',
-    'sus.shhnowisnottheti.me',
-    'aeon-network.net',
-    'adderall.ir',
-    'mc.lamplifesteal.xyz',
-    'vanillamc.org',
-    'mc.voidsent.net',
-    'mc.dssx.uk',
-    'xena.wtf',
-    'tuff.ws'
+    'wss://mc.arch.lol',
+    'wss://zentic.cc',
+    'wss://mc.zyth.me',
+    'wss://play.webmc.fun',
+    'wss://asianf4rmer.minecraft.pe',
+    'wss://sus.shhnowisnottheti.me',
+    'wss://aeon-network.net',
+    'wss://adderall.ir',
+    'wss://mc.lamplifesteal.xyz',
+    'wss://vanillamc.org',
+    'wss://mc.voidsent.net',
+    'wss://mc.dssx.uk',
+    'wss://xena.wtf',
+    'wss://tuff.ws'
   ];
-
-  // mcsrvstat.us v3 API — free, no key needed, returns JSON with full server info
-  const API = host => `https://api.mcsrvstat.us/3/${host}`;
 
   // ── State ──────────────────────────────────────────────────────────────────
   let updateIntervalMs = 30000;
@@ -414,6 +425,7 @@
 
     const els = {
       favicon:    card.querySelector('.server-favicon-wrap'),
+      name:       card.querySelector('.server-name'),
       ip:         card.querySelector('.server-ip'),
       version:    card.querySelector('.server-version'),
       dot:        card.querySelector('.server-online-dot'),
@@ -437,7 +449,7 @@
     serverStates.push(state);
 
     // Stagger initial fetches so we don't hammer the API all at once
-    setTimeout(() => fetchServer(state), serverStates.indexOf(state) * 400);
+    fetchServer(state);
   });
 
   // ── Fetch & render ─────────────────────────────────────────────────────────
@@ -445,13 +457,49 @@
     if (isPaused) return;
     const t0 = Date.now();
     try {
-      const res  = await fetch(API(state.host));
-      const data = await res.json();
-      const ping = Date.now() - t0;
-      state.lastData  = data;
-      state.lastFetch = new Date();
-      renderServer(state, data, ping);
+      const ws     = new WebSocket(state.host);
+
+      let json;
+      let icon;
+
+      ws.onopen    = () => {
+        ws.send('Accept: MOTD')
+      };
+
+      ws.onmessage = async (ev) => {
+        let render = true;
+
+        const ping = Date.now() - t0;
+
+        if (typeof ev.data === 'string') {
+          data = JSON.parse(ev.data);
+          state.lastData  = data;
+          state.lastFetch = new Date();
+          if (data?.data?.icon) render = false;
+        } else {
+          const buffer    = await ev.data.arrayBuffer();
+          const rgba      = new Uint8ClampedArray(buffer);
+          const canvas    = document.createElement('canvas');
+          canvas.width    = 64;
+          canvas.height   = 64;
+          const ctx       = canvas.getContext('2d');
+          const imageData = new ImageData(rgba, 64, 64);
+          ctx.putImageData(imageData, 0, 0);
+          const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+          icon       = URL.createObjectURL(blob);
+        }
+
+        if (render) {
+          renderServer(state, { ...data, icon, online: true }, ping);
+          ws.close();
+        }
+      };
+
+      ws.onerror   = () => {
+        renderOffline(state);
+      };
     } catch (e) {
+      console.error(e);
       renderOffline(state);
     }
   }
@@ -478,6 +526,14 @@
       els.favicon.innerHTML = `<div class="server-favicon-placeholder">⬛</div>`;
     }
 
+    if (online) {
+      if (data.name !== 'EaglercraftXServer') {
+        els.name.textContent = data.name;
+      } else {
+        els.name.textContent = state.host.split('://').pop();
+      }
+    }
+
     // IP stays as-is
     els.ip.textContent = state.host;
 
@@ -492,16 +548,23 @@
     els.dot.className = 'server-online-dot ' + (online ? 'up' : 'down');
 
     // MOTD — strip §color codes
-    if (online && data.motd && data.motd.clean && data.motd.clean.length) {
-      els.motd.textContent = data.motd.clean.join(' ').replace(/§./g, '').trim();
+    if (online && data?.data?.motd) {
+      if (data.data.motd[0].includes('\n')) data.data.motd = data.data.motd[0].split('\n');
+      for (const [i, line] of data.data.motd.entries()) {
+        if (i <= 1) {
+          const el = els.motd.querySelector('.server-motd-line-' + i);
+          el.textContent = line.replace(/§./g, '').trim();
+        }
+      }
     } else {
+      els.motd.innerHTML = '';
       els.motd.textContent = online ? '' : 'Could not connect to server.';
     }
 
     // Players
-    if (online && data.players) {
-      const cur = data.players.online ?? 0;
-      const max = data.players.max   ?? 0;
+    if (online) {
+      const cur = data?.data?.online ?? 0;
+      const max = data?.data?.max   ?? 0;
       const pct = max > 0 ? Math.min((cur / max) * 100, 100) : 0;
       els.players.textContent    = cur;
       els.maxPlayers.textContent = max;
@@ -585,13 +648,17 @@
           <div class="server-favicon-placeholder">⬛</div>
         </div>
         <div class="server-id-block">
+          <div class="server-name"></div>
           <div class="server-ip">${host}</div>
           <div class="server-version skeleton" style="width:80px;margin-top:4px;"></div>
         </div>
         <span class="server-online-dot down"></span>
         <button class="copy-btn">Copy IP</button>
       </div>
-      <div class="server-motd skeleton" style="height:10px;width:90%;margin-bottom:7px;"></div>
+      <div class="server-motd skeleton" style="height:10px;width:90%;margin-bottom:7px;">
+        <span class="server-motd-line-0"></span>
+        <span class="server-motd-line-1"></span>
+      </div>
       <div class="server-stats">
         <div class="stat-block">
           <div class="stat-label">Online</div>
