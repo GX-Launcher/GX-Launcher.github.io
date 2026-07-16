@@ -175,7 +175,7 @@
       width: 360px;
       max-width: 90vw;
       padding: 18px;
-      box-shadow: 0 0 30px rgba(0,0,0,0.6);
+      box-shadow: 0 0 30px rgba(0,0,0,0.6), 0 0 40px var(--accent-glow);
       animation: dlModalIn 0.15s ease;
     }
     @keyframes dlModalIn {
@@ -224,7 +224,11 @@
       border-color: var(--accent-dim);
       color: #fff;
     }
-    .dl-modal-btn.yes:hover { background: var(--accent); border-color: var(--accent); }
+    .dl-modal-btn.yes:hover {
+      background: var(--accent-hi, var(--accent));
+      border-color: var(--accent-hi, var(--accent));
+      box-shadow: 0 0 14px var(--accent-glow);
+    }
 
     /* Toast (shared pattern with servers page) */
     .copy-feedback {
