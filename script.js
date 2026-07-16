@@ -85,7 +85,49 @@ function toggleVersionDropdown() {
     if (!dd) return;
     const isOpen = dd.classList.toggle('open');
     sel.classList.toggle('open', isOpen);
+    const search = document.getElementById('version-search');
+    if (search) {
+        if (isOpen) {
+            search.value = '';
+            filterVersionDropdown(search);
+            setTimeout(() => search.focus(), 0);
+        }
+    }
 }
+
+function filterVersionDropdown(input) {
+    const dd = document.getElementById('version-dropdown');
+    if (!dd) return;
+    const query = input.value.trim().toLowerCase();
+    let currentGroup = null;
+    let groupHasMatch = false;
+    const groups = [];
+    dd.querySelectorAll('.version-group-label, .version-option').forEach(el => {
+        if (el.classList.contains('version-group-label')) {
+            if (currentGroup) groups.push([currentGroup, groupHasMatch]);
+            currentGroup = el;
+            groupHasMatch = false;
+        } else {
+            const text = el.textContent.toLowerCase();
+            const match = !query || text.includes(query);
+            el.style.display = match ? '' : 'none';
+            if (match) groupHasMatch = true;
+        }
+    });
+    if (currentGroup) groups.push([currentGroup, groupHasMatch]);
+    groups.forEach(([label, hasMatch]) => { label.style.display = hasMatch ? '' : 'none'; });
+}
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        const dd = document.getElementById('version-dropdown');
+        const sel = document.getElementById('version-select');
+        if (dd && dd.classList.contains('open')) {
+            dd.classList.remove('open');
+            sel.classList.remove('open');
+        }
+    }
+});
 
 function selectVersion(path, label, isWasm) {
     _selectedVersion = path;
@@ -501,6 +543,7 @@ function redirectToServers()      { window.location.href = 'servers.html'; }
 function redirectToMods()         { window.location.href = 'mods.html'; }
 function redirectToMain()         { window.location.href = 'index.html'; }
 function redirectToOtherClients() { window.location.href = 'otherclients.html'; }
+function redirectToDownloads()    { window.location.href = 'downloads.html'; }
 function redirectToSettings()     { window.location.href = 'settings.html'; }
 
 function openBlankPage(link) { window.open(link); }

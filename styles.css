@@ -418,6 +418,29 @@ nav::-webkit-scrollbar-thumb { background: var(--border2); }
 }
 .version-dropdown.open { display: block; }
 
+.version-search-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border2);
+  padding: 7px;
+}
+.version-search-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  color: var(--text-bright);
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 6px 9px;
+  outline: none;
+  letter-spacing: 0.03em;
+}
+.version-search-input:focus { border-color: var(--accent); }
+.version-search-input::placeholder { color: var(--text-dim); }
+
 .version-dropdown::-webkit-scrollbar { width: 5px; }
 .version-dropdown::-webkit-scrollbar-track { background: var(--bg); }
 .version-dropdown::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }

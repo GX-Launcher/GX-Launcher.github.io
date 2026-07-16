@@ -45,6 +45,10 @@
           <svg class="nav-svg" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="5" rx="1"/><rect x="2" y="10" width="20" height="5" rx="1"/><rect x="2" y="17" width="20" height="5" rx="1"/></svg>
           Servers
         </div>
+        <div class="nav-item" onclick="redirectToDownloads()">
+          <svg class="nav-svg" viewBox="0 0 24 24"><line x1="12" y1="3" x2="12" y2="15"/><polyline points="7 10 12 15 17 10"/><line x1="4" y1="19" x2="20" y2="19"/></svg>
+          Downloads
+        </div>
       </nav>
       <div class="sidebar-bottom">
         <div class="nav-item" onclick="redirectToSettings()">
@@ -72,6 +76,9 @@
             <span class="chevron">▼</span>
           </div>
           <div class="version-dropdown" id="version-dropdown">
+            <div class="version-search-wrap">
+              <input type="text" class="version-search-input" id="version-search" placeholder="Search versions..." oninput="filterVersionDropdown(this)" onclick="event.stopPropagation()">
+            </div>
             <div class="version-group-label">Clients</div>
             <div class="version-option" onclick="selectVersion('GX-Client','GX-Client (1.8.8-u53)',true)">
               <img src="./game/GX-Client/favicon.png" onerror="this.style.display='none'">
