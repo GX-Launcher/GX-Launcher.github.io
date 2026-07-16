@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html style="width:100%;height:100%;background-color:black;">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+		<meta name="description" content="Eaglercraft 1.16.5 (u1-beta) - play in your browser" />
+		<meta name="keywords" content="eaglercraft, eaglercraftx, minecraft, 1.16.5" />
+		<title>Eaglercraft 1.16.5 (u1-beta)</title>
+		<link type="image/png" rel="shortcut icon" href="favicon.png" />
+		<style type="text/css">
+			#bootScreen { transition: opacity 0.6s ease; }
+		</style>
+		<script type="text/javascript" src="classes.js"></script>
+		<script type="text/javascript">
+			"use strict";
+
+			var bootScreenStartTime = Date.now();
+			var bootScreenMinDurationMs = 1500;
+
+			// eagler: boot screen is now a blank overlay - status/progress/tip functions are kept as
+			// no-ops (they just won't find their target elements) so the rest of the boot logic below
+			// doesn't need to change.
+			window.eaglerSetBootStatus = function(text, pct) {
+				var statusEl = document.getElementById("bootStatusText");
+				var barEl = document.getElementById("bootProgressBar");
+				if(statusEl && typeof text === "string") statusEl.innerText = text;
+				if(barEl && typeof pct === "number") barEl.style.width = Math.max(0, Math.min(100, pct)) + "%";
+			};
+
+			window.eaglerHideBootScreen = function() {
+				var screen = document.getElementById("bootScreen");
+				if(!screen) return;
+				var elapsed = Date.now() - bootScreenStartTime;
+				var remaining = bootScreenMinDurationMs - elapsed;
+				var doHide = function() {
+					screen.style.opacity = "0";
+					setTimeout(function() {
+						if(screen.parentNode) screen.parentNode.removeChild(screen);
+					}, 600);
+				};
+				if(remaining > 0) {
+					setTimeout(doHide, remaining);
+				} else {
+					doHide();
+				}
+			};
+
+			// eagler: assets.epk is split into <100MB chunk files (assets/assets.epk.partN) so it can be
+			// committed directly to the git repo and served same-origin by GitHub Pages - GitHub Release
+			// assets were tested and confirmed to lack CORS headers on the actual file-serving CDN, so a
+			// cross-origin fetch() from this page would fail; same-origin chunk files avoid that issue
+			// entirely. This fetches every part, concatenates them back into the exact original byte
+			// sequence, and hands the result to the engine as a Blob - not a URL string - via the same
+			// assetsURI[0].blob mechanism already used (and already proven working) for the single-file
+			// offline build, where the main-thread Blob object is transferred to the worker over
+			// postMessage so the worker can mint its own same-realm blob: URL instead of trying to fetch
+			// a blob: URL created in a different JS realm (which always fails - "Not allowed to load
+			// local resource" - see ClientPlatformSingleplayer.resolveWorkerAssetsBlob()).
+			async function loadChunkedAssets() {
+				window.eaglerSetBootStatus("Downloading assets...", 5);
+				var manifest = await (await fetch("assets/manifest.json")).json();
+				var partCount = manifest.partCount;
+				var chunks = new Array(partCount);
+				var totalBytes = manifest.totalBytes;
+				var loadedBytes = 0;
+				for(var i = 0; i < partCount; ++i) {
+					var resp = await fetch("assets/assets.epk.part" + i);
+					var buf = await resp.arrayBuffer();
+					chunks[i] = buf;
+					loadedBytes += buf.byteLength;
+					window.eaglerSetBootStatus("Downloading assets... (" + Math.round(loadedBytes / 1e6) + " / " + Math.round(totalBytes / 1e6) + " MB)",
+						5 + 45 * (loadedBytes / totalBytes));
+				}
+				var reassembledBlob = new Blob(chunks, { type: "application/octet-stream" });
+				var blobUrl = URL.createObjectURL(reassembledBlob);
+				return { url: blobUrl, blob: reassembledBlob };
+			}
+
+			window.addEventListener("load", function() {
+				if(window.location.href.indexOf("file:") === 0) {
+					alert("HTTP please, do not open this file locally - it must be served over HTTP(S).");
+					return;
+				}
+
+				var relayId = Math.floor(Math.random() * 3);
+
+				loadChunkedAssets().then(function(assetsEntry) {
+					window.eaglercraftXOpts = {
+						demoMode: false,
+						container: "game_frame",
+						assetsURI: [ assetsEntry ],
+						localesURI: "lang/",
+						worldsDB: "worlds",
+						logInvalidCerts: true,
+						crashOnUncaughtExceptions: true,
+						relays: [
+							{ addr: "wss://relay.deev.is/", comment: "lax1dude relay #1", primary: relayId === 0 },
+							{ addr: "wss://relay.lax1dude.net/", comment: "lax1dude relay #2", primary: relayId === 1 },
+							{ addr: "wss://relay.shhnowisnottheti.me/", comment: "ayunami relay #1", primary: relayId === 2 }
+						]
+					};
+
+					var q = window.location.search;
+					if((typeof q === "string") && q[0] === "?" && (typeof window.URLSearchParams !== "undefined")) {
+						q = new window.URLSearchParams(q);
+						var s = q.get("server");
+						if(s) window.eaglercraftXOpts.joinServer = s;
+					}
+
+					window.eaglerSetBootStatus("Starting engine...", 55);
+					main();
+				}).catch(function(err) {
+					window.eaglerSetBootStatus("Failed to download assets: " + err, 0);
+					console.error(err);
+				});
+			});
+		</script>
+	</head>
+	<body style="margin:0px;width:100%;height:100%;overflow:hidden;background-color:#161616;">
+		<div id="game_frame" style="margin:0px;width:100%;height:100%;"></div>
+		<div style="margin:0px;width:100%;height:100%;background-color:#161616;position:absolute;left:0;top:0;z-index:1000;" id="bootScreen"></div>
+	</body>
+</html>
