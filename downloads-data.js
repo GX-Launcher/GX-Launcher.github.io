@@ -47,7 +47,15 @@ const DOWNLOAD_GROUPS = [
       },
       {
         "folder": "1.16.5",
-        "label": "1.16.5 (u0)",
+        "label": "1.16.5 WASM (u2)",
+        "multi": false,
+        "files": [
+          "index.html"
+        ]
+      },
+      {
+        "folder": "1.16.5",
+        "label": "1.16.5",
         "multi": true,
         "files": [
           "assets/assets.epk.part0",
