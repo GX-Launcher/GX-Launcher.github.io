@@ -46,7 +46,7 @@ const DOWNLOAD_GROUPS = [
         ]
       },
       {
-        "folder": "1.16.5",
+        "folder": "1.16.5-wasm",
         "label": "1.16.5 WASM (u2)",
         "multi": false,
         "files": [
@@ -141,6 +141,14 @@ const DOWNLOAD_GROUPS = [
           "lang/vi_VN.lang",
           "lang/zh_CN.lang",
           "lang/zh_TW.lang"
+        ]
+      },
+      {
+        "folder": "1.14.4-wasm",
+        "label": "1.14.4 WASM (u0)",
+        "multi": false,
+        "files": [
+          "index.html"
         ]
       },
       {
