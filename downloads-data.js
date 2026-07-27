@@ -1,5 +1,5 @@
 // Auto-generated from repo file tree (xXJ0NXx/GX-Launcher, main branch)
-const DOWNLOADS_BASE = 'https://raw.githubusercontent.com/xXJ0NXx/GX-Launcher/main/';
+const DOWNLOADS_BASE = 'https://raw.githubusercontent.com/GX-Launcher/GX-Launcher.github.io/main/';
 const DOWNLOAD_GROUPS = [
   {
     "group": "Release",
