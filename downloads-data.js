@@ -1,5 +1,5 @@
 // Auto-generated from repo file tree (xXJ0NXx/GX-Launcher, main branch)
-const DOWNLOADS_BASE = 'https://raw.githubusercontent.com/XENOTECH-X/GX-Launcher/main/';
+const DOWNLOADS_BASE = 'https://raw.githubusercontent.com/XENOTECH-X/GX-Launcher/main/game/';
 const DOWNLOAD_GROUPS = [
   {
     "group": "Release",
