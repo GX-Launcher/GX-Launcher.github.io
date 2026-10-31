@@ -37,6 +37,14 @@ const DOWNLOAD_GROUPS = [
         ]
       },
       {
+        "folder": "1.21.11",
+        "label": "1.21.11 (u1)",
+        "multi": false,
+        "files": [
+          "index.html"
+        ]
+      },
+      {
         "folder": "1.20.6-wasm",
         "label": "1.20.6 WASM (u0)",
         "multi": false,
@@ -158,16 +166,16 @@ const DOWNLOAD_GROUPS = [
         ]
       },
       {
-        "folder": "1.8.8-wasm",
-        "label": "1.8.8 WASM (u53)",
+        "folder": "1.9.4",
+        "label": "1.9.4 (u0)",
         "multi": false,
         "files": [
           "index.html"
         ]
       },
       {
-        "folder": "1.9.4",
-        "label": "1.9.4 (u0)",
+        "folder": "1.8.8-wasm",
+        "label": "1.8.8 WASM (u53)",
         "multi": false,
         "files": [
           "index.html"
@@ -507,7 +515,7 @@ const DOWNLOAD_GROUPS = [
       },
       {
         "folder": "indev-20100223-wasm",
-        "label": "Indev 20100223",
+        "label": "Indev 20100223 WASM",
         "multi": false,
         "files": [
           "index.html"
@@ -515,7 +523,23 @@ const DOWNLOAD_GROUPS = [
       },
       {
         "folder": "indev-20100219-wasm",
-        "label": "Indev 20100219",
+        "label": "Indev 20100219 WASM",
+        "multi": false,
+        "files": [
+          "index.html"
+        ]
+      },
+      {
+        "folder": "indev-20100214-wasm",
+        "label": "Indev 20100214 WASM",
+        "multi": false,
+        "files": [
+          "index.html"
+        ]
+      },
+      {
+        "folder": "indev-20100214",
+        "label": "Indev 20100214",
         "multi": false,
         "files": [
           "index.html"
