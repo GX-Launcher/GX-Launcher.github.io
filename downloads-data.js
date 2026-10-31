@@ -150,8 +150,24 @@ const DOWNLOAD_GROUPS = [
         ]
       },
       {
+        "folder": "1.9.4-wasm",
+        "label": "1.9.4 WASM (u0)",
+        "multi": false,
+        "files": [
+          "index.html"
+        ]
+      },
+      {
         "folder": "1.8.8-wasm",
         "label": "1.8.8 WASM (u53)",
+        "multi": false,
+        "files": [
+          "index.html"
+        ]
+      },
+      {
+        "folder": "1.9.4",
+        "label": "1.9.4 (u0)",
         "multi": false,
         "files": [
           "index.html"

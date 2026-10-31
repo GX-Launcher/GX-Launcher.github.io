@@ -58,7 +58,7 @@
   <div class="title-bar">
     <div class="title-logo">
       <div class="title-dot"></div>
-      GX-LAUNCHER <span class="ver">2.4.2</span>
+      GX-LAUNCHER <span class="ver">2.5</span>
     </div>
   </div>
 
@@ -85,10 +85,6 @@
           <svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
           Clients
         </div>
-        <div class="nav-item" onclick="redirectToOtherClients()">
-          <svg class="nav-svg" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          Beta Clients
-        </div>
         <div class="nav-item" onclick="redirectToServers()">
           <svg class="nav-svg" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="5" rx="1"/><rect x="2" y="10" width="20" height="5" rx="1"/><rect x="2" y="17" width="20" height="5" rx="1"/></svg>
           Servers
@@ -104,6 +100,10 @@
         <div class="nav-item" onclick="redirectToSkins()">
           <svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2"/></svg>
           Skins
+        </div>
+        <div class="nav-item" onclick="redirectToChat()">
+          <svg class="nav-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Chat
         </div>
         <div class="nav-item" onclick="window.open('https://discord.gg/qQBamNZSwz', '_blank')">
           <svg class="nav-svg" viewBox="0 0 24 24" fill="currentColor">
@@ -127,8 +127,6 @@
         <div class="mods-controls">
           <input type="text" id="mod-search" placeholder="Search...">
           <button class="refresh-btn" id="installAll">Install All</button>
-          <button class="refresh-btn ghost" id="imp">Import</button>
-          <input type="file" id="impf" accept=".json,application/json" hidden style="display:none">
           <button class="refresh-btn ghost" id="reset">Remove All</button>
         </div>
       </div>
@@ -412,24 +410,6 @@ $("installAll").onclick=async()=>{
   let ok=0;
   for(const m of MODS){try{if(await installMod(m))ok++;}catch(e){toast(e.message,true);}}
   toast("Installed "+ok+" mod"+(ok==1?"":"s")+". Relaunch the client.");refresh();
-};
-$("exp").onclick=async()=>{
-  const act=await getActive(),off=await getOff(),mods={};
-  for(const n of [...act,...off])if(!n.startsWith("web@"))mods[n]=await get("mods/"+n)||"";
-  const u=URL.createObjectURL(new Blob([JSON.stringify({format:"gx-efi-mods",active:act,disabled:off,mods},null,1)],{type:"application/json"}));
-  const l=document.createElement("a");l.href=u;l.download="efi-mods-backup.json";l.click();setTimeout(()=>URL.revokeObjectURL(u),2000);
-};
-$("imp").onclick=()=>$("impf").click();
-$("impf").onchange=async e=>{
-  const f=e.target.files[0];e.target.value="";if(!f)return;
-  try{
-    const j=JSON.parse(await f.text());
-    if(j.format!=="gx-efi-mods")throw new Error("Not a mods backup");
-    for(const [n,t] of Object.entries(j.mods||{}))await put("mods/"+clean(n),t);
-    await setActive([...(await getActive()),...(j.active||[])]);
-    await setOff([...(await getOff()),...(j.disabled||[])]);
-    toast("Backup imported");refresh();
-  }catch(err){toast(err.message,true);}
 };
 $("reset").onclick=async()=>{
   if(!confirm("Remove ALL mods from the EFI mod store?"))return;

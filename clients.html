@@ -12,7 +12,7 @@
 <div class="launcher">
 
   <div class="title-bar">
-    <div class="title-logo"><div class="title-dot"></div>GX-LAUNCHER <span class="ver">v2.4.2</span></div>
+    <div class="title-logo"><div class="title-dot"></div>GX-LAUNCHER <span class="ver">v2.5</span></div>
     
   </div>
 
@@ -37,10 +37,6 @@
           <svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
           Clients
         </div>
-        <div class="nav-item" onclick="redirectToOtherClients()">
-          <svg class="nav-svg" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          Beta Clients
-        </div>
         <div class="nav-item" onclick="redirectToServers()">
           <svg class="nav-svg" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="5" rx="1"/><rect x="2" y="10" width="20" height="5" rx="1"/><rect x="2" y="17" width="20" height="5" rx="1"/></svg>
           Servers
@@ -56,6 +52,10 @@
         <div class="nav-item" onclick="redirectToSkins()">
           <svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2"/></svg>
           Skins
+        </div>
+        <div class="nav-item" onclick="redirectToChat()">
+          <svg class="nav-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Chat
         </div>
         <div class="nav-item" onclick="window.open('https://discord.gg/qQBamNZSwz', '_blank')">
           <svg class="nav-svg" viewBox="0 0 24 24" fill="currentColor">
@@ -121,6 +121,10 @@
             <div class="version-option" onclick="selectVersion('Tuff Client','Tuff Client (1.12.2-u2)',true)">
               <img src="./game/Tuff Client/favicon.png" onerror="this.style.display='none'">
               <span>Tuff Client (1.12.2-u2)</span><span class="version-badge wasm">WASM</span>
+            </div>
+            <div class="version-option" onclick="selectVersion('Tuff Client Beta','Tuff Client Beta 1.12.2',true)">
+              <img src="./game/Tuff Client Beta/favicon.png" onerror="this.style.display='none'">
+              <span>Tuff Client Beta 1.12.2</span><span class="version-badge wasm">WASM</span>
             </div>
             <div class="version-option" onclick="selectVersion('EB Client','EB Client (1.8.8-u53)',true)">
               <img src="./game/EB Client/favicon.png" onerror="this.style.display='none'">
@@ -193,6 +197,14 @@
             <div class="version-option" onclick="selectVersion('Forge 1.6.4','Forge 1.6.4',false)">
               <img src="./game/Forge 1.6.4/favicon.png" onerror="this.style.display='none'">
               <span></span>Forge 1.6.4</span>
+            </div>
+            <div class="version-option" onclick="selectVersion('Forge 1.0.0','Forge 1.0.0',true)">
+              <img src="./game/Forge 1.0.0/favicon.png" onerror="this.style.display='none'">
+              <span></span>Forge 1.0.0</span><span class="version-badge wasm">WASM</span>
+            </div>
+            <div class="version-option" onclick="selectVersion('Modern Client','Modern Client (1.12.2-u2) WASM',true)">
+              <img src="./game/Modern Client/favicon.png" onerror="this.style.display='none'">
+              <span>Modern Client (1.12.2-u2)</span><span class="version-badge wasm">WASM</span>
             </div>
           </div>
         </div>

@@ -47,7 +47,7 @@
   <div class="title-bar">
     <div class="title-logo">
       <div class="title-dot"></div>
-      GX-LAUNCHER <span class="ver">v2.4.2</span>
+      GX-LAUNCHER <span class="ver">v2.5</span>
     </div>
     <div class="title-controls">
       <div class="wdot min"></div>
@@ -79,10 +79,6 @@
           <svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg>
           Clients
         </div>
-        <div class="nav-item" onclick="redirectToOtherClients()">
-          <svg class="nav-svg" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          Beta Clients
-        </div>
         <div class="nav-item" onclick="redirectToServers()">
           <svg class="nav-svg" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="5" rx="1"/><rect x="2" y="10" width="20" height="5" rx="1"/><rect x="2" y="17" width="20" height="5" rx="1"/></svg>
           Servers
@@ -98,6 +94,10 @@
         <div class="nav-item" onclick="redirectToSkins()">
           <svg class="nav-svg" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21v-2a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v2"/></svg>
           Skins
+        </div>
+        <div class="nav-item" onclick="redirectToChat()">
+          <svg class="nav-svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Chat
         </div>
         <div class="nav-item" onclick="window.open('https://discord.gg/qQBamNZSwz', '_blank')">
           <svg class="nav-svg" viewBox="0 0 24 24" fill="currentColor">
@@ -162,6 +162,10 @@
               <img src="resources/main.png">
               <span>1.21.11 (u1)</span><span class="version-badge wasm">WASM</span>
             </div>
+            <div class="version-option" onclick="selectVersion('1.21.11','1.21.11 (u1)',false)">
+              <img src="resources/main.png">
+              <span>1.21.11 (u1)</span>
+            </div>
             <div class="version-option" onclick="selectVersion('1.20.6-wasm','1.20.6 WASM (u0)',true)">
               <img src="resources/main.png">
               <span>1.20.6 (u0)</span><span class="version-badge wasm">WASM</span>
@@ -210,13 +214,21 @@
               <img src="resources/main.png">
               <span>1.12.2 (u3)</span>
             </div>
-            <div class="version-option" onclick="selectVersion('1.8.8-wasm','1.8.8 WASM (u54)',true)">
+            <div class="version-option" onclick="selectVersion('1.9.4-wasm','1.9.4 WASM (u0)',true)">
               <img src="resources/main.png">
-              <span>1.8.8 (u54-unoffical)</span><span class="version-badge wasm">WASM</span>
+              <span>1.9.4 (u0)</span><span class="version-badge wasm">WASM</span>
             </div>
-            <div class="version-option" onclick="selectVersion('1.8.8','1.8.8 (u54)',false)">
+            <div class="version-option" onclick="selectVersion('1.9.4','1.9.4 (u0)',false)">
               <img src="resources/main.png">
-              <span>1.8.8 (u54-unoffical)</span>
+              <span>1.9.4 (u0)</span>
+            </div>
+            <div class="version-option" onclick="selectVersion('1.8.8-wasm','1.8.8 WASM (u53)',true)">
+              <img src="resources/main.png">
+              <span>1.8.8 (u53)</span><span class="version-badge wasm">WASM</span>
+            </div>
+            <div class="version-option" onclick="selectVersion('1.8.8','1.8.8 (u53)',false)">
+              <img src="resources/main.png">
+              <span>1.8.8 (u53)</span>
             </div>
             <div class="version-option" onclick="selectVersion('1.7.10','1.7.10 (u0)',false)">
               <img src="resources/main.png">
@@ -377,6 +389,14 @@
             <div class="version-option" onclick="selectVersion('indev-20100219-wasm','Indev 20100219',true)">
               <img src="resources/main.png">
               <span>Indev 20100219</span><span class="version-badge wasm">WASM</span>
+            </div>
+            <div class="version-option" onclick="selectVersion('indev-20100214-wasm','Indev 20100214',true)">
+              <img src="resources/main.png">
+              <span>Indev 20100214</span><span class="version-badge wasm">WASM</span>
+            </div>
+            <div class="version-option" onclick="selectVersion('indev-20100214','Indev 20100214',false)">
+              <img src="resources/main.png">
+              <span>Indev 20100214</span>
             </div>
             <div class="version-option" onclick="selectVersion('indev','Indev',false)">
               <img src="resources/main.png">

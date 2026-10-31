@@ -1,0 +1,5179 @@
+(function() {
+  'use strict';
+  const aa = ["DEBUG", "INFO", "WARN", "ERROR"];
+  var ea = "main",
+    ia = null;
+
+  function ja(a, b, c) {
+    if (!(1 > a)) {
+      var d = "EagRuntimeJS: [" + (new Date).toLocaleTimeString() + "][" + ea + "/" + (aa[a] || "UNKNOWN") + "] ";
+      a: {
+        if (0 < c.length) {
+          for (var g = [], m = 0; m < c.length; ++m) {
+            var t = b.indexOf("{}");
+            if (-1 != t) g.push(b.substring(0, t)), g.push(c[m]), b = b.substring(t + 2);
+            else break
+          }
+          if (0 < g.length) {
+            g.push(b);
+            c = g.join("");
+            break a
+          }
+        }
+        c = b
+      }
+      b = d + c;
+      3 <= a ? console.error(b) : console.log(b);
+      ia && ia(b, 3 <= a)
+    }
+  }
+
+  function e(a, ...b) {
+    ja(1, a, b)
+  }
+
+  function ka(a, ...b) {
+    ja(2, a, b)
+  }
+
+  function f(a, ...b) {
+    ja(3, a, b)
+  }
+
+  function ma(a, b) {
+    if (b) {
+      if (b.message ? ja(3, '{}: {} - "{}"', [a, b.name, b.message]) : ja(3, "{}: {}", [a, b.name]), "string" === typeof b.stack)
+        for (b = na(b.stack), a = 0; a < b.length; ++a) ja(3, "    at " + b[a], [])
+    } else ja(3, "{}: <null>", [a])
+  }
+
+  function pa(a) {
+    return function() {
+      f("Unsupported function called: {}.{}", a);
+      return 0
+    }
+  }
+
+  function D(a, b) {
+    a[b] = pa(b)
+  }
+
+  function qa(a) {
+    return new Promise(function(b) {
+      setTimeout(b, a)
+    })
+  }
+  class sa {
+    constructor() {
+      this.G = this.o = null;
+      this.u = 0
+    }
+    L() {
+      return this.u
+    }
+    push(a) {
+      this.G && (this.G._next = a);
+      this.G = a;
+      this.o || (this.o = a);
+      ++this.u
+    }
+    j() {
+      if (this.o) {
+        const a = this.o;
+        (this.o = a._next || null) ? a._next = null: this.G = null;
+        --this.u;
+        return a
+      }
+      return null
+    }
+  };
+  var ta = {},
+    H = {},
+    I = {},
+    ua = {},
+    xa = {},
+    J = {},
+    za = {},
+    N = {},
+    Aa = {},
+    Ba = {},
+    Ea = {},
+    O = {},
+    Fa = {},
+    Ga = {},
+    Ja = {},
+    Ka = null,
+    La = null,
+    Ma = null,
+    Na = null,
+    Oa = null,
+    Pa = null,
+    Qa = null,
+    Ra = null,
+    P = null,
+    Sa = null,
+    Ta = null,
+    R = null,
+    T = null,
+    Va = null,
+    Wa = !1,
+    Xa = 0,
+    Ya = null,
+    Za = null,
+    $a = null,
+    ab = null,
+    bb = null,
+    cb = null,
+    db = null,
+    gb = null,
+    hb = null,
+    ib = !1,
+    jb = null,
+    kb = null,
+    lb = !1;
+  const mb = [];
+  var nb = null,
+    ob = null,
+    pb = null,
+    qb = null,
+    Lb = "_eaglercraftX",
+    Mb = !1,
+    Nb = !1,
+    Ob = !1,
+    Pb = !0,
+    Qb = !1,
+    Rb = !1,
+    Sb = !0,
+    Tb = !0,
+    Ub = !1;
+
+  function Vb() {
+    "string" === typeof P.localStorageNamespace && (Lb = P.localStorageNamespace);
+    "boolean" === typeof P.openDebugConsoleOnLaunch && (Mb = P.openDebugConsoleOnLaunch);
+    "boolean" === typeof P.fixDebugConsoleUnloadListener && (Nb = P.fixDebugConsoleUnloadListener);
+    "boolean" === typeof P.forceWebViewSupport && (Ob = P.forceWebViewSupport);
+    "boolean" === typeof P.enableWebViewCSP && (Pb = P.enableWebViewCSP);
+    "boolean" === typeof P.forceWebGL1 && (Qb = P.forceWebGL1);
+    "boolean" === typeof P.forceWebGL2 && (Rb = P.forceWebGL2);
+    "boolean" ===
+    typeof P.allowExperimentalWebGL1 && (Sb = P.allowExperimentalWebGL1);
+    "boolean" === typeof P.useWebGLExt && (Tb = P.useWebGLExt);
+    "boolean" === typeof P.useDelayOnSwap && (Ub = P.useDelayOnSwap)
+  }
+  async function Wb() {
+    function a() {
+      try {
+        g = new AudioContext
+      } catch (t) {
+        ma("Could not initialize audio context", t)
+      }
+    }
+    Vb();
+    ia = Xb;
+    "yes" !== window.__isEaglerX188UnloadListenerSet && (window.onbeforeunload = function() {
+      window.__curEaglerX188UnloadListenerCB && window.__curEaglerX188UnloadListenerCB();
+      return !1
+    }, window.__isEaglerX188UnloadListenerSet = "yes");
+    e("Initializing EagRuntime JS context...");
+    await Yb();
+    Zb();
+    $b();
+    ac();
+    bc();
+    cc();
+    dc();
+    D(Ja, "sendPacket");
+    D(Ja, "getAvailablePackets");
+    D(Ja, "getNextPacket");
+    D(Ja, "setCrashCallback");
+    D(Ja, "isTabAboutToClose");
+    Ta.classList.add("_eaglercraftX_root_element");
+    Ta.style.overflow = "hidden";
+    for (var b = null, c; c = Ta.lastChild;) b ||= c, Ta.removeChild(c);
+    R = document.createElement("div");
+    R.classList.add("_eaglercraftX_wrapper_element");
+    R.style.position = "relative";
+    R.style.width = "100%";
+    R.style.height = "100%";
+    R.style.overflow = "hidden";
+    R.style.backgroundColor = "black";
+    Ta.appendChild(R);
+    b && (b.style.position = "absolute", b.style.top = "0px", b.style.left = "0px", b.style.right = "0px", b.style.bottom = "0px", b.style.zIndex =
+      "2", b.classList.add("_eaglercraftX_early_splash_element"), R.appendChild(b));
+    await qa(10);
+    c = window.devicePixelRatio;
+    b = c * R.clientWidth | 0;
+    c = c * R.clientHeight | 0;
+    e("Initializing audio context");
+    if ("function" === typeof document.exitPointerLock) {
+      var d = navigator.userAgent;
+      null !== d ? (d = d.toLowerCase(), ib = -1 !== d.indexOf("mobi") || -1 !== d.indexOf("tablet")) : ib = !1
+    } else ib = !0;
+    var g = null;
+    !ib && navigator.userActivation && navigator.userActivation.hasBeenActive ? a() : (d = document.createElement("div"), d.classList.add("_eaglercraftX_press_any_key_image"),
+      d.style.position = "absolute", d.style.top = "0px", d.style.left = "0px", d.style.right = "0px", d.style.bottom = "0px", d.style.width = "100%", d.style.height = "100%", d.style.zIndex = "3", d.style.touchAction = "pan-x pan-y", d.style.background = 'center / contain no-repeat url("' + Pa + '"), left / 1000000% 100% no-repeat url("' + Pa + '") white', d.style.setProperty("image-rendering", "pixelated"), R.appendChild(d), await new Promise(function(t, B) {
+        function x() {
+          if (!z) {
+            z = !0;
+            ib ? R.removeChild(C) : (window.removeEventListener("keydown", x),
+              R.removeEventListener("mousedown", x), R.removeEventListener("touchstart", x));
+            try {
+              a()
+            } catch (G) {
+              B(G);
+              return
+            }
+            t()
+          }
+        }
+        var z = !1;
+        if (ib) {
+          var C = document.createElement("div");
+          C.classList.add("_eaglercraftX_mobile_press_any_key");
+          C.setAttribute("style", "position:absolute;background-color:white;font-family:sans-serif;top:10%;left:10%;right:10%;bottom:10%;border:5px double black;padding:calc(5px + 7vh) 15px;text-align:center;font-size:20px;user-select:none;z-index:10;");
+          C.innerHTML = '<h3 style="margin-block-start:0px;margin-block-end:0px;margin:20px 5px;">Mobile Browser Detected</h3><p style="margin-block-start:0px;margin-block-end:0px;margin:20px 5px;">Warning: EaglercraftX WASM-GC requires a lot of memory and may not be stable on most mobile devices!</p><p style="margin-block-start:0px;margin-block-end:0px;margin:20px 2px;"><button style="font: 24px sans-serif;font-weight:bold;" class="_eaglercraftX_mobile_launch_client">Launch EaglercraftX</button></p><p style="margin-block-start:0px;margin-block-end:0px;margin:25px 5px;">(Tablets and phones with large screens work best)</p>';
+          C.querySelector("._eaglercraftX_mobile_launch_client").addEventListener("click", x);
+          R.appendChild(C)
+        } else window.addEventListener("keydown", x), R.addEventListener("mousedown", x), R.addEventListener("touchstart", x)
+      }), R.removeChild(d));
+    g ? ec(g) : fc();
+    e("Creating main canvas");
+    T = document.createElement("canvas");
+    T.classList.add("_eaglercraftX_canvas_element");
+    T.style.width = "100%";
+    T.style.height = "100%";
+    T.style.zIndex = "1";
+    T.style.touchAction = "pan-x pan-y";
+    T.style.setProperty("-webkit-touch-callout", "none");
+    T.style.setProperty("-webkit-tap-highlight-color", "rgba(255, 255, 255, 0)");
+    T.style.setProperty("image-rendering", "pixelated");
+    T.width = b;
+    T.height = c;
+    R.appendChild(T);
+    await gc();
+    e("Creating WebGL context");
+    R.addEventListener("webglcontextcreationerror", function(t) {
+      f("[WebGL Error]: {}", t.statusMessage)
+    });
+    b = {
+      antialias: !1,
+      depth: !1,
+      powerPreference: "high-performance",
+      desynchronized: !0,
+      preserveDrawingBuffer: !1,
+      premultipliedAlpha: !1,
+      alpha: !1
+    };
+    d = !1;
+    if (Rb) {
+      e("Note: Forcing WebGL 2.0 context");
+      c = 300;
+      var m = T.getContext("webgl2",
+        b);
+      if (!m) return hc("WebGL 2.0 is not supported on this device!"), !1
+    } else if (Qb) {
+      if (e("Note: Forcing WebGL 1.0 context"), c = 200, m = T.getContext("webgl", b), !m)
+        if (Sb) {
+          if (d = !0, m = T.getContext("experimental-webgl", b), !m) return hc("WebGL is not supported on this device!"), !1
+        } else return hc("WebGL is not supported on this device!"), !1
+    } else if (c = 300, m = T.getContext("webgl2", b), !m && (c = 200, m = T.getContext("webgl", b), !m))
+      if (Sb) {
+        if (d = !0, m = T.getContext("experimental-webgl", b), !m) return hc("WebGL is not supported on this device!"),
+          !1
+      } else return hc("WebGL is not supported on this device!"), !1;
+    d && alert('WARNING: Detected "experimental" WebGL 1.0 support, certain graphics API features may be missing, and therefore EaglercraftX may malfunction and crash!');
+    Xa = c;
+    Va = m;
+    Wa = d;
+    ic(m, c);
+    e("OpenGL Version: {}", N.glGetString(7938));
+    e("OpenGL Renderer: {}", N.glGetString(7937));
+    b = N.dumpActiveExtensions();
+    if (0 === b.length) e("Unlocked the following OpenGL ES extensions: (NONE)");
+    else
+      for (b.sort(), e("Unlocked the following OpenGL ES extensions:"),
+        c = 0; c < b.length; ++c) e(" - {}", b[c]);
+    N.glClearColor(0, 0, 0, 1);
+    N.glClear(16384);
+    await qa(20);
+    e("EagRuntime JS context initialization complete");
+    return !0
+  }
+  async function jc() {
+    Vb();
+    ia = function(a, b) {
+      postMessage({
+        ch: "~!LOGGER",
+        txt: a,
+        err: b
+      })
+    };
+    e("Initializing EagRuntime worker JS context...");
+    await Yb();
+    D(H, "setClipboard");
+    D(H, "getClipboard");
+    D(H, "displayFileChooser");
+    D(H, "fileChooserHasResult");
+    D(H, "getFileChooserResult");
+    D(H, "clearFileChooserResult");
+    D(H, "downloadFileWithNameU8");
+    D(H, "downloadFileWithNameA");
+    D(H, "downloadScreenshot");
+    D(H, "showDebugConsole");
+    D(H, "addLogMessage");
+    D(H, "isShowingDebugConsole");
+    D(H, "getFaviconURL");
+    D(H, "setResetSettingsCallback");
+    fc();
+    D(J, "keyboardLayoutSupported");
+    D(J, "iterateKeyboardLayout");
+    D(J, "updateCanvasSize");
+    D(J, "updatePlatformAndSleep");
+    D(J, "isVSyncSupported");
+    D(J, "mouseSetGrabbed");
+    D(J, "isMouseGrabSupported");
+    D(J, "isMouseGrabbed");
+    D(J, "isPointerLocked");
+    D(J, "supportsFullscreen");
+    D(J, "toggleFullscreen");
+    D(J, "isFullscreen");
+    D(J, "touchSetOpenKeyboardZone");
+    D(J, "touchCloseDeviceKeyboard");
+    D(J, "touchIsDeviceKeyboardOpenMAYBE");
+    D(J, "gamepadSupported");
+    D(J, "isVisualViewport");
+    D(N, "getCapBits");
+    D(N, "glEnable");
+    D(N, "glDisable");
+    D(N, "glClearColor");
+    D(N, "glClearDepth");
+    D(N, "glClear");
+    D(N, "glDepthFunc");
+    D(N, "glDepthMask");
+    D(N, "glCullFace");
+    D(N, "glViewport");
+    D(N, "glBlendFunc");
+    D(N, "glBlendFuncSeparate");
+    D(N, "glBlendEquation");
+    D(N, "glBlendColor");
+    D(N, "glColorMask");
+    D(N, "glDrawBuffers");
+    D(N, "glReadBuffer");
+    D(N, "glReadPixels");
+    D(N, "glPolygonOffset");
+    D(N, "glLineWidth");
+    D(N, "glGenBuffers");
+    D(N, "glGenTextures");
+    D(N, "glCreateProgram");
+    D(N, "glCreateShader");
+    D(N, "glCreateFramebuffer");
+    D(N, "glCreateRenderbuffer");
+    D(N, "glGenQueries");
+    D(N, "glDeleteBuffers");
+    D(N, "glDeleteTextures");
+    D(N, "glDeleteProgram");
+    D(N, "glDeleteShader");
+    D(N, "glDeleteFramebuffer");
+    D(N, "glDeleteRenderbuffer");
+    D(N, "glDeleteQueries");
+    D(N, "glBindBuffer");
+    D(N, "glBufferData");
+    D(N, "glBufferSubData");
+    D(N, "glEnableVertexAttribArray");
+    D(N, "glDisableVertexAttribArray");
+    D(N, "glVertexAttribPointer");
+    D(N, "glActiveTexture");
+    D(N, "glBindTexture");
+    D(N, "glTexParameterf");
+    D(N, "glTexParameteri");
+    D(N, "glTexImage3D");
+    D(N, "glTexImage2D");
+    D(N, "glTexSubImage2D");
+    D(N, "glCopyTexSubImage2D");
+    D(N, "glTexStorage2D");
+    D(N, "glPixelStorei");
+    D(N, "glGenerateMipmap");
+    D(N, "glShaderSource");
+    D(N, "glCompileShader");
+    D(N, "glGetShaderi");
+    D(N, "glGetShaderInfoLog");
+    D(N, "glUseProgram");
+    D(N, "glAttachShader");
+    D(N, "glDetachShader");
+    D(N, "glLinkProgram");
+    D(N, "glGetProgrami");
+    D(N, "glGetProgramInfoLog");
+    D(N, "glDrawArrays");
+    D(N, "glDrawElements");
+    D(N, "glDrawRangeElements");
+    D(N, "glFlush");
+    D(N, "glScissor");
+    D(N, "glBindAttribLocation");
+    D(N, "glGetAttribLocation");
+    D(N, "glGetUniformLocation");
+    D(N, "glGetUniformBlockIndex");
+    D(N, "glBindBufferRange");
+    D(N, "glUniformBlockBinding");
+    D(N, "glUniform1f");
+    D(N, "glUniform2f");
+    D(N, "glUniform3f");
+    D(N, "glUniform4f");
+    D(N, "glUniform1i");
+    D(N, "glUniform2i");
+    D(N, "glUniform3i");
+    D(N, "glUniform4i");
+    D(N, "glUniformMatrix2fv");
+    D(N, "glUniformMatrix3fv");
+    D(N, "glUniformMatrix4fv");
+    D(N, "glUniformMatrix3x2fv");
+    D(N, "glUniformMatrix4x2fv");
+    D(N, "glUniformMatrix4x3fv");
+    D(N, "glBindFramebuffer");
+    D(N, "glCheckFramebufferStatus");
+    D(N, "glBlitFramebuffer");
+    D(N, "glRenderbufferStorage");
+    D(N, "glFramebufferTexture2D");
+    D(N, "glFramebufferTextureLayer");
+    D(N, "glBindRenderbuffer");
+    D(N, "glFramebufferRenderbuffer");
+    D(N, "glGetInteger");
+    D(N, "glGetError");
+    D(N, "getAllExtensions");
+    D(N, "dumpActiveExtensions");
+    D(N, "glGetString");
+    D(N, "glGenVertexArrays");
+    D(N, "glDeleteVertexArrays");
+    D(N, "glBindVertexArray");
+    D(N, "glVertexAttribDivisor");
+    D(N, "glDrawArraysInstanced");
+    D(N, "glDrawElementsInstanced");
+    D(N, "isContextLost");
+    D(Ba, "getMic");
+    D(Ba, "setDataAvailableHandler");
+    D(Ea, "isSupported");
+    D(Ea, "createRTCPeerConnection");
+    D(O, "supported");
+    D(O, "clientLANReadyState");
+    D(O, "clientLANCloseConnection");
+    D(O, "clientLANSendPacket");
+    D(O, "clientLANReadPacket");
+    D(O, "clientLANAvailable");
+    D(O, "clientLANSetICEServersAndConnect");
+    D(O, "clearLANClientState");
+    D(O, "clientLANAwaitICECandidate");
+    D(O, "clientLANAwaitDescription");
+    D(O, "clientLANAwaitChannel");
+    D(O, "clientLANClosed");
+    D(O, "clientLANSetICECandidate");
+    D(O, "clientLANSetDescription");
+    D(O, "clientLANClosed");
+    D(O, "serverLANInitializeServer");
+    D(O, "serverLANCloseServer");
+    D(O, "serverLANCreatePeer");
+    D(Fa,
+      "checkSupported");
+    D(Fa, "checkCSPSupported");
+    D(Fa, "sendStringMessage");
+    D(Fa, "sendBinaryMessage");
+    D(Fa, "beginShowing");
+    D(Fa, "resize");
+    D(Fa, "endShowing");
+    D(Ga, "startIntegratedServer");
+    D(Ga, "sendPacket");
+    D(Ga, "getAvailablePackets");
+    D(Ga, "getNextPacket");
+    D(Ga, "killWorker");
+    D(Ga, "showCrashReportOverlay");
+    D(Ga, "hideCrashReportOverlay");
+    kc();
+    e("EagRuntime worker JS context initialization complete")
+  }
+
+  function lc(a) {
+    Ya = a.buffer;
+    e("WebAssembly direct memory resized to {} MiB", .01 * (Ya.byteLength / 1024 / 10.24 | 0));
+    Za = new Uint8Array(Ya);
+    $a = new Int8Array(Ya);
+    ab = new Uint16Array(Ya);
+    bb = new Int16Array(Ya);
+    db = new Uint32Array(Ya);
+    cb = new Int32Array(Ya);
+    gb = new Float32Array(Ya);
+    mc()
+  }
+
+  function mc() {
+    hb && hb($a, Za, bb, ab, cb, db, gb)
+  }
+  const nc = new sa;
+
+  function W(a, b, c) {
+    nc.push({
+      eventType: a << 5 | b,
+      eventObj: c,
+      _next: null
+    })
+  }
+  let oc = /.+:wasm-function\[[0-9]+]:0x([0-9a-f]+).*/;
+
+  function na(a) {
+    if (!a) return null;
+    const b = [];
+    for (let c of a.split("\n")) {
+      if (Na && (a = oc.exec(c), null !== a && 2 <= a.length && (a = parseInt(a[1], 16), !isNaN(a)))) try {
+        const d = Na([a]);
+        if (0 < d.length) {
+          for (let g of d) b.push("" + g.className + "." + g.method + "(" + g.file + ":" + g.line + ")");
+          continue
+        }
+      } catch (d) {}
+      c = c.trim();
+      c.startsWith("at ") && (c = c.substring(3));
+      b.push(c)
+    }
+    return b
+  }
+
+  function pc() {
+    var a = document.createElement("button");
+    a.setAttribute("style", "margin-left:10px;");
+    a.innerText = "Reset Settings";
+    a.addEventListener("click", function() {
+      pb ? pb() : window.alert("Local storage has not been initialized yet")
+    });
+    const b = document.createElement("button");
+    b.setAttribute("style", "margin-left:10px;");
+    b.innerText = "Open Debug Console";
+    b.addEventListener("click", function() {
+      ob ? ob() : window.alert("Debug console has not been initialized yet")
+    });
+    var c = document.createElement("div");
+    c.setAttribute("style",
+      "position:absolute;bottom:5px;right:0px;");
+    c.appendChild(a);
+    c.appendChild(b);
+    a = document.createElement("div");
+    a.setAttribute("style", "position:relative;");
+    a.appendChild(c);
+    c = document.createElement("div");
+    c.classList.add("_eaglercraftX_crash_tools_element");
+    c.setAttribute("style", "z-index:101;position:absolute;top:135px;left:10%;right:10%;height:0px;");
+    c.appendChild(a);
+    return c
+  }
+
+  function qc(a) {
+    const b = a ? na(a.stack) : null;
+    a = "Native Browser Exception\n----------------------------------\n  Line: " + (a && "string" === typeof a.fileName ? a.fileName : "unknown") + ":" + (a && "number" === typeof a.lineNumber ? a.lineNumber : "unknown") + ":" + (a && "number" === typeof a.columnNumber ? a.columnNumber : "unknown") + "\n  Type: " + (a && "string" === typeof a.name ? a.name : "unknown") + "\n  Desc: " + (a && "string" === typeof a.message ? a.message : "null") + "\n----------------------------------\n\nDeobfuscated stack trace:\n    at " +
+      (b ? b.join("\n    at ") : "null") + "\n\nThis exception was not handled by the WASM binary\n";
+    if ("undefined" !== typeof window) rc(a, !0);
+    else if (sc) {
+      f("\n{}", a);
+      try {
+        sc(a, !0)
+      } catch (c) {
+        console.log(c)
+      }
+    } else f("\n{}", a)
+  }
+
+  function rc(a, b) {
+    f("Game crashed!");
+    var c = "Game Crashed! I have fallen and I can't get up!\n\n" + a + "\n\n",
+      d = 'eaglercraft.version = "' + mb[0] + '"\neaglercraft.minecraft = "' + mb[2] + '"\neaglercraft.brand = "' + mb[1] + '"\n\n' + tc() + "\nwindow.eaglercraftXOpts = " + JSON.stringify(P) + "\n\ncurrentTime = " + (new Date).toLocaleString() + "\n\n" + uc("userAgent") + uc("vendor") + uc("language") + uc("hardwareConcurrency") + uc("deviceMemory") + uc("platform") + uc("product") + vc() + "\n" + wc("localStorage") + wc("sessionStorage") + wc("indexedDB") +
+      "\nrootElement.clientWidth = " + (R ? R.clientWidth : "undefined") + "\nrootElement.clientHeight = " + (R ? R.clientHeight : "undefined") + "\n" + wc("innerWidth") + wc("innerHeight") + wc("outerWidth") + wc("outerHeight") + wc("devicePixelRatio") + xc("availWidth") + xc("availHeight") + xc("colorDepth") + xc("pixelDepth") + "\n" + yc() + "\n",
+      g = c + d;
+    const m = [];
+    try {
+      "object" === typeof P && "object" === typeof P.hooks && "function" === typeof P.hooks.crashReportShow && P.hooks.crashReportShow(g, function(t) {
+        m.push(t)
+      })
+    } catch (t) {
+      ma("Uncaught exception invoking crash report hook",
+        t)
+    }
+    if (lb) {
+      f("");
+      f("An additional crash report was supressed:");
+      g = a.split(/[\r\n]+/);
+      for (a = 0; a < g.length; ++a) f("  {}", g[a]);
+      if (0 < m.length)
+        for (a = 0; a < m.length; ++a)
+          if (g = m[a]) {
+            f("");
+            f("  ----------[ CRASH HOOK ]----------");
+            g = g.split(/[\r\n]+/);
+            for (a = 0; a < g.length; ++a) f("  {}", g[a]);
+            f("  ----------------------------------")
+          }
+    } else {
+      lb = !0;
+      if (0 < m.length) {
+        g = c + "Got the following messages from the crash report hook registered in eaglercraftXOpts:\n\n";
+        for (a = 0; a < m.length; ++a) g += "----------[ CRASH HOOK ]----------\n" +
+          m[a] + "\n----------------------------------\n\n";
+        g += d
+      }(d = R || Ta) ? (b && f("\n{}", g), b = document.createElement("img"), a = document.createElement("div"), b.setAttribute("style", "z-index:100;position:absolute;top:10px;left:calc(50% - 151px);"), b.src = Qa, a.setAttribute("style", "z-index:100;position:absolute;top:135px;left:10%;right:10%;bottom:50px;background-color:white;border:1px solid #cccccc;overflow-x:hidden;overflow-y:scroll;overflow-wrap:break-word;white-space:pre-wrap;font: 14px monospace;padding:10px;"),
+        a.classList.add("_eaglercraftX_crash_element"), d.appendChild(b), d.appendChild(a), d.appendChild(pc()), a.appendChild(document.createTextNode(g)), nb && nb(), window.__curEaglerX188UnloadListenerCB = null) : (alert("Root element not found, crash report was printed to console"), f("\n{}", g))
+    }
+  }
+
+  function hc(a) {
+    if (!lb) {
+      lb = !0;
+      var b = R || Ta;
+      f("Compatibility error: {}", a);
+      if (b) {
+        var c = document.createElement("img"),
+          d = document.createElement("div");
+        c.setAttribute("style", "z-index:100;position:absolute;top:10px;left:calc(50% - 151px);");
+        c.src = Qa;
+        d.setAttribute("style", "z-index:100;position:absolute;top:135px;left:10%;right:10%;bottom:50px;background-color:white;border:1px solid #cccccc;overflow-x:hidden;overflow-y:scroll;font:18px sans-serif;padding:40px;");
+        d.classList.add("_eaglercraftX_incompatible_element");
+        b.appendChild(c);
+        b.appendChild(d);
+        b.appendChild(pc());
+        d.innerHTML = '<h2><svg style="vertical-align:middle;margin:0px 16px 8px 8px;" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none"><path stroke="#000000" stroke-width="3" stroke-linecap="square" d="M1.5 8.5v34h45v-28m-3-3h-10v-3m-3-3h-10m15 6h-18v-3m-3-3h-10"/><path stroke="#000000" stroke-width="2" stroke-linecap="square" d="M12 21h0m0 4h0m4 0h0m0-4h0m-2 2h0m20-2h0m0 4h0m4 0h0m0-4h0m-2 2h0"/><path stroke="#000000" stroke-width="2" stroke-linecap="square" d="M20 30h0 m2 2h0 m2 2h0 m2 2h0 m2 -2h0 m2 -2h0 m2 -2h0"/></svg>+ This device is incompatible with Eaglercraft&ensp;:(</h2><div style="margin-left:40px;"><p style="font-size:1.2em;"><b style="font-size:1.1em;">Issue:</b> <span style="color:#BB0000;" id="_eaglercraftX_crashReason"></span><br /></p><p style="margin-left:10px;font:0.9em monospace;" id="_eaglercraftX_crashUserAgent"></p><p style="margin-left:10px;font:0.9em monospace;" id="_eaglercraftX_crashWebGL"></p><p style="margin-left:10px;font:0.9em monospace;">Current Date: ' +
+          (new Date).toLocaleString() + '</p><p><br /><span style="font-size:1.1em;border-bottom:1px dashed #AAAAAA;padding-bottom:5px;">Things you can try:</span></p><ol><li><span style="font-weight:bold;">Just try using Eaglercraft on a different device</span>, it isn\'t a bug it\'s common sense</li><li style="margin-top:7px;">If this screen just appeared randomly, try restarting your browser or device</li><li style="margin-top:7px;">If you are not using Chrome/Edge, try installing the latest Google Chrome</li><li style="margin-top:7px;">If your browser is out of date, please update it to the latest version</li></ol></div>';
+        d.querySelector("#_eaglercraftX_crashReason").appendChild(document.createTextNode(a));
+        try {
+          var g = window.navigator.userAgent
+        } catch (t) {
+          g = "<error>"
+        }
+        d.querySelector("#_eaglercraftX_crashUserAgent").appendChild(document.createTextNode(g));
+        nb && nb();
+        window.__curEaglerX188UnloadListenerCB = null;
+        a = "No GL_RENDERER string could be queried";
+        try {
+          const t = document.createElement("canvas");
+          t.width = 64;
+          t.height = 64;
+          const B = t.getContext("webgl");
+          if (B) {
+            if (B.getExtension("WEBGL_debug_renderer_info")) var m = B.getParameter(37446);
+            else(m = B.getParameter(WebGLRenderingContext.RENDERER)) && (m += " [masked]");
+            m && (a = m)
+          }
+        } catch (t) {}
+        d.querySelector("#_eaglercraftX_crashWebGL").appendChild(document.createTextNode(a))
+      } else alert("Compatibility error: " + a)
+    }
+  }
+  var zc = null;
+
+  function tc() {
+    if (zc) return zc;
+    try {
+      var a = Va,
+        b = Wa;
+      if (!a) {
+        b = !1;
+        var c = document.createElement("canvas");
+        c.width = 64;
+        c.height = 64;
+        a = c.getContext("webgl2");
+        a || (a = c.getContext("webgl"), a || (b = !0, a = c.getContext("experimental-webgl")))
+      }
+      return a ? (c = "", 0 < Xa && (c += "webgl.version = " + a.getParameter(7938) + "\n"), c = a.getExtension("WEBGL_debug_renderer_info") ? c + ("webgl.renderer = " + a.getParameter(37446) + "\nwebgl.vendor = " + a.getParameter(37445) + "\n") : c + ("webgl.renderer = " + a.getParameter(7937) + " [masked]\nwebgl.vendor = " +
+          a.getParameter(7936) + " [masked]\n"), 0 < Xa ? (c += "\nwebgl.version.id = " + Xa + "\nwebgl.experimental = " + b, 200 === Xa ? c += "\nwebgl.ext.ANGLE_instanced_arrays = " + !!a.getExtension("ANGLE_instanced_arrays") + "\nwebgl.ext.EXT_color_buffer_half_float = " + !!a.getExtension("EXT_color_buffer_half_float") + "\nwebgl.ext.EXT_shader_texture_lod = " + !!a.getExtension("EXT_shader_texture_lod") + "\nwebgl.ext.OES_fbo_render_mipmap = " + !!a.getExtension("OES_fbo_render_mipmap") + "\nwebgl.ext.OES_texture_float = " + !!a.getExtension("OES_texture_float") +
+          "\nwebgl.ext.OES_texture_half_float = " + !!a.getExtension("OES_texture_half_float") + "\nwebgl.ext.OES_texture_half_float_linear = " + !!a.getExtension("OES_texture_half_float_linear") : 300 <= Xa && (c += "\nwebgl.ext.EXT_color_buffer_float = " + !!a.getExtension("EXT_color_buffer_float") + "\nwebgl.ext.EXT_color_buffer_half_float = " + !!a.getExtension("EXT_color_buffer_half_float") + "\nwebgl.ext.OES_texture_float_linear = " + !!a.getExtension("OES_texture_float_linear")), c += "\nwebgl.ext.EXT_texture_filter_anisotropic = " +
+          !!a.getExtension("EXT_texture_filter_anisotropic") + "\n") : c += "webgl.ext.ANGLE_instanced_arrays = " + !!a.getExtension("ANGLE_instanced_arrays") + "\nwebgl.ext.EXT_color_buffer_float = " + !!a.getExtension("EXT_color_buffer_float") + "\nwebgl.ext.EXT_color_buffer_half_float = " + !!a.getExtension("EXT_color_buffer_half_float") + "\nwebgl.ext.EXT_shader_texture_lod = " + !!a.getExtension("EXT_shader_texture_lod") + "\nwebgl.ext.OES_fbo_render_mipmap = " + !!a.getExtension("OES_fbo_render_mipmap") + "\nwebgl.ext.OES_texture_float = " +
+        !!a.getExtension("OES_texture_float") + "\nwebgl.ext.OES_texture_float_linear = " + !!a.getExtension("OES_texture_float_linear") + "\nwebgl.ext.OES_texture_half_float = " + !!a.getExtension("OES_texture_half_float") + "\nwebgl.ext.OES_texture_half_float_linear = " + !!a.getExtension("OES_texture_half_float_linear") + "\nwebgl.ext.EXT_texture_filter_anisotropic = " + !!a.getExtension("EXT_texture_filter_anisotropic") + "\n", zc = c) : zc = "Failed to query GPU info!\n"
+    } catch (d) {
+      return zc = "ERROR: could not query webgl info - " +
+        d + "\n"
+    }
+  }
+
+  function uc(a) {
+    try {
+      var b = window.navigator[a]
+    } catch (c) {
+      b = "<error>"
+    }
+    return "window.navigator." + a + " = " + b + "\n"
+  }
+
+  function vc() {
+    try {
+      var a = [];
+      if ("object" === typeof navigator.plugins) {
+        var b = navigator.plugins.length;
+        if (0 < b)
+          for (var c = 0; c < b; ++c) {
+            var d = navigator.plugins[c];
+            a.push({
+              name: d.name,
+              filename: d.filename,
+              desc: d.description
+            })
+          }
+      }
+      var g = JSON.stringify(a)
+    } catch (m) {
+      g = "<error>"
+    }
+    return "window.navigator.plugins = " + g + "\n"
+  }
+
+  function xc(a) {
+    try {
+      var b = window.screen[a]
+    } catch (c) {
+      b = "<error>"
+    }
+    return "window.screen." + a + " = " + b + "\n"
+  }
+
+  function yc() {
+    try {
+      var a = window.location.href
+    } catch (b) {
+      a = "<error>"
+    }
+    return "window.location.href = " + a + "\n"
+  }
+
+  function wc(a) {
+    try {
+      var b = window[a]
+    } catch (c) {
+      b = "<error>"
+    }
+    return "window." + a + " = " + b + "\n"
+  };
+
+  function Ac(a, b, c) {
+    const d = document.createElement("a");
+    d.style.position = "absolute";
+    d.style.left = "0px";
+    d.style.top = "0px";
+    d.style.zIndex = "-100";
+    d.style.color = "transparent";
+    d.innerText = "Download File";
+    d.href = b;
+    d.target = "_blank";
+    d.download = a;
+    R.appendChild(d);
+    setTimeout(function() {
+      d.click();
+      setTimeout(function() {
+        R.removeChild(d)
+      }, 50);
+      c && setTimeout(c, 6E4)
+    }, 50)
+  }
+  var Bc = 0,
+    Cc = null,
+    Dc = null,
+    Ec = null,
+    Fc = null;
+
+  function Xb(a, b) {
+    if (Ec) Fc && Fc(a, b);
+    else
+      for (a = {
+          msg: a,
+          err: b,
+          next: null
+        }, Dc && (Dc.next = a), Cc ||= a, Dc = a, ++Bc; 256 < Bc;) --Bc, Cc &&= Cc.next
+  }
+
+  function Zb() {
+    function a() {
+      t = !1;
+      B = null;
+      null !== z ? (R.removeChild(z), x = z = null) : null !== x && (R.removeChild(x), x = null)
+    }
+
+    function b(h) {
+      try {
+        window.localStorage && window.localStorage.setItem(fa, h ? "true" : "false")
+      } catch (n) {}
+    }
+
+    function c() {
+      try {
+        if (window.localStorage) {
+          const h = window.localStorage.getItem(fa);
+          return h && "true" === h.toLowerCase()
+        }
+        return !1
+      } catch (h) {
+        return !1
+      }
+    }
+
+    function d() {
+      if (Ec) Ec.focus();
+      else {
+        var h = Math.round(1E3 * window.devicePixelRatio);
+        const n = Math.round(400 * window.devicePixelRatio);
+        if (Ec = window.open("",
+            "_blank", "top=" + Math.round((window.screen.height - n) / 2) + ",left=" + Math.round((window.screen.width - h) / 2) + ",width=" + h + ",height=" + n + ",menubar=0,status=0,titlebar=0,toolbar=0")) {
+          Ec.focus();
+          C = Ec.document;
+          C.write('<!DOCTYPE html><html><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Debug Console</title><link type="image/png" rel="shortcut icon" href="' + Ra + '" /></head><body style="overflow-x:hidden;overflow-y:scroll;padding:0px;"><p id="loggerMessageContainer" style="overflow-wrap:break-word;white-space:pre-wrap;font:14px monospace;padding:10px;"></p></body></html>');
+          C.close();
+          G = C.body;
+          X = C.getElementById("loggerMessageContainer");
+          for (h = Cc; h;) g(h.msg + "\n", h.err ? "#DD0000" : "#000000"), h = h.next;
+          Dc = Cc = null;
+          Bc = 0;
+          m();
+          h = () => {
+            null != Ec && (Ec = null, b(!1))
+          };
+          Ec.addEventListener("beforeunload", h);
+          Ec.addEventListener("unload", h)
+        } else f("Logger popup was blocked!"), window.alert("ERROR: Popup blocked!\n\nPlease make sure you have popups enabled for this site!")
+      }
+    }
+
+    function g(h, n) {
+      var v = C.createElement("span");
+      v.innerText = h;
+      v.style.color = n;
+      X.appendChild(v);
+      for (h = X.children; 2048 < h.length;) h[0].remove()
+    }
+
+    function m() {
+      setTimeout(() => {
+        Ec.scrollTo(0, G.scrollHeight || G.clientHeight)
+      }, 1)
+    }
+    H.setClipboard = function(h) {
+      try {
+        if (window.navigator.clipboard) return window.navigator.clipboard.writeText(h), !0
+      } catch (n) {
+        f("Failed to set clipboard data!")
+      }
+      return !1
+    };
+    H.getClipboard = new WebAssembly.Suspending(async function() {
+      var h = null;
+      try {
+        window.navigator.clipboard && (h = await navigator.clipboard.readText())
+      } catch (n) {
+        f("Failed to read clipboard data!")
+      }
+      return h
+    });
+    var t = !1,
+      B = null,
+      x = null,
+      z = null;
+    H.displayFileChooser = function(h,
+      n) {
+      a();
+      if (ib) {
+        const q = z = document.createElement("div");
+        q.classList.add("_eaglercraftX_mobile_file_chooser_popup");
+        q.style.position = "absolute";
+        q.style.backgroundColor = "white";
+        q.style.fontFamily = "sans-serif";
+        q.style.top = "10%";
+        q.style.left = "10%";
+        q.style.right = "10%";
+        q.style.border = "5px double black";
+        q.style.padding = "15px";
+        q.style.textAlign = "left";
+        q.style.fontSize = "20px";
+        q.style.userSelect = "none";
+        q.style.zIndex = "150";
+        var v = document.createElement("h3");
+        v.appendChild(document.createTextNode("File Chooser"));
+        q.appendChild(v);
+        v = document.createElement("p");
+        const y = x = document.createElement("input");
+        y.type = "file";
+        y.accept = null === h ? "." + n : h;
+        y.multiple = !1;
+        v.appendChild(y);
+        q.appendChild(v);
+        h = document.createElement("p");
+        n = document.createElement("button");
+        n.classList.add("_eaglercraftX_mobile_file_chooser_btn_cancel");
+        n.style.fontSize = "1.0em";
+        n.addEventListener("click", function() {
+          z === q && (R.removeChild(q), x = z = null)
+        });
+        n.appendChild(document.createTextNode("Cancel"));
+        h.appendChild(n);
+        h.appendChild(document.createTextNode(" "));
+        n = document.createElement("button");
+        n.classList.add("_eaglercraftX_mobile_file_chooser_btn_done");
+        n.style.fontSize = "1.0em";
+        n.style.fontWeight = "bold";
+        n.addEventListener("click", function() {
+          if (z === q) {
+            if (0 < y.files.length) {
+              const k = y.files[0];
+              k.arrayBuffer().then(function(u) {
+                t = !0;
+                B = {
+                  fileName: k.name,
+                  fileData: u
+                }
+              }).catch(function() {
+                t = !0;
+                B = null
+              })
+            } else t = !0, B = null;
+            R.removeChild(q);
+            x = z = null
+          }
+        });
+        n.appendChild(document.createTextNode("Done"));
+        h.appendChild(n);
+        q.appendChild(h);
+        R.appendChild(q)
+      } else {
+        const q = x = document.createElement("input");
+        q.type = "file";
+        q.style.position = "absolute";
+        q.style.left = "0px";
+        q.style.top = "0px";
+        q.style.zIndex = "-100";
+        q.accept = null === h ? "." + n : h;
+        q.multiple = !1;
+        q.addEventListener("change", function() {
+          if (x === q) {
+            if (0 < q.files.length) {
+              const y = q.files[0];
+              y.arrayBuffer().then(function(k) {
+                t = !0;
+                B = {
+                  fileName: y.name,
+                  fileData: k
+                }
+              }).catch(function() {
+                t = !0;
+                B = null
+              })
+            } else t = !0, B = null;
+            R.removeChild(q);
+            x = null
+          }
+        });
+        R.appendChild(q);
+        window.setTimeout(function() {
+          q.click()
+        }, 50)
+      }
+    };
+    H.fileChooserHasResult = function() {
+      return t
+    };
+    H.getFileChooserResult =
+      function() {
+        t = !1;
+        const h = B;
+        B = null;
+        return h
+      };
+    H.clearFileChooserResult = a;
+    H.downloadFileWithNameU8 = function(h, n) {
+      const v = URL.createObjectURL(new Blob([n], {
+        type: "application/octet-stream"
+      }));
+      Ac(h, v, function() {
+        URL.revokeObjectURL(v)
+      })
+    };
+    H.downloadFileWithNameA = function(h, n) {
+      const v = URL.createObjectURL(new Blob([n], {
+        type: "application/octet-stream"
+      }));
+      Ac(h, v, function() {
+        URL.revokeObjectURL(v)
+      })
+    };
+    H.downloadScreenshot = function(h, n) {
+      Ac(h, n.toDataURL("image/png"), null)
+    };
+    var C = null,
+      G = null,
+      X = null;
+    const fa = Lb + ".showDebugConsole",
+      L = Nb ? "beforeunload" : "unload";
+    try {
+      window.addEventListener(L, () => {
+        if (Ec) {
+          var h = Ec;
+          X = G = C = Ec = null;
+          h.close()
+        }
+      })
+    } catch (h) {}(Mb || c()) && d();
+    ob = function() {
+      b(!0);
+      d()
+    };
+    Fc = function(h, n) {
+      var v = Ec.innerHeight + Ec.pageYOffset >= G.offsetHeight;
+      g(h + "\n", n ? "#DD0000" : "#000000");
+      v && m()
+    };
+    H.showDebugConsole = ob;
+    H.addLogMessage = Xb;
+    H.isShowingDebugConsole = function() {
+      return !!Ec
+    };
+    H.getFaviconURL = function() {
+      return Ra
+    };
+    H.setResetSettingsCallback = function() {
+      return {
+        call: function(h) {
+          pb = h
+        }
+      }
+    }
+  };
+  I.getEPKFileData = function(a) {
+    const b = Oa[a];
+    Oa[a] = null;
+    return b
+  };
+  I.getEPKFileCount = function() {
+    return Oa.length
+  };
+  if ("undefined" !== typeof window) {
+    I.loadImageFile0 = new WebAssembly.Suspending(function(a, b) {
+      return new Promise(function(c) {
+        const d = URL.createObjectURL(new Blob([a], {
+          type: b
+        }));
+        if (d) {
+          const g = document.createElement("img");
+          g.addEventListener("load", function() {
+            URL.revokeObjectURL(d);
+            c({
+              width: g.width,
+              height: g.height,
+              img: g
+            })
+          });
+          g.addEventListener("error", function() {
+            URL.revokeObjectURL(d);
+            c(null)
+          });
+          g.src = d
+        } else c(null)
+      })
+    });
+    var Gc = null,
+      Hc = null;
+    I.loadImageFile1 = function(a, b) {
+      const c = a.width,
+        d = a.height;
+      if (a = a.img) Gc ||=
+        document.createElement("canvas"), Gc.width < c && (Gc.width = c), Gc.height < d && (Gc.height = d), Hc || (Hc = Gc.getContext("2d", {
+          willReadFrequently: !0
+        }), Hc.imageSmoothingEnabled = !1), Hc.clearRect(0, 0, c, d), Hc.drawImage(a, 0, 0, c, d), b.set(Hc.getImageData(0, 0, c, d).data, 0)
+    };
+    I.registerTTFBlob = new WebAssembly.Suspending(function(a) {
+      var b = "eagler_ttf_" + Math.random().toString(36).slice(2),
+        c = new FontFace(b, a.buffer.slice(a.byteOffset, a.byteOffset + a.byteLength));
+      document.fonts.add(c);
+      return c.load().then(function() {
+        return {
+          family: b,
+          fontFace: c
+        }
+      }, function() {
+        document.fonts.delete(c);
+        return null
+      })
+    });
+    I.unregisterFontFamily = function(a) {
+      a && a.fontFace && document.fonts.delete(a.fontFace)
+    };
+    I.measureFontMetrics = function(a) {
+      try {
+        var b = document.createElement("canvas");
+        b.width = 4;
+        b.height = 4;
+        var c = b.getContext("2d");
+        c.font = a;
+        var d = c.measureText("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789gjpqy|"),
+          g = void 0 !== d.actualBoundingBoxAscent ? d.actualBoundingBoxAscent : d.fontBoundingBoxAscent || 0,
+          m = void 0 !== d.actualBoundingBoxDescent ?
+          d.actualBoundingBoxDescent : d.fontBoundingBoxDescent || 0,
+          t = c.measureText(" "),
+          B = new Float64Array(4);
+        B[0] = g;
+        B[1] = m;
+        B[2] = t.width || 0;
+        B[3] = 3;
+        return B
+      } catch (x) {
+        return null
+      }
+    };
+    I.createFontCanvas = function(a, b) {
+      var c = document.createElement("canvas");
+      c.width = a;
+      c.height = b;
+      a = c.getContext("2d", {
+        willReadFrequently: !0
+      });
+      a.imageSmoothingEnabled = !1;
+      c.I = a;
+      return c
+    };
+    I.measureGlyphWidth = function(a, b, c) {
+      a = a.I;
+      a.font = b;
+      return a.measureText(c).width
+    };
+    I.renderGlyph = function(a, b, c, d, g) {
+      a = a.I;
+      a.font = b;
+      a.fillStyle = "#ffffff";
+      a.fillText(c, d, g);
+      return a.measureText(c).width
+    };
+    I.readCanvasPixels = function(a, b, c, d, g, m) {
+      a = a.I.getImageData(b, c, d, g).data;
+      m.set(a)
+    };
+    I.charFromCode = function(a) {
+      return String.fromCharCode(a)
+    };
+    I.getFontFamily = function(a) {
+      return a ? a.family : null
+    };
+    I.getFontOversample = function() {
+      return 3
+    }
+  } else D(I, "loadImageFile0"), D(I, "loadImageFile1"), D(I, "registerTTFBlob"), D(I, "unregisterFontFamily"), D(I, "measureFontMetrics"), D(I, "createFontCanvas"), D(I, "measureGlyphWidth"), D(I, "renderGlyph"), D(I, "readCanvasPixels"),
+    D(I, "charFromCode"), D(I, "getFontFamily"), D(I, "getFontOversample");
+  var Ic = null;
+
+  function ec(a) {
+    ua.getContext = function() {
+      return a
+    };
+    ua.initKeepAliveHack = function(b, c) {
+      b = URL.createObjectURL(new Blob([Ya.slice(b, b + c)], {
+        type: "audio/wav"
+      }));
+      c = document.createElement("audio");
+      c.classList.add("_eaglercraftX_keepalive_hack");
+      c.setAttribute("style", "display:none;");
+      c.autoplay = !1;
+      c.loop = !0;
+      c.addEventListener("seeked", function() {});
+      c.addEventListener("canplay", function() {
+        Ic && "hidden" === document.visibilityState && Ic.play()
+      });
+      const d = document.createElement("source");
+      d.type = "audio/wav";
+      d.src =
+        b;
+      c.appendChild(d);
+      R.appendChild(c);
+      Ic = c
+    };
+    qb = function() {
+      Ic && ("hidden" === document.visibilityState ? Ic.play() : Ic.pause())
+    };
+    ua.setupPanner = function(b, c, d, g, m) {
+      b.maxDistance = c;
+      b.rolloffFactor = 1;
+      b.panningModel = "HRTF";
+      b.distanceModel = "linear";
+      b.coneInnerAngle = 360;
+      b.coneOuterAngle = 0;
+      b.coneOuterGain = 0;
+      b.setOrientation(0, 1, 0);
+      b.setPosition(d, g, m)
+    };
+    ua.registerIsEndedHandler = function(b, c) {
+      c.selfEndHandler || (c.selfEndHandler = function() {
+        c.isEnded = !0
+      });
+      b.addEventListener("ended", c.selfEndHandler)
+    };
+    ua.releaseIsEndedHandler =
+      function(b, c) {
+        c.selfEndHandler && b.removeEventListener("ended", c.selfEndHandler)
+      };
+    ua.decodeAudioBrowser = new WebAssembly.Suspending(function(b, c) {
+      return new Promise(function(d) {
+        const g = new Uint8Array(b.length);
+        g.set(b, 0);
+        a.decodeAudioData(g.buffer, d, function() {
+          f("Failed to load audio: {}", c);
+          d(null)
+        })
+      })
+    })
+  }
+
+  function fc() {
+    ua.getContext = function() {
+      return null
+    };
+    D(ua, "setupPanner");
+    D(ua, "initKeepAliveHack");
+    D(ua, "registerIsEndedHandler");
+    D(ua, "releaseIsEndedHandler");
+    D(ua, "decodeAudioBrowser")
+  };
+
+  function Jc(a) {
+    return "string" === typeof a ? a : "undefined" === typeof a ? null : "string" === typeof a[0] ? a[0] : null
+  }
+
+  function Kc(a) {
+    return "undefined" === typeof a ? null : "undefined" === typeof a.data ? null : a.data
+  }
+  xa.openDB = new WebAssembly.Suspending(function(a) {
+    return new Promise(function(b) {
+      if ("undefined" === typeof indexedDB) b({
+        failedInit: !0,
+        failedLocked: !1,
+        failedError: "IndexedDB not supported",
+        database: null
+      });
+      else {
+        try {
+          var c = indexedDB.open(a, 1)
+        } catch (g) {
+          b({
+            failedInit: !0,
+            failedLocked: !1,
+            failedError: "Exception opening database",
+            database: null
+          });
+          return
+        }
+        var d = b;
+        c.addEventListener("success", function() {
+          d && d({
+            failedInit: !1,
+            failedLocked: !1,
+            failedError: null,
+            database: c.result
+          });
+          d = null
+        });
+        c.addEventListener("blocked",
+          function() {
+            d && d({
+              failedInit: !1,
+              failedLocked: !0,
+              failedError: "Database is locked",
+              database: null
+            });
+            d = null
+          });
+        c.addEventListener("error", function() {
+          d && d({
+            failedInit: !0,
+            failedLocked: !1,
+            failedError: "Opening database failed",
+            database: null
+          });
+          d = null
+        });
+        c.addEventListener("upgradeneeded", function() {
+          c.result.createObjectStore("filesystem", {
+            keyPath: ["path"]
+          })
+        })
+      }
+    })
+  });
+
+  function Lc(a, b) {
+    return new Promise(function(c) {
+      const d = a.transaction("filesystem", "readwrite").objectStore("filesystem").delete([b]);
+      d.addEventListener("success", function() {
+        c(!0)
+      });
+      d.addEventListener("error", function() {
+        c(!1)
+      })
+    })
+  }
+  xa.eaglerDelete = new WebAssembly.Suspending(Lc);
+
+  function Mc(a, b) {
+    return new Promise(function(c) {
+      const d = a.transaction("filesystem", "readonly").objectStore("filesystem").get([b]);
+      d.addEventListener("success", function() {
+        c(Kc(d.result))
+      });
+      d.addEventListener("error", function() {
+        c(null)
+      })
+    })
+  }
+  xa.eaglerRead = new WebAssembly.Suspending(Mc);
+
+  function Nc(a, b, c) {
+    return new Promise(function(d) {
+      const g = a.transaction("filesystem", "readwrite").objectStore("filesystem").put({
+        path: b,
+        data: c
+      });
+      g.addEventListener("success", function() {
+        d(!0)
+      });
+      g.addEventListener("error", function() {
+        d(!1)
+      })
+    })
+  }
+  xa.eaglerWrite = new WebAssembly.Suspending(function(a, b, c, d) {
+    return Nc(a, b, Ya.slice(c, c + d))
+  });
+  xa.eaglerExists = new WebAssembly.Suspending(function(a, b) {
+    return new Promise(function(c) {
+      const d = a.transaction("filesystem", "readonly").objectStore("filesystem").count([b]);
+      d.addEventListener("success", function() {
+        c(0 < d.result)
+      });
+      d.addEventListener("error", function() {
+        c(!1)
+      })
+    })
+  });
+  xa.eaglerMove = new WebAssembly.Suspending(async function(a, b, c) {
+    const d = await Mc(a, b);
+    return d && await Nc(a, c, d) ? await Lc(a, b) : !1
+  });
+  xa.eaglerCopy = new WebAssembly.Suspending(async function(a, b, c) {
+    return (b = await Mc(a, b)) && await Nc(a, c, b)
+  });
+  xa.eaglerSize = new WebAssembly.Suspending(function(a, b) {
+    return new Promise(function(c) {
+      const d = a.transaction("filesystem", "readonly").objectStore("filesystem").get([b]);
+      d.addEventListener("success", function() {
+        const g = Kc(d.result);
+        c(g ? g.byteLength : -1)
+      });
+      d.addEventListener("error", function() {
+        c(-1)
+      })
+    })
+  });
+
+  function Oc(a) {
+    if (0 === a.length) return -1;
+    for (var b = 0, c = 0, d = a.length; c < d; ++c) 47 === a.charCodeAt(c) && ++b;
+    return b
+  }
+  xa.eaglerIterate = new WebAssembly.Suspending(function(a, b, c) {
+    return new Promise(function(d) {
+      const g = [],
+        m = a.transaction("filesystem", "readonly").objectStore("filesystem").openCursor(),
+        t = 0 === b.length,
+        B = c ? -1 : Oc(b);
+      m.addEventListener("success", function() {
+        const x = m.result;
+        if (null === x || null === x.key) d({
+          length: g.length,
+          getRow: function(C) {
+            return g[C]
+          }
+        });
+        else {
+          var z = Jc(x.key);
+          null != z && (!t && !z.startsWith(b) || !c && Oc(z) !== B || g.push(z));
+          x.continue()
+        }
+      });
+      m.addEventListener("error", function() {
+        d(null)
+      })
+    })
+  });
+  async function gc() {
+    function a() {
+      var l = window.devicePixelRatio;
+      .01 > l && (l = 1);
+      fa = X = 0;
+      for (var A = T; A && !isNaN(A.offsetLeft) && !isNaN(A.offsetTop);) X += A.offsetLeft - A.scrollLeft, fa += A.offsetTop - A.scrollTop, A = A.offsetParent;
+      A = R.clientWidth * l | 0;
+      var U = R.clientHeight * l | 0,
+        Q = 0,
+        ba = 0,
+        ra = A,
+        oa = U;
+      if (Z) {
+        oa = window.visualViewport;
+        var ca = oa.scale;
+        Q = oa.pageLeft * l * ca;
+        ba = oa.pageTop * l * ca;
+        ra = oa.width * l * ca;
+        oa = oa.height * l * ca;
+        1 > ra && (ra = 1);
+        1 > oa && (oa = 1);
+        0 > Q ? (ra += Q, Q = 0) : Q >= A && (Q = A - 1);
+        0 > ba ? (oa += ba, ba = 0) : ba >= U && (ba = U - 1);
+        Q + ra > A && (ra =
+          A - Q);
+        ba + oa > U && (oa = U - ba)
+      }
+      ca = {
+        eventTypeMask: 0
+      };
+      K !== l && (K = l, ca.eventTypeMask |= 4, ca.windowDPI = l);
+      if (w !== A || E !== U) w = A, E = U, ca.eventTypeMask |= 1, ca.windowWidth = A, ca.windowHeight = U;
+      if (V !== Q || Y !== ba || eb !== ra || Ha !== oa) V = Q, Y = ba, eb = ra, Ha = oa, ca.eventTypeMask |= 2, ca.visualViewportX = Q, ca.visualViewportY = ba, ca.visualViewportW = ra, ca.visualViewportH = oa;
+      0 !== ca.eventTypeMask && W(0, 9, ca)
+    }
+
+    function b(l) {
+      const A = l.length,
+        U = Array(A);
+      for (var Q = 0; Q < A; ++Q) {
+        const ba = l.item(Q);
+        U[Q] = {
+          pointX: ba.pageX - X,
+          pointY: ba.pageY - fa,
+          radius: .5 *
+            (ba.radiusX + ba.radiusY),
+          force: ba.force,
+          pointUID: ba.identifier
+        }
+      }
+      return U
+    }
+
+    function c(l, A) {
+      return {
+        eventType: l,
+        keyCode: A.code || null,
+        keyName: A.key || null,
+        legacyCode: "number" === typeof A.which ? A.which : "number" === typeof A.keyCode ? A.keyCode : 0,
+        location: A.location,
+        mods: (A.ctrlKey ? 1 : 0) | (A.shiftKey ? 2 : 0) | (A.metaKey ? 4 : 0)
+      }
+    }
+
+    function d() {
+      return new Promise(function(l) {
+        if (-1 !== F) throw Error("Main thread is already waiting for VSync!");
+        const A = [!1];
+        window.requestAnimationFrame(function() {
+          A[0] || (A[0] = !0, -1 !== F && (window.clearTimeout(F),
+            F = -1), l())
+        });
+        F = window.setTimeout(function() {
+          A[0] || (A[0] = !0, F = -1, l())
+        }, 20)
+      })
+    }
+
+    function g(l) {
+      return new Promise(function(A) {
+        setTimeout(A, l)
+      })
+    }
+
+    function m(l) {
+      if (0 < l && 1E3 >= l) {
+        const U = 1E3 / l;
+        if (0 === la) la = performance.now() + U;
+        else {
+          l = performance.now();
+          var A = la - l | 0;
+          if (0 < A) return !Ub && Pc ? Qc().then(function() {
+            var Q = performance.now(),
+              ba = la - Q | 0;
+            if (0 < ba) return g(ba).then(function() {
+              var ra = performance.now();
+              (la += U) < ra && (la = ra)
+            });
+            (la += U) < Q && (la = Q)
+          }) : g(A).then(function() {
+            var Q = performance.now();
+            (la += U) < Q && (la = Q)
+          });
+          (la +=
+            U) < l && (la = l)
+        }
+      } else la = 0;
+      return Ub ? Rc(0) : Qc()
+    }
+
+    function t(l) {
+      if (Ca) {
+        Da = !!l;
+        var A = performance.now() | 0;
+        if (l) {
+          ya = !0;
+          try {
+            T.requestPointerLock()
+          } catch (U) {} - 1 !== va && window.clearTimeout(va);
+          va = -1;
+          3E3 > A - fb && (va = window.setTimeout(function() {
+            try {
+              T.requestPointerLock()
+            } catch (U) {}
+          }, 3100 - (A - fb)))
+        } else if (-1 !== va && window.clearTimeout(va), va = -1, !ya) try {
+          document.exitPointerLock()
+        } catch (U) {}
+      }
+    }
+
+    function B() {
+      if (Ia)
+        if (ha.matches) {
+          if (p) try {
+            navigator.keyboard.unlock()
+          } catch (l) {}
+          try {
+            document.exitFullscreen()
+          } catch (l) {}
+        } else {
+          if (p) try {
+            navigator.keyboard.lock()
+          } catch (l) {}
+          try {
+            T.requestFullscreen()
+          } catch (l) {}
+        }
+    }
+
+    function x() {
+      C() ? z() : h ? (h.blur(), h.value = "", setTimeout(function() {
+        h && (L ? L.removeChild(h) : h.remove(), h = null);
+        L && (R.removeChild(L), L = null)
+      }, 10)) : (L && (R.removeChild(L), L = null), L = document.createElement("form"), L.setAttribute("autocomplete", "off"), L.classList.add("_eaglercraftX_text_input_wrapper"), L.style.position = "absolute", L.style.top = "0px", L.style.left = "0px", L.style.right = "0px", L.style.bottom = "0px", L.style.zIndex = "-100", L.style.margin = "0px", L.style.padding = "0px", L.style.border = "none", L.addEventListener("submit",
+        function(l) {
+          l.preventDefault();
+          l.stopPropagation();
+          l = l.timeStamp;
+          l && (0 !== y && 10 > l - y || 0 !== k && 10 > l - k || 0 !== u && 10 > l - u) || (q || (e("Note: Generating return keystroke from submit event on form, this browser probably doesn't generate keydown/beforeinput/input when enter/return is pressed on the on-screen keyboard"), q = !0), W(0, 3, {
+            eventType: 0,
+            absoluteCode: 28,
+            absoluteChar: 10
+          }))
+        }), h = document.createElement("input"), h.type = "password", h.value = " ", h.classList.add("_eaglercraftX_text_input_element"), h.setAttribute("autocomplete",
+        "off"), h.style.position = "absolute", h.style.top = "0px", h.style.left = "0px", h.style.right = "0px", h.style.bottom = "0px", h.style.zIndex = "-100", h.style.margin = "0px", h.style.padding = "0px", h.style.border = "none", h.style.setProperty("-webkit-touch-callout", "default"), h.addEventListener("beforeinput", function(l) {
+        if (h === l.target) {
+          n || (e("Note: Caught beforeinput event from on-screen keyboard, browser probably does not generate global keydown/keyup events on text fields, or does not respond to cancelling keydown"),
+            n = !0);
+          var A = l.timeStamp;
+          if (A) {
+            if (0 !== y && 10 > A - y) return;
+            k = A
+          }
+          l.preventDefault();
+          l.stopPropagation();
+          switch (l.inputType) {
+            case "insertParagraph":
+            case "insertLineBreak":
+              W(0, 3, {
+                eventType: 0,
+                absoluteCode: 28,
+                absoluteChar: 10
+              });
+              break;
+            case "deleteWordBackward":
+            case "deleteSoftLineBackward":
+            case "deleteHardLineBackward":
+            case "deleteEntireSoftLine":
+            case "deleteContentBackward":
+            case "deleteContent":
+              W(0, 3, {
+                eventType: 0,
+                absoluteCode: 14,
+                absoluteChar: 0
+              });
+              break;
+            case "deleteWordForward":
+            case "deleteSoftLineForward":
+            case "deleteHardLineForward":
+            case "deleteContentForward":
+              W(0,
+                3, {
+                  eventType: 0,
+                  absoluteCode: 211,
+                  absoluteChar: 0
+                });
+              break;
+            case "insertText":
+            case "insertCompositionText":
+            case "insertReplacementText":
+              (l = l.data) && 0 < l.length && W(0, 3, {
+                eventType: 1,
+                codepoints: l
+              });
+              break;
+            case "insertFromPaste":
+            case "insertFromPasteAsQuotation":
+            case "insertFromDrop":
+            case "insertFromYank":
+            case "insertLink":
+              (l = l.data) && 0 < l.length && W(0, 4, l);
+              break;
+            case "historyUndo":
+            case "historyRedo":
+            case "deleteByDrag":
+            case "deleteByCut":
+              break;
+            default:
+              e('Ignoring InputEvent.inputType "{}" from on-screen keyboard',
+                l.inputType)
+          }
+        }
+      }), h.addEventListener("input", function(l) {
+        if (h === l.target) {
+          v || (e("Note: Caught legacy input events from on-screen keyboard, browser could be outdated and doesn't support beforeinput event, or does not respond to cancelling beforeinput"), v = !0);
+          if (l = l.timeStamp) {
+            if (0 !== y && 10 > l - y || 0 !== k && 10 > l - k) return;
+            u = l
+          }
+          l = h.value;
+          var A = l.length;
+          0 === A ? W(0, 3, {
+            eventType: 0,
+            absoluteCode: 14,
+            absoluteChar: 0
+          }) : 1 === A ? W(0, 3, {
+            eventType: 1,
+            codepoints: l
+          }) : (l = l.trim(), A = l.length, 0 === A ? W(0, 3, {
+            eventType: 0,
+            absoluteCode: 57,
+            absoluteChar: 32
+          }) : W(0, 3, {
+            eventType: 1,
+            codepoints: l.charAt(A - 1)
+          }));
+          h.value = " ";
+          h.setSelectionRange(1, 1)
+        }
+      }), h.addEventListener("focus", function(l) {
+        h === l.target && (h.value = " ", h.setSelectionRange(1, 1))
+      }), h.addEventListener("select", function(l) {
+        h === l.target && (l.preventDefault(), l.stopPropagation(), h.value = " ", h.setSelectionRange(1, 1))
+      }), L.appendChild(h), R.appendChild(L), h.value = " ", h.focus(), h.select(), h.setSelectionRange(1, 1))
+    }
+
+    function z() {
+      if (h) {
+        h.blur();
+        h.value = "";
+        const l = h,
+          A = L;
+        window.setTimeout(function() {
+          null !==
+            A ? (A.removeChild(l), A.remove()) : l.remove()
+        }, 10);
+        L = h = null
+      } else L && (R ? R.removeChild(L) : L.remove(), L = null)
+    }
+
+    function C() {
+      return !!h && document.activeElement === h
+    }
+    var G = null,
+      X = 0,
+      fa = 0,
+      L = null,
+      h = null,
+      n = !1,
+      v = !1,
+      q = !1,
+      y = 0,
+      k = 0,
+      u = 0,
+      w = -1,
+      E = -1,
+      K = -1,
+      Z = !1,
+      V = -1,
+      Y = -1,
+      eb = -1,
+      Ha = -1,
+      Ca = !1,
+      Da = !1,
+      ya = !1,
+      fb = 0,
+      va = -1,
+      Ia = !1,
+      ha = null,
+      p = !1,
+      r = !1,
+      F = -1,
+      M = !1,
+      S = null,
+      da = null,
+      wa = null,
+      Ua = null,
+      rb = null,
+      sb = null,
+      tb = null,
+      ub = null,
+      vb = null,
+      wb = null,
+      xb = null,
+      yb = null,
+      zb = null,
+      Ab = null,
+      Bb = null,
+      Cb = null,
+      Db = null,
+      Eb = null,
+      Fb = null,
+      Gb = null,
+      Hb = null,
+      Ib = null,
+      Jb = null,
+      Kb = null;
+    G = document.createElement("div");
+    G.classList.add("_eaglercraftX_keyboard_open_zone");
+    G.style.display = "none";
+    G.style.position = "absolute";
+    G.style.backgroundColor = "transparent";
+    G.style.top = "0px";
+    G.style.left = "0px";
+    G.style.width = "0px";
+    G.style.height = "0px";
+    G.style.zIndex = "100";
+    G.style.touchAction = "pan-x pan-y";
+    G.style.setProperty("-webkit-touch-callout", "none");
+    G.style.setProperty("-webkit-tap-highlight-color", "rgba(255, 255, 255, 0)");
+    R.appendChild(G);
+    a();
+    R.addEventListener("contextmenu", S = function(l) {
+      l.target !==
+        Sc && (l.preventDefault(), l.stopPropagation())
+    });
+    T.addEventListener("mousedown", da = function(l) {
+      l.preventDefault();
+      l.stopPropagation();
+      Ca && Da && document.pointerLockElement !== T ? t(1) : W(0, 0, {
+        eventType: 0,
+        posX: l.offsetX,
+        posY: l.offsetY,
+        button: l.button
+      })
+    });
+    T.addEventListener("mouseup", wa = function(l) {
+      l.preventDefault();
+      l.stopPropagation();
+      W(0, 0, {
+        eventType: 1,
+        posX: l.offsetX,
+        posY: l.offsetY,
+        button: l.button
+      })
+    });
+    T.addEventListener("mousemove", Ua = function(l) {
+      l.preventDefault();
+      l.stopPropagation();
+      W(0, 0, {
+        eventType: 2,
+        posX: l.offsetX,
+        posY: l.offsetY,
+        movementX: l.movementX,
+        movementY: l.movementY
+      })
+    });
+    T.addEventListener("mouseenter", rb = function() {
+      W(0, 7, null)
+    });
+    T.addEventListener("mouseleave", sb = function() {
+      W(0, 8, null)
+    });
+    T.addEventListener("touchstart", tb = function(l) {
+      l.preventDefault();
+      l.stopPropagation();
+      W(0, 2, {
+        eventType: 0,
+        changedTouches: b(l.changedTouches),
+        targetTouches: b(l.targetTouches)
+      });
+      z()
+    });
+    T.addEventListener("touchend", ub = function(l) {
+      l.preventDefault();
+      l.stopPropagation();
+      W(0, 2, {
+        eventType: 2,
+        changedTouches: b(l.changedTouches),
+        targetTouches: b(l.targetTouches)
+      })
+    });
+    T.addEventListener("touchmove", vb = function(l) {
+      l.preventDefault();
+      l.stopPropagation();
+      W(0, 2, {
+        eventType: 1,
+        changedTouches: b(l.changedTouches),
+        targetTouches: b(l.targetTouches)
+      })
+    });
+    T.addEventListener("touchcancel", wb = function(l) {
+      W(0, 2, {
+        eventType: 2,
+        changedTouches: b(l.changedTouches),
+        targetTouches: b(l.targetTouches)
+      })
+    });
+    T.addEventListener("wheel", Eb = function(l) {
+      l.preventDefault();
+      l.stopPropagation();
+      W(0, 0, {
+        eventType: 3,
+        posX: l.offsetX,
+        posY: l.offsetY,
+        wheel: l.deltaY
+      })
+    });
+    window.addEventListener("blur", Gb = function() {
+      W(0, 6, null)
+    });
+    window.addEventListener("focus", Fb = function() {
+      W(0, 5, null)
+    });
+    document.addEventListener("visibilitychange", Kb = function() {
+      qb && qb()
+    });
+    window.addEventListener("keydown", zb = function(l) {
+      Tc || (l.preventDefault(), l.stopPropagation());
+      "F11" !== l.key || l.repeat ? (W(0, 1, c(l.repeat ? 2 : 0, l)), l.timeStamp && "Unidentified" !== l.key && (y = l.timeStamp)) : B()
+    });
+    window.addEventListener("keyup", Ab = function(l) {
+      Tc || (l.preventDefault(), l.stopPropagation());
+      W(0, 1, c(1, l))
+    });
+    G.addEventListener("touchstart", Bb = function(l) {
+      l.preventDefault();
+      l.stopPropagation()
+    });
+    G.addEventListener("touchend", Cb = function(l) {
+      l.preventDefault();
+      l.stopPropagation();
+      x()
+    });
+    G.addEventListener("touchmove", Db = function(l) {
+      l.preventDefault();
+      l.stopPropagation()
+    });
+    (Ca = "function" === typeof document.exitPointerLock) ? (document.addEventListener("pointerlockchange", Hb = function() {
+      window.setTimeout(function() {
+        const l = document.pointerLockElement === T;
+        l || Da && (fb = performance.now() | 0);
+        Da = l
+      }, 60);
+      ya = !1
+    }), document.addEventListener("pointerlockerror",
+      Ib = function() {
+        ya = !1
+      })) : f("Pointer lock is not supported on this browser");
+    (Ia = "function" === typeof document.exitFullscreen) ? (ha = window.matchMedia("(display-mode: fullscreen)"), (p = !(!navigator.keyboard || !navigator.keyboard.lock)) && ha.addEventListener("change", Jb = function() {
+      ha.matches || navigator.keyboard.unlock()
+    })) : f("Fullscreen is not supported on this browser");
+    if ("undefined" !== typeof window.visualViewport)
+      if ("body" === Ta.tagName.toLowerCase()) Z = !0;
+      else {
+        const l = document.body;
+        10 >= Math.abs(l.clientWidth -
+          R.clientWidth) && 10 >= Math.abs(l.clientHeight - R.clientHeight) && (Z = !0)
+      }
+    else Z = !1;
+    Z && e("Note: Detected game is embedded in body, some screens may be resized to window.visualViewport instead for a better mobile experience");
+    try {
+      await d(), r = !0
+    } catch (l) {
+      r = !1
+    }
+    r || f("VSync is not supported on this browser");
+    (M = "function" === typeof navigator.getGamepads) ? (window.addEventListener("gamepadconnected", xb = function() {
+      W(0, 10, {
+        eventType: 0
+      })
+    }), window.addEventListener("gamepaddisconnected", yb = function(l) {
+      W(0, 10, {
+        eventType: 1,
+        gamepad: l.gamepad
+      })
+    })) : f("Gamepad detected as unsupported!");
+    J.keyboardLayoutSupported = function() {
+      return !(!navigator.keyboard || !navigator.keyboard.getLayoutMap)
+    };
+    J.iterateKeyboardLayout = new WebAssembly.Suspending(async function() {
+      const l = [];
+      try {
+        const A = await navigator.keyboard.getLayoutMap();
+        A && A.forEach && A.forEach(function(U, Q) {
+          l.push({
+            key: U,
+            value: Q
+          })
+        })
+      } catch (A) {}
+      return l
+    });
+    J.updateCanvasSize = function(l, A) {
+      T.width !== l && (T.width = l);
+      T.height !== A && (T.height = A)
+    };
+    var la = 0;
+    J.updatePlatformAndSleep = new WebAssembly.Suspending(function(l,
+      A, U) {
+      a();
+      if ("string" !== typeof document.visibilityState || "visible" === document.visibilityState) {
+        if (r && A) return la = 0, d();
+        U && Va.finish();
+        return 0 >= l ? (la = 0, Ub ? Rc(0) : Qc()) : m(l)
+      }
+      la = 0;
+      return g(50)
+    });
+    J.isVSyncSupported = function() {
+      return r
+    };
+    J.mouseSetGrabbed = t;
+    J.isMouseGrabSupported = function() {
+      return Ca
+    };
+    J.isMouseGrabbed = function() {
+      return Da
+    };
+    J.isPointerLocked = function() {
+      return Ca && (ya || document.pointerLockElement === T)
+    };
+    J.supportsFullscreen = function() {
+      return Ia
+    };
+    J.toggleFullscreen = B;
+    J.isFullscreen = function() {
+      return Ia &&
+        ha.matches
+    };
+    J.touchSetOpenKeyboardZone = function(l, A, U, Q) {
+      0 !== U && 0 !== Q ? (G.style.display = "block", G.style.top = "" + (E - A - Q) / K + "px", G.style.left = "" + l / K + "px", G.style.width = "" + U / K + "px", G.style.height = "" + Q / K + "px") : (G.style.display = "none", G.style.top = "0px", G.style.left = "0px", G.style.width = "0px", G.style.height = "0px")
+    };
+    J.touchCloseDeviceKeyboard = z;
+    J.touchIsDeviceKeyboardOpenMAYBE = C;
+    J.gamepadSupported = function() {
+      return M
+    };
+    J.isVisualViewport = function() {
+      return Z
+    };
+    nb = function() {
+      try {
+        S && (R.removeEventListener("contextmenu",
+            S), S = null), da && (T.removeEventListener("mousedown", da), da = null), wa && (T.removeEventListener("mouseup", wa), wa = null), Ua && (T.removeEventListener("mousemove", Ua), Ua = null), rb && (T.removeEventListener("mouseenter", rb), rb = null), sb && (T.removeEventListener("mouseleave", sb), sb = null), tb && (T.removeEventListener("touchstart", tb), tb = null), ub && (T.removeEventListener("touchend", ub), ub = null), vb && (T.removeEventListener("touchmove", vb), vb = null), wb && (T.removeEventListener("touchcancel", wb), wb = null), xb && (window.removeEventListener("gamepadconnected",
+            xb), xb = null), yb && (window.removeEventListener("gamepaddisconnected", yb), yb = null), zb && (window.removeEventListener("keydown", zb), zb = null), Ab && (window.removeEventListener("keyup", Ab), Ab = null), Bb && (G.removeEventListener("touchstart", Bb), Bb = null), Cb && (G.removeEventListener("touchend", Cb), Cb = null), Db && (G.removeEventListener("touchmove", Db), Db = null), Eb && (T.removeEventListener("wheel", Eb), Eb = null), Fb && (window.removeEventListener("focus", Fb), Fb = null), Gb && (window.removeEventListener("blur", Gb), Gb = null), Kb &&
+          (document.removeEventListener("visibilitychange", Kb), Kb = null), Hb && (document.removeEventListener("pointerlockchange", Hb), Hb = null), Ib && (document.removeEventListener("pointerlockerror", Ib), Ib = null), Jb && (ha.removeEventListener("change", Jb), Jb = null)
+      } catch (l) {
+        f("Failed to remove event listeners! {}", l)
+      }
+      nb = null
+    }
+  };
+  (function() {
+    function a() {
+      this._socket.close()
+    }
+
+    function b(k) {
+      this._socket.send(k)
+    }
+
+    function c(k) {
+      this._socket.send(k)
+    }
+
+    function d() {
+      return this._frameCountStr + this._frameCountBin
+    }
+
+    function g() {
+      const k = this._queue;
+      return k ? (k._next === k && k._prev === k ? this._queue = null : (this._queue = k._next, k._prev._next = k._next, k._next._prev = k._prev), k._next = null, k._prev = null, 0 === k.type ? --this._frameCountStr : --this._frameCountBin, k) : null
+    }
+
+    function m() {
+      var k = this._frameCountStr + this._frameCountBin;
+      if (0 === k) return null;
+      k = Array(k);
+      var u = 0,
+        w = this._queue;
+      const E = w;
+      do {
+        k[u++] = w;
+        var K = w._next;
+        w._next = null;
+        w._prev = null;
+        w = K
+      } while (w !== E);
+      this._queue = null;
+      this._frameCountBin = this._frameCountStr = 0;
+      return k
+    }
+
+    function t() {
+      this._queue = null;
+      this._frameCountBin = this._frameCountStr = 0
+    }
+
+    function B(k, u) {
+      var w = k._queue;
+      if (!w) return null;
+      const E = w;
+      do {
+        var K = w._next;
+        if (w.type === u) return u = w._prev, K === w && u === w ? k._queue = null : (w === E && (k._queue = K), u._next = K, K._prev = u), w._next = null, w._prev = null, w;
+        w = K
+      } while (w !== E);
+      return null
+    }
+
+    function x(k, u, w) {
+      var E = 0,
+        K =
+        k._queue,
+        Z = K;
+      do {
+        var V = K._next;
+        K.type === u && (w[E++] = K);
+        K = V
+      } while (K !== Z);
+      w.length = E;
+      for (Z = 0; Z < E; ++Z) K = w[Z], V = K._next, u = K._prev, V === K && u === K ? k._queue = null : (K === k._queue && (k._queue = V), u._next = V, V._prev = u)
+    }
+
+    function z() {
+      return this._frameCountStr
+    }
+
+    function C() {
+      if (0 === this._frameCountStr) return null;
+      const k = B(this, 0);
+      k ? --this._frameCountStr : this._frameCountStr = 0;
+      return k
+    }
+
+    function G() {
+      var k = this._frameCountStr;
+      if (0 === k) return null;
+      k = Array(k);
+      x(this, 0, k);
+      this._frameCountStr = 0;
+      return k
+    }
+
+    function X() {
+      const k = this._frameCountStr;
+      if (0 === k) return null;
+      x(this, 0, Array(k));
+      this._frameCountStr = 0
+    }
+
+    function fa() {
+      return this._frameCountBin
+    }
+
+    function L() {
+      if (0 === this._frameCountBin) return null;
+      const k = B(this, 1);
+      k ? --this._frameCountBin : this._frameCountBin = 0;
+      return k
+    }
+
+    function h() {
+      var k = this._frameCountBin;
+      if (0 === k) return null;
+      k = Array(k);
+      x(this, 1, k);
+      this._frameCountBin = 0;
+      return k
+    }
+
+    function n() {
+      const k = this._frameCountBin;
+      if (0 === k) return null;
+      x(this, 1, Array(k));
+      this._frameCountBin = 0
+    }
+
+    function v(k) {
+      this._enableStringFrames = k
+    }
+
+    function q(k) {
+      this._enableBinaryFrames =
+        k
+    }
+
+    function y(k) {
+      const u = "string" === typeof k;
+      if (u) {
+        if (!this._enableStringFrames) return
+      } else if (!this._enableBinaryFrames) return;
+      k = {
+        type: u ? 0 : 1,
+        data: k,
+        timestamp: performance.now(),
+        _next: null,
+        _prev: null
+      };
+      const w = this._queue;
+      if (w) {
+        const E = w._prev;
+        E._next = k;
+        k._prev = E;
+        k._next = w;
+        w._prev = k
+      } else this._queue = k, k._next = k, k._prev = k;
+      u ? ++this._frameCountStr : ++this._frameCountBin
+    }
+    za.createWebSocketHandle = function(k) {
+      let u;
+      try {
+        u = new WebSocket(k)
+      } catch (E) {
+        return f("Failed to create WebSocket: {}", k), ma("Exception Caught",
+          E), null
+      }
+      u.binaryType = "arraybuffer";
+      const w = {
+        state: 1,
+        _socket: u,
+        _queue: null,
+        _frameCountStr: 0,
+        _frameCountBin: 0,
+        _addRecievedFrame: y,
+        _enableStringFrames: !0,
+        _enableBinaryFrames: !0,
+        closeSocket: a,
+        sendStringFrame: b,
+        sendBinaryFrame: c,
+        availableFrames: d,
+        getNextFrame: g,
+        getAllFrames: m,
+        clearFrames: t,
+        availableStringFrames: z,
+        getNextStringFrame: C,
+        getAllStringFrames: G,
+        clearStringFrames: X,
+        availableBinaryFrames: fa,
+        getNextBinaryFrame: L,
+        getAllBinaryFrames: h,
+        clearBinaryFrames: n,
+        setEnableStringFrames: v,
+        setEnableBinaryFrames: q
+      };
+      u.addEventListener("open", function() {
+        w.state = 2
+      });
+      u.addEventListener("message", function(E) {
+        w._addRecievedFrame(E.data)
+      });
+      u.addEventListener("close", function() {
+        3 !== w.state && (w.state = 0)
+      });
+      u.addEventListener("error", function() {
+        1 === w.state && (w.state = 3)
+      });
+      return w
+    }
+  })();
+
+  function ic(a, b) {
+    var c = Tb;
+    const d = c && 200 === b ? a.getExtension("OES_vertex_array_object") : null,
+      g = c && 200 === b ? a.getExtension("ANGLE_instanced_arrays") : null,
+      m = c && 200 === b && null !== g,
+      t = c && (310 === b || 300 === b) && null !== a.getExtension("EXT_color_buffer_float"),
+      B = c && !t && (310 === b || 300 === b || 200 === b) && null !== a.getExtension("EXT_color_buffer_half_float"),
+      x = c && 200 === b && null !== a.getExtension("EXT_shader_texture_lod"),
+      z = c && 200 === b && null !== a.getExtension("OES_fbo_render_mipmap"),
+      C = c && 200 === b && null !== d,
+      G = c && 200 === b && null !==
+      a.getExtension("OES_texture_float"),
+      X = c && 300 <= b && null !== a.getExtension("OES_texture_float_linear"),
+      fa = c && 200 === b && null !== a.getExtension("OES_texture_half_float"),
+      L = c && 200 === b && null !== a.getExtension("OES_texture_half_float_linear");
+    c = c && null !== a.getExtension("EXT_texture_filter_anisotropic");
+    const h = null !== a.getExtension("WEBGL_debug_renderer_info"),
+      n = 300 <= b ? 0 : 200 === b && C ? 1 : -1,
+      v = 300 <= b ? 0 : 200 === b && m ? 1 : -1,
+      q = [b, n, v, 0, 0];
+    if (300 <= b || z) q[3] |= 4;
+    if (300 <= b || x) q[3] |= 8;
+    300 <= b && (q[3] |= 16);
+    (320 <= b || (300 <= b || G) &&
+      (t || B)) && (q[3] |= 32);
+    (320 <= b || (300 <= b || fa) && t) && (q[3] |= 64);
+    c && (q[3] |= 128);
+    (300 <= b || L) && (q[4] |= 1);
+    300 <= b && X && (q[4] |= 2);
+    N.getCapBits = function(k) {
+      return q[k]
+    };
+    N.glEnable = a.enable.bind(a);
+    N.glDisable = a.disable.bind(a);
+    N.glClearColor = a.clearColor.bind(a);
+    N.glClearDepth = a.clearDepth.bind(a);
+    N.glClear = a.clear.bind(a);
+    N.glDepthFunc = a.depthFunc.bind(a);
+    N.glDepthMask = a.depthMask.bind(a);
+    N.glCullFace = a.cullFace.bind(a);
+    N.glViewport = a.viewport.bind(a);
+    N.glBlendFunc = a.blendFunc.bind(a);
+    N.glBlendFuncSeparate = a.blendFuncSeparate.bind(a);
+    N.glBlendEquation = a.blendEquation.bind(a);
+    N.glBlendColor = a.blendColor.bind(a);
+    N.glColorMask = a.colorMask.bind(a);
+    N.glDrawBuffers = 300 <= b ? a.drawBuffers.bind(a) : pa("glDrawBuffers");
+    N.glReadBuffer = 300 <= b ? a.readBuffer.bind(a) : pa("glReadBuffer");
+    N.glReadPixels = a.readPixels.bind(a);
+    N.glPolygonOffset = a.polygonOffset.bind(a);
+    N.glLineWidth = a.lineWidth.bind(a);
+    N.glGenBuffers = a.createBuffer.bind(a);
+    N.glGenTextures = a.createTexture.bind(a);
+    N.glCreateProgram = a.createProgram.bind(a);
+    N.glCreateShader = a.createShader.bind(a);
+    N.glCreateFramebuffer = a.createFramebuffer.bind(a);
+    N.glCreateRenderbuffer = a.createRenderbuffer.bind(a);
+    N.glGenQueries = 300 <= b ? a.createQuery.bind(a) : pa("glGenQueries");
+    N.glDeleteBuffers = a.deleteBuffer.bind(a);
+    N.glDeleteTextures = a.deleteTexture.bind(a);
+    N.glDeleteProgram = a.deleteProgram.bind(a);
+    N.glDeleteShader = a.deleteShader.bind(a);
+    N.glDeleteFramebuffer = a.deleteFramebuffer.bind(a);
+    N.glDeleteRenderbuffer = a.deleteRenderbuffer.bind(a);
+    N.glDeleteQueries = 300 <= b ? a.deleteQuery.bind(a) : pa("glDeleteQueries");
+    N.glBindBuffer = a.bindBuffer.bind(a);
+    N.glBufferData = a.bufferData.bind(a);
+    N.glBufferSubData = a.bufferSubData.bind(a);
+    N.glEnableVertexAttribArray = a.enableVertexAttribArray.bind(a);
+    N.glDisableVertexAttribArray = a.disableVertexAttribArray.bind(a);
+    N.glVertexAttribPointer = a.vertexAttribPointer.bind(a);
+    N.glActiveTexture = a.activeTexture.bind(a);
+    N.glBindTexture = a.bindTexture.bind(a);
+    N.glTexParameterf = a.texParameterf.bind(a);
+    N.glTexParameteri = a.texParameteri.bind(a);
+    N.glTexImage3D = 300 <= b ? a.texImage3D.bind(a) :
+      pa("glTexImage3D");
+    N.glTexImage2D = a.texImage2D.bind(a);
+    N.glTexSubImage2D = a.texSubImage2D.bind(a);
+    N.glCopyTexSubImage2D = a.copyTexSubImage2D.bind(a);
+    N.glTexStorage2D = 300 <= b ? a.texStorage2D.bind(a) : pa("glTexStorage2D");
+    N.glPixelStorei = a.pixelStorei.bind(a);
+    N.glGenerateMipmap = a.generateMipmap.bind(a);
+    N.glShaderSource = a.shaderSource.bind(a);
+    N.glCompileShader = a.compileShader.bind(a);
+    N.glGetShaderi = a.getShaderParameter.bind(a);
+    N.glGetShaderInfoLog = a.getShaderInfoLog.bind(a);
+    N.glUseProgram = a.useProgram.bind(a);
+    N.glAttachShader = a.attachShader.bind(a);
+    N.glDetachShader = a.detachShader.bind(a);
+    N.glLinkProgram = a.linkProgram.bind(a);
+    N.glGetProgrami = a.getProgramParameter.bind(a);
+    N.glGetProgramInfoLog = a.getProgramInfoLog.bind(a);
+    N.glDrawArrays = a.drawArrays.bind(a);
+    N.glDrawElements = a.drawElements.bind(a);
+    N.glDrawRangeElements = 300 <= b ? a.drawRangeElements.bind(a) : pa("glDrawRangeElements");
+    N.glFlush = a.flush.bind(a);
+    N.glScissor = a.scissor.bind(a);
+    N.glBindAttribLocation = a.bindAttribLocation.bind(a);
+    N.glGetAttribLocation =
+      a.getAttribLocation.bind(a);
+    N.glGetUniformLocation = a.getUniformLocation.bind(a);
+    N.glGetUniformBlockIndex = 300 <= b ? a.getUniformBlockIndex.bind(a) : pa("glGetUniformBlockIndex");
+    N.glBindBufferRange = 300 <= b ? a.bindBufferRange.bind(a) : pa("glBindBufferRange");
+    N.glUniformBlockBinding = 300 <= b ? a.uniformBlockBinding.bind(a) : pa("glUniformBlockBinding");
+    N.glUniform1f = a.uniform1f.bind(a);
+    N.glUniform2f = a.uniform2f.bind(a);
+    N.glUniform3f = a.uniform3f.bind(a);
+    N.glUniform4f = a.uniform4f.bind(a);
+    N.glUniform1i = a.uniform1i.bind(a);
+    N.glUniform2i = a.uniform2i.bind(a);
+    N.glUniform3i = a.uniform3i.bind(a);
+    N.glUniform4i = a.uniform4i.bind(a);
+    N.glUniformMatrix2fv = a.uniformMatrix2fv.bind(a);
+    N.glUniformMatrix3fv = a.uniformMatrix3fv.bind(a);
+    N.glUniformMatrix4fv = a.uniformMatrix4fv.bind(a);
+    N.glUniformMatrix3x2fv = 300 <= b ? a.uniformMatrix3x2fv.bind(a) : pa("glUniformMatrix3x2fv");
+    N.glUniformMatrix4x2fv = 300 <= b ? a.uniformMatrix4x2fv.bind(a) : pa("glUniformMatrix4x2fv");
+    N.glUniformMatrix4x3fv = 300 <= b ? a.uniformMatrix4x3fv.bind(a) : pa("glUniformMatrix4x3fv");
+    N.glBindFramebuffer = a.bindFramebuffer.bind(a);
+    N.glCheckFramebufferStatus = a.checkFramebufferStatus.bind(a);
+    N.glBlitFramebuffer = 300 <= b ? a.blitFramebuffer.bind(a) : pa("glBlitFramebuffer");
+    N.glRenderbufferStorage = a.renderbufferStorage.bind(a);
+    N.glFramebufferTexture2D = a.framebufferTexture2D.bind(a);
+    N.glFramebufferTextureLayer = 300 <= b ? a.framebufferTextureLayer.bind(a) : pa("glFramebufferTextureLayer");
+    N.glBindRenderbuffer = a.bindRenderbuffer.bind(a);
+    N.glFramebufferRenderbuffer = a.framebufferRenderbuffer.bind(a);
+    N.glGetError = a.getError.bind(a);
+    N.getAllExtensions = a.getSupportedExtensions.bind(a);
+    N.isContextLost = a.isContextLost.bind(a);
+    const y = [];
+    m && y.push("ANGLE_instanced_arrays");
+    t && y.push("EXT_color_buffer_float");
+    B && y.push("EXT_color_buffer_half_float");
+    x && y.push("EXT_shader_texture_lod");
+    z && y.push("OES_fbo_render_mipmap");
+    C && y.push("OES_vertex_array_object");
+    G && y.push("OES_texture_float");
+    X && y.push("OES_texture_float_linear");
+    fa && y.push("OES_texture_half_float");
+    L && y.push("OES_texture_half_float_linear");
+    c && y.push("EXT_texture_filter_anisotropic");
+    h && y.push("WEBGL_debug_renderer_info");
+    N.dumpActiveExtensions = function() {
+      return y
+    };
+    N.glGetInteger = function(k) {
+      k = a.getParameter(k);
+      return "number" === typeof k ? k : 0
+    };
+    N.glGetString = function(k) {
+      if (h) switch (k) {
+        case 7936:
+          k = a.getParameter(37445);
+          null == k && (k = a.getParameter(7936));
+          break;
+        case 7937:
+          k = a.getParameter(37446);
+          null == k && (k = a.getParameter(7937));
+          break;
+        default:
+          k = a.getParameter(k)
+      } else k = a.getParameter(k);
+      return "string" === typeof k ? k : null
+    };
+    switch (n) {
+      case 0:
+        N.glGenVertexArrays =
+          a.createVertexArray.bind(a);
+        N.glDeleteVertexArrays = a.deleteVertexArray.bind(a);
+        N.glBindVertexArray = a.bindVertexArray.bind(a);
+        break;
+      case 1:
+        N.glGenVertexArrays = d.createVertexArrayOES.bind(d);
+        N.glDeleteVertexArrays = d.deleteVertexArrayOES.bind(d);
+        N.glBindVertexArray = d.bindVertexArrayOES.bind(d);
+        break;
+      default:
+        D(N, "glGenVertexArrays"), D(N, "glDeleteVertexArrays"), D(N, "glBindVertexArray")
+    }
+    switch (v) {
+      case 0:
+        N.glVertexAttribDivisor = a.vertexAttribDivisor.bind(a);
+        N.glDrawArraysInstanced = a.drawArraysInstanced.bind(a);
+        N.glDrawElementsInstanced = a.drawElementsInstanced.bind(a);
+        break;
+      case 1:
+        N.glVertexAttribDivisor = g.vertexAttribDivisorANGLE.bind(g);
+        N.glDrawArraysInstanced = g.drawArraysInstancedANGLE.bind(g);
+        N.glDrawElementsInstanced = g.drawElementsInstancedANGLE.bind(g);
+        break;
+      default:
+        D(N, "glVertexAttribDivisor"), D(N, "glDrawArraysInstanced"), D(N, "glDrawElementsInstanced")
+    }
+  };
+  var Pc = !1;
+  const Uc = new MessageChannel;
+  var Vc = null;
+  Uc.port2.addEventListener("message", function() {
+    Vc()
+  });
+  async function Yb() {
+    Uc.port1.start();
+    Uc.port2.start();
+    Vc = function() {
+      Vc = null
+    };
+    Uc.port1.postMessage(0);
+    Vc ? await new Promise(function(a) {
+      setTimeout(function() {
+        Vc ? f("Immediate continue hack is not supported") : Pc = !0;
+        a()
+      }, 25)
+    }) : f("Immediate continue hack is not supported")
+  }
+  Aa.getRootElement = function() {
+    return Ta
+  };
+  Aa.getParentElement = function() {
+    return R
+  };
+  Aa.getCanvasElement = function() {
+    return T
+  };
+  Aa.getEaglercraftXOpts = function() {
+    return P
+  };
+  Aa.getEventCount = nc.L.bind(nc);
+  Aa.getNextEvent = nc.j.bind(nc);
+  Aa.queueAsyncDownload = function(a, b, c) {
+    try {
+      fetch(a, {
+        cache: b ? "force-cache" : "no-store",
+        mode: "cors"
+      }).then(function(d) {
+        return d.arrayBuffer()
+      }).then(function(d) {
+        W(1, 0, {
+          requestId: c,
+          arrayBuffer: d
+        })
+      }).catch(function(d) {
+        f("Failed to complete async download: {}", a);
+        ma("Exception Caught", d);
+        W(1, 0, {
+          requestId: c,
+          arrayBuffer: null
+        })
+      })
+    } catch (d) {
+      f("Failed to fetch: {}", a), ma("Exception Caught", d), W(1, 0, {
+        requestId: c,
+        arrayBuffer: null
+      })
+    }
+  };
+  Aa.download = new WebAssembly.Suspending(function(a, b) {
+    return new Promise(function(c) {
+      try {
+        fetch(a, {
+          cache: b ? "force-cache" : "no-store",
+          mode: "cors"
+        }).then(function(d) {
+          return d.arrayBuffer()
+        }).then(function(d) {
+          c(d)
+        }).catch(function(d) {
+          f("Failed to complete download: {}", a);
+          ma("Exception Caught", d);
+          c(null)
+        })
+      } catch (d) {
+        f("Failed to fetch: {}", a), ma("Exception Caught", d), c(null)
+      }
+    })
+  });
+  Aa.writeCrashReport = function(a) {
+    rc(a, !1)
+  };
+  Aa.showContextLostScreen = function(a) {
+    if (!lb) {
+      lb = !0;
+      var b = R || Ta;
+      if (b) {
+        var c = document.createElement("img"),
+          d = document.createElement("div");
+        c.setAttribute("style", "z-index:100;position:absolute;top:10px;left:calc(50% - 151px);");
+        c.src = Qa;
+        d.setAttribute("style", "z-index:100;position:absolute;top:135px;left:10%;right:10%;bottom:50px;background-color:white;border:1px solid #cccccc;overflow-x:hidden;overflow-y:scroll;font:18px sans-serif;padding:40px;");
+        d.classList.add("_eaglercraftX_context_lost_element");
+        b.appendChild(c);
+        b.appendChild(d);
+        b.appendChild(pc());
+        d.innerHTML = '<h2><svg style="vertical-align:middle;margin:0px 16px 8px 8px;" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none"><path stroke="#000000" stroke-width="3" stroke-linecap="square" d="M1.5 8.5v34h45v-28m-3-3h-10v-3m-3-3h-10m15 6h-18v-3m-3-3h-10"/><path stroke="#000000" stroke-width="2" stroke-linecap="square" d="M12 21h0m0 4h0m4 0h0m0-4h0m-2 2h0m20-2h0m0 4h0m4 0h0m0-4h0m-2 2h0"/><path stroke="#000000" stroke-width="2" stroke-linecap="square" d="M20 30h0 m2 2h0 m2 2h0 m2 2h0 m2 -2h0 m2 -2h0 m2 -2h0"/></svg> + WebGL context lost!</h2><div style="margin-left:40px;"><p style="font-size:1.2em;">Your browser has forcibly released all of the resources allocated by the game\'s 3D rendering context. EaglercraftX cannot continue, please refresh the page to restart the game, sorry for the inconvenience.</p><p style="font-size:1.2em;">This is not a bug, it is usually caused by the browser deciding it no longer has sufficient resources to continue rendering this page. If it happens again, try closing your other browser tabs and windows.</p><p style="font-size:1.2em;">If you\'re playing with vsync disabled, try enabling vsync to allow the browser to control the GPU usage more precisely.</p><p style="overflow-wrap:break-word;white-space:pre-wrap;font:0.75em monospace;margin-top:1.5em;" id="_eaglercraftX_contextLostTrace"></p></div>';
+        d.querySelector("#_eaglercraftX_contextLostTrace").appendChild(document.createTextNode(a))
+      } else alert("WebGL context lost!"), f("WebGL context lost!")
+    }
+  };
+  Aa.steadyTimeMillis = performance.now.bind(performance);
+
+  function Rc(a) {
+    return new Promise(function(b) {
+      setTimeout(b, a)
+    })
+  }
+  Aa.sleep = new WebAssembly.Suspending(Rc);
+
+  function Wc(a) {
+    Pc ? (Vc = a, Uc.port1.postMessage(0)) : setTimeout(a, 0)
+  }
+
+  function Qc() {
+    return new Promise(Wc)
+  }
+  Aa.immediateContinue = new WebAssembly.Suspending(Qc);
+  Aa.immediateContinueSupported = function() {
+    return Pc
+  };
+  Aa.setCrashReportString = function(a, b) {
+    mb[a] = b
+  };
+  var Xc = "undefined" !== typeof window,
+    Yc = null;
+
+  function Zc() {
+    return new Promise(function(a) {
+      if ("navigator" in window && "mediaDevices" in window.navigator && "getUserMedia" in window.navigator.mediaDevices) try {
+        window.navigator.mediaDevices.getUserMedia({
+          audio: !0,
+          video: !1
+        }).then(function(b) {
+          a(b)
+        }).catch(function(b) {
+          f("getUserMedia Error! (async)");
+          ma("Exception Caught", b);
+          a(null)
+        })
+      } catch (b) {
+        f("getUserMedia Error!"), a(null)
+      } else f("No getUserMedia!"), a(null)
+    })
+  }
+  async function $c() {
+    return Xc ? null === Yc && (Yc = await Zc(), null === Yc) ? (Xc = !1, null) : Yc : null
+  }
+
+  function $b() {
+    function a(b) {
+      const c = new Date;
+      return b.replace("${date}", c.getFullYear() + "-" + ("0" + (c.getMonth() + 1)).slice(-2) + "-" + ("0" + c.getDate()).slice(-2) + " " + ("0" + c.getHours()).slice(-2) + "-" + ("0" + c.getMinutes()).slice(-2) + "-" + ("0" + c.getSeconds()).slice(-2))
+    }
+    Ba.getMic = new WebAssembly.Suspending($c);
+    Ba.setDataAvailableHandler = function(b, c, d) {
+      const g = performance.now();
+      b.addEventListener("dataavailable", function(m) {
+        if (c) ad(m.data, performance.now() - g | 0, function(t) {
+          const B = URL.createObjectURL(t);
+          Ac(a(d),
+            B,
+            function() {
+              URL.revokeObjectURL(B)
+            })
+        }, {
+          V: function(t) {
+            e(t)
+          }
+        });
+        else {
+          const t = URL.createObjectURL(m.data);
+          Ac(a(d), t, function() {
+            URL.revokeObjectURL(t)
+          })
+        }
+      })
+    }
+  };
+
+  function ac() {
+    function a(g) {
+      try {
+        const m = JSON.parse(g);
+        this._peerConnection.setRemoteDescription(m).then(() => {
+          m.hasOwnProperty("type") && "offer" === m.type && this._peerConnection.createAnswer().then(t => {
+            this._peerConnection.setLocalDescription(t).then(() => {
+              W(2, 1, {
+                objId: this.objId,
+                data: JSON.stringify(t)
+              })
+            }).catch(B => {
+              f('Failed to set local description for "{}"! {}', this.objId, B.message);
+              W(2, 3, {
+                objId: this.objId
+              })
+            })
+          }).catch(t => {
+            f('Failed to create answer for "{}"! {}', this.objId, t.message);
+            W(2, 3, {
+              objId: this.objId
+            })
+          })
+        }).catch(t => {
+          f('Failed to set remote description for "{}"! {}', this.objId, t.message);
+          W(2, 3, {
+            objId: this.objId
+          })
+        })
+      } catch (m) {
+        f(m.message), W(2, 3, {
+          objId: this.objId
+        })
+      }
+    }
+
+    function b(g) {
+      try {
+        this._peerConnection.addIceCandidate(new RTCIceCandidate(JSON.parse(g))).catch(m => {
+          f('Failed to parse ice candidate for "{}"! {}', this.objId, m.message);
+          W(2, 3, {
+            objId: this.objId
+          })
+        })
+      } catch (m) {
+        f(m.message), W(2, 3, {
+          objId: this.objId
+        })
+      }
+    }
+
+    function c() {
+      this._peerConnection.close()
+    }
+    Ea.isSupported = function() {
+      return "undefined" !== typeof navigator.mediaDevices &&
+        "undefined" !== typeof navigator.mediaDevices.getUserMedia && "srcObject" in HTMLAudioElement.prototype
+    };
+    let d = 0;
+    Ea.createRTCPeerConnection = function(g, m, t) {
+      try {
+        const x = d++;
+        var B;
+        const z = new RTCPeerConnection({
+          iceServers: JSON.parse(g),
+          optional: [{
+            DtlsSrtpKeyAgreement: !0
+          }]
+        });
+        z.addEventListener("icecandidate", C => {
+          C.candidate && W(2, 0, {
+            objId: x,
+            data: JSON.stringify({
+              sdpMLineIndex: "" + C.candidate.sdpMLineIndex,
+              candidate: C.candidate.candidate
+            })
+          })
+        });
+        z.addEventListener("track", C => {
+          C = C.streams[0];
+          B._aud = document.createElement("audio");
+          B._aud.autoplay = !0;
+          B._aud.muted = !0;
+          B._aud.srcObject = C;
+          W(2, 2, {
+            objId: x,
+            stream: C
+          })
+        });
+        t.getTracks().forEach(function(C) {
+          z.addTrack(C, t)
+        });
+        m && z.createOffer().then(C => {
+          z.setLocalDescription(C).then(() => {
+            W(2, 1, {
+              objId: x,
+              data: JSON.stringify(C)
+            })
+          }).catch(G => {
+            f('Failed to set local description for "{}"! {}', x, G.message);
+            W(2, 3, {
+              objId: x
+            })
+          })
+        }).catch(C => {
+          f('Failed to set create offer for "{}"! {}', x, C.message);
+          W(2, 3, {
+            objId: x
+          })
+        });
+        z.addEventListener("connectionstatechange", () => {
+          const C = z.connectionState;
+          "disconnected" !==
+          C && "failed" !== C || W(2, 3, {
+            objId: x
+          })
+        });
+        return B = {
+          objId: x,
+          _peerConnection: z,
+          setRemoteDescription: a,
+          addRemoteICECandidate: b,
+          closeHandle: c
+        }
+      } catch (x) {
+        return f(x.message), null
+      }
+    }
+  };
+
+  function bc() {
+    const a = new sa;
+    let b;
+    b = {
+      iceServers: [],
+      g: null,
+      h: null,
+      readyState: 1,
+      v: null,
+      description: null,
+      D: !1,
+      C: !0,
+      disconnect: function(d) {
+        if (b.h) {
+          try {
+            b.h.close()
+          } catch (g) {}
+          b.h = null
+        }
+        if (b.g) {
+          try {
+            b.g.close()
+          } catch (g) {}
+          b.g = null
+        }
+        d || (b.C = !0);
+        b.readyState = 0
+      }
+    };
+    O.supported = function() {
+      return "undefined" !== typeof RTCPeerConnection
+    };
+    O.clientLANReadyState = function() {
+      return b.readyState
+    };
+    O.clientLANCloseConnection = function() {
+      b.disconnect(!1)
+    };
+    O.clientLANSendPacket = function(d) {
+      if (null !== b.h && "open" === b.h.readyState) try {
+        b.h.send(d)
+      } catch (g) {
+        b.disconnect(!1)
+      } else b.disconnect(!1)
+    };
+    O.clientLANReadPacket = function() {
+      const d = a.j();
+      return d ? new Uint8Array(d.data) : null
+    };
+    O.clientLANAvailable = function() {
+      return a.u
+    };
+    O.clientLANSetICEServersAndConnect = function(d) {
+      b.iceServers.length = 0;
+      for (let g of d) d = g.split(";"), 1 === d.length ? b.iceServers.push({
+        urls: d[0]
+      }) : 3 === d.length && b.iceServers.push({
+        urls: d[0],
+        username: d[1],
+        credential: d[2]
+      });
+      2 !== b.readyState && 1 !== b.readyState || b.disconnect(!0);
+      try {
+        if (b.h) {
+          try {
+            b.h.close()
+          } catch (g) {}
+          b.h = null
+        }
+        if (b.g) try {
+          b.g.close()
+        } catch (g) {}
+        b.g = new RTCPeerConnection({
+          iceServers: b.iceServers,
+          optional: [{
+            DtlsSrtpKeyAgreement: !0
+          }]
+        });
+        b.readyState = 1
+      } catch (g) {
+        ma("Could not create LAN client RTCPeerConnection!", g);
+        b.readyState = -2;
+        return
+      }
+      try {
+        const g = [];
+        b.g.addEventListener("icecandidate", t => {
+          if (t.candidate) {
+            if (0 === g.length) {
+              const B = [0, 0],
+                x = () => {
+                  if (null !== b.g && "disconnected" !== b.g.connectionState) {
+                    const z = ++B[1];
+                    B[0] !== g.length && 3 > z ? (B[0] = g.length, setTimeout(x, 2E3)) : (b.v = JSON.stringify(g), g.length = 0)
+                  }
+                };
+              setTimeout(x, 2E3)
+            }
+            g.push({
+              sdpMLineIndex: t.candidate.sdpMLineIndex,
+              candidate: t.candidate.candidate
+            })
+          }
+        });
+        b.h = b.g.createDataChannel("lan");
+        b.h.binaryType = "arraybuffer";
+        let m;
+        m = () => {
+          0 < g.length ? setTimeout(m, 10) : (b.C = !1, b.D = !0)
+        };
+        b.h.addEventListener("open", m);
+        b.h.addEventListener("message", t => {
+          a.push({
+            data: t.data,
+            _next: null
+          })
+        });
+        b.g.createOffer().then(t => {
+          b.g.setLocalDescription(t).then(() => {
+            b.description = JSON.stringify(t)
+          }).catch(B => {
+            f("Failed to set local description! {}", B.message);
+            b.readyState = -1;
+            b.disconnect(!1)
+          })
+        }).catch(t => {
+          f("Failed to set create offer! {}", t.message);
+          b.readyState = -1;
+          b.disconnect(!1)
+        });
+        b.g.addEventListener("connectionstatechange", () => {
+          var t = b.g.connectionState;
+          "disconnected" === t ? b.disconnect(!1) : "connected" === t ? b.readyState = 2 : "failed" === t && (b.readyState = -1, b.disconnect(!1))
+        })
+      } catch (g) {
+        if (b.h) {
+          try {
+            b.h.close()
+          } catch (m) {}
+          b.h = null
+        }
+        if (b.g) {
+          try {
+            b.g.close()
+          } catch (m) {}
+          b.g = null
+        }
+        ma("Could not create LAN client RTCDataChannel!", g);
+        b.readyState = -2
+      }
+    };
+    O.clearLANClientState = function() {
+      b.v = b.description = null;
+      b.D = !1;
+      b.C = !0
+    };
+    O.clientLANAwaitICECandidate = function() {
+      if (null === b.v) return null;
+      const d =
+        b.v;
+      b.v = null;
+      return d
+    };
+    O.clientLANAwaitDescription = function() {
+      if (null === b.description) return null;
+      const d = b.description;
+      b.description = null;
+      return d
+    };
+    O.clientLANAwaitChannel = function() {
+      return b.D ? (b.D = !1, !0) : !1
+    };
+    O.clientLANClosed = function() {
+      return b.C
+    };
+    O.clientLANSetICECandidate = function(d) {
+      try {
+        const g = JSON.parse(d);
+        for (d = 0; d < g.length; ++d) b.g.addIceCandidate(new RTCIceCandidate(g[d]))
+      } catch (g) {
+        ma("Uncaught exception setting remote ICE candidates", g), b.readyState = -1, b.disconnect(!1)
+      }
+    };
+    O.clientLANSetDescription =
+      function(d) {
+        try {
+          b.g.setRemoteDescription(JSON.parse(d))
+        } catch (g) {
+          ma("Uncaught exception setting remote description", g), b.readyState = -1, b.disconnect(!1)
+        }
+      };
+    let c;
+    c = {
+      iceServers: [],
+      A: new Map,
+      F: new Map,
+      disconnect: function(d) {
+        const g = c.A.get(d);
+        if (g) {
+          c.A.delete(d);
+          g.l && c.F.delete(g.l);
+          try {
+            g.disconnect()
+          } catch (m) {}
+          g.s(4, null)
+        }
+      }
+    };
+    O.serverLANInitializeServer = function(d) {
+      c.iceServers.length = 0;
+      for (let g of d) d = g.split(";"), 1 === d.length ? c.iceServers.push({
+        urls: d[0]
+      }) : 3 === d.length && c.iceServers.push({
+        urls: d[0],
+        username: d[1],
+        credential: d[2]
+      })
+    };
+    O.serverLANCloseServer = function() {
+      for (let d of Object.values(c.A))
+        if (d) {
+          try {
+            d.disconnect()
+          } catch (g) {}
+          d.s(4, null)
+        } c.A.clear()
+    };
+    O.serverLANCreatePeer = function(d) {
+      try {
+        const g = new sa;
+        let m;
+        m = {
+          i: d,
+          g: new RTCPeerConnection({
+            iceServers: c.iceServers,
+            optional: [{
+              DtlsSrtpKeyAgreement: !0
+            }]
+          }),
+          h: null,
+          l: null,
+          s: function(x, z) {
+            g.push({
+              type: x,
+              data: z,
+              _next: null
+            })
+          },
+          disconnect: function() {
+            m.h && m.h.close();
+            m.g.close()
+          }
+        };
+        c.A.set(m.i, m);
+        const t = [];
+        m.g.addEventListener("icecandidate", x => {
+          if (x.candidate) {
+            if (0 ===
+              t.length) {
+              const z = [0, 0],
+                C = () => {
+                  if (null !== m.g && "disconnected" !== m.g.connectionState) {
+                    const G = ++z[1];
+                    z[0] !== t.length && 3 > G ? (z[0] = t.length, setTimeout(C, 2E3)) : (m.s(0, JSON.stringify(t)), t.length = 0)
+                  }
+                };
+              setTimeout(C, 2E3)
+            }
+            t.push({
+              sdpMLineIndex: x.candidate.sdpMLineIndex,
+              candidate: x.candidate.candidate
+            })
+          }
+        });
+        let B;
+        B = x => {
+          0 < t.length ? setTimeout(B, 10, x) : x.channel && (x = x.channel, null !== m.h ? x.close() : (m.h = x, m.s(2, null), m.h.addEventListener("message", z => {
+            z = z.data;
+            m.l ? kb(m.l, z) : m.s(3, new Uint8Array(z))
+          })))
+        };
+        m.g.addEventListener("datachannel",
+          B);
+        m.g.addEventListener("connectionstatechange", () => {
+          const x = m.g.connectionState;
+          "disconnected" !== x && "failed" !== x || c.disconnect(m.i)
+        });
+        return {
+          peerId: m.i,
+          countAvailableEvents: function() {
+            return g.u
+          },
+          nextEvent: function() {
+            return g.j()
+          },
+          writePacket: function(x) {
+            let z = !1;
+            if (null !== m.h && "open" === m.h.readyState) try {
+              m.h.send(x)
+            } catch (C) {
+              z = !0
+            } else z = !0;
+            z && c.disconnect(m.i)
+          },
+          handleRemoteICECandidates: function(x) {
+            try {
+              const z = JSON.parse(x);
+              for (let C of z) m.g.addIceCandidate(new RTCIceCandidate(C))
+            } catch (z) {
+              f('Failed to parse ice candidate for "{}"! {}',
+                m.i, z.message), c.disconnect(m.i)
+            }
+          },
+          handleRemoteDescription: function(x) {
+            try {
+              const z = JSON.parse(x);
+              m.g.setRemoteDescription(z).then(() => {
+                z.hasOwnProperty("type") && "offer" === z.type && m.g.createAnswer().then(C => {
+                  m.g.setLocalDescription(C).then(() => {
+                    m.s(1, JSON.stringify(C))
+                  }).catch(G => {
+                    f('Failed to set local description for "{}"! {}', m.i, G.message);
+                    c.disconnect(m.i)
+                  })
+                }).catch(C => {
+                  f('Failed to create answer for "{}"! {}', m.i, C.message);
+                  c.disconnect(m.i)
+                })
+              }).catch(C => {
+                f('Failed to set remote description for "{}"! {}',
+                  m.i, C.message);
+                c.disconnect(m.i)
+              })
+            } catch (z) {
+              f('Failed to parse remote description for "{}"! {}', m.i, z.message), c.disconnect(m.i)
+            }
+          },
+          mapIPC: function(x) {
+            m.l ? x || (c.F.delete(m.l), m.l = null) : x && (m.l = x, c.F.set(x, m))
+          },
+          disconnect: function() {
+            c.disconnect(m.i)
+          }
+        }
+      } catch (g) {
+        return ma("Failed to create WebRTC LAN peer!", g), null
+      }
+    };
+    jb = function(d, g) {
+      if (d = c.F.get(d)) {
+        let m = !1;
+        if (d.h && "open" === d.h.readyState) try {
+          d.h.send(g)
+        } catch (t) {
+          m = !0
+        } else m = !0;
+        m && c.disconnect(d.i);
+        return !0
+      }
+      return !1
+    }
+  };
+
+  function cc() {
+    function a(k, u) {
+      k.allow = u;
+      return k.allow === u
+    }
+
+    function b(k, u) {
+      const w = k.sandbox;
+      for (var E = 0; E < u.length; ++E) w.add(u[E]);
+      for (E = 0; E < u.length; ++E)
+        if (!w.contains(u[E])) return !1;
+      for (E = 0; E < w.length; ++E)
+        if (!u.find(K => K === w[E])) return !1;
+      return !0
+    }
+
+    function c(k) {
+      if (G) q = document.createElement("iframe"), q.allow = "", q.referrerPolicy = "strict-origin", q.sandbox.add("allow-downloads"), k.scriptEnabled && (q.sandbox.add("allow-scripts"), q.sandbox.add("allow-pointer-lock"));
+      else {
+        q = document.createElement("iframe");
+        q.referrerPolicy = "strict-origin";
+        var u = ["allow-downloads"];
+        k.scriptEnabled && (u.push("allow-scripts"), u.push("allow-pointer-lock"));
+        if (!a(q, "") || !b(q, u)) {
+          f("Caught safety exception while opening webview!");
+          null !== q && (q.remove(), q = null);
+          f("Things you can try:");
+          f("1. Set window.eaglercraftXOpts.forceWebViewSupport to true");
+          f("2. Set window.eaglercraftXOpts.enableWebViewCSP to false");
+          f("(these settings may compromise security)");
+          d();
+          v.innerHTML = '<div style="padding-top:13vh;"><h1 style="text-align:center;"><img width="48" height="48" style="vertical-align:middle;" src="' +
+            Ra + '">&emsp;IFrame Safety Error</h1><h4 style="text-align:center;">The content cannot be displayed safely!</h4><h4 style="text-align:center;">Check console for more details</h4></div>';
+          return
+        }
+      }
+      q.j = !0;
+      q.o = "lazy";
+      u = !1;
+      if (1 === k.contentMode) {
+        if (X && C)
+          if ("string" === typeof q.csp) {
+            var w = "default-src 'none';",
+              E = k.strictCSPEnable ? "" : L ? " https:" : " http: https:";
+            w = k.scriptEnabled ? w + (" script-src 'unsafe-eval' 'unsafe-inline' data: blob:" + E + "; style-src 'unsafe-eval' 'unsafe-inline' data: blob:") + (E + "; img-src data: blob:") +
+              (E + "; font-src data: blob:") + (E + "; child-src data: blob:") + (E + "; frame-src data: blob:; media-src data: mediastream: blob:") + (E + "; connect-src data: blob:") + (E + "; worker-src data: blob:") + (E + ";") : w + (" style-src data: 'unsafe-inline'" + E + "; img-src data:") + (E + "; font-src data:") + (E + "; media-src data:") + (E + ";");
+            q.csp = w
+          } else ka("This browser does not support CSP attribute on iframes! (try Chrome)"), u = !0;
+        else u = !0;
+        u && k.strictCSPEnable && ka("Strict CSP was requested for this webview, but that feature is not available!")
+      } else u = !0;
+      q.style.border = "none";
+      q.style.backgroundColor = "white";
+      q.style.width = "100%";
+      q.style.height = "100%";
+      q.classList.add("_eaglercraftX_webview_iframe_element");
+      n.appendChild(q);
+      1 === k.contentMode ? (w = x.decode(k.blob), k.blob = null, q.srcdoc = w) : q.src = k.uri;
+      const K = h,
+        Z = q;
+      let V = !1;
+      q.addEventListener("mouseover", function() {
+        K !== h || Z !== q || V || (V = !0, q.contentWindow.focus())
+      });
+      q.addEventListener("mouseout", function() {
+        K === h && Z === q && V && (V = !1, window.focus())
+      });
+      k.scriptEnabled && k.serverMessageAPIEnabled && (y = function(Y) {
+        if (K ===
+          h && Z === q && Y.source === Z.contentWindow) {
+          Y = Y.data;
+          if ("object" === typeof Y && 1 === Y.ver && "string" === typeof Y.channel && 0 < Y.channel.length) {
+            if ("boolean" === typeof Y.open) {
+              W(3, 0, {
+                eventType: Y.open ? 0 : 1,
+                channelName: Y.channel
+              });
+              return
+            }
+            if ("string" === typeof Y.data) {
+              W(3, 1, {
+                eventType: 0,
+                channelName: Y.channel,
+                eventData: Y.data
+              });
+              return
+            }
+            if (Y.data instanceof ArrayBuffer) {
+              W(3, 1, {
+                eventType: 1,
+                channelName: Y.channel,
+                eventData: Y.data
+              });
+              return
+            }
+          }
+          ka("WebView sent an invalid message!")
+        } else ka("Recieved message from on dead IFrame handler: (#{}) {}",
+          K, Z.src)
+      });
+      e('WebView is loading: "{}"', 1 === k.contentMode ? "about:srcdoc" : q.src);
+      e("JavaScript: {}, Strict CSP: {}, Message API: {}", k.scriptEnabled, k.strictCSPEnable && !u, k.serverMessageAPIEnabled)
+    }
+
+    function d() {
+      null !== v && (++h, v.remove(), v = null);
+      v = document.createElement("div");
+      v.style.backgroundColor = "white";
+      v.style.width = "100%";
+      v.style.height = "100%";
+      v.classList.add("_eaglercraftX_webview_permission_screen");
+      n.appendChild(v)
+    }
+
+    function g(k) {
+      d();
+      v.innerHTML = '<div style="padding-top:13vh;"><div style="margin:auto;max-width:450px;border:6px double black;text-align:center;padding:20px;"><h2><img width="32" height="32" style="vertical-align:middle;" src="' +
+        Ra + '">&emsp;Allow JavaScript</h2><p style="font-family:monospace;text-decoration:underline;word-wrap:break-word;" class="_eaglercraftX_permission_target_url"></p><h4 style="line-height:1.4em;">Strict CSP: ' + (1 !== k.contentMode ? '<span style="color:red;">Impossible</span>' : C && X ? k.strictCSPEnable ? '<span style="color:green;">Enabled</span>' : '<span style="color:red;">Disabled</span>' : '<span style="color:red;">Unsupported</span>') + "&ensp;|&ensp;Message API: " + (k.serverMessageAPIEnabled ? '<span style="color:red;">Enabled</span>' :
+          '<span style="color:green;">Disabled</span>') + '</h4><p><input class="_eaglercraftX_remember_javascript" type="checkbox" checked> Remember my choice</p><p><button style="font-size:1.5em;" class="_eaglercraftX_allow_javascript">Allow</button>&emsp;<button style="font-size:1.5em;" class="_eaglercraftX_block_javascript">Block</button></p></div></div>';
+      const u = h;
+      if (1 !== k.contentMode) {
+        const w = k.url;
+        v.querySelector("._eaglercraftX_permission_target_url").innerText = 255 < w.length() ? w.substring(0, 253) + "..." :
+          w
+      }
+      v.querySelector("._eaglercraftX_allow_javascript").addEventListener("click", function() {
+        if (h === u && null !== v) {
+          const w = v.querySelector("._eaglercraftX_remember_javascript");
+          null !== w && w.checked && W(3, 2, null);
+          v.remove();
+          v = null;
+          ++h;
+          c(k)
+        }
+      });
+      v.querySelector("._eaglercraftX_block_javascript").addEventListener("click", function() {
+        if (h === u && null !== v) {
+          const w = v.querySelector("._eaglercraftX_remember_javascript");
+          null !== w && w.checked && W(3, 3, null);
+          m(k)
+        }
+      })
+    }
+
+    function m(k) {
+      d();
+      v.innerHTML = '<div style="padding-top:13vh;"><h1 style="text-align:center;"><img width="48" height="48" style="vertical-align:middle;" src="' +
+        Ra + '">&emsp;Content Blocked</h1><h4 style="text-align:center;">You chose to block JavaScript execution for this embed</h4><p style="text-align:center;"><button style="font-size:1.0em;" class="_eaglercraftX_re_evaluate_javascript">Re-evaluate</button></p></div>';
+      const u = h;
+      v.querySelector("._eaglercraftX_re_evaluate_javascript").addEventListener("click", function() {
+        h === u && null !== v && (W(3, 4, null), g(k))
+      })
+    }
+
+    function t(k, u, w, E) {
+      if (n) {
+        const K = window.devicePixelRatio;
+        n.style.top = "" + u / K + "px";
+        n.style.left = "" +
+          k / K + "px";
+        n.style.width = "" + (w / K - 10) + "px";
+        n.style.height = "" + (E / K - 10) + "px"
+      }
+    }
+
+    function B() {
+      ++h;
+      q && (q.remove(), q = null);
+      y = null;
+      v && (v.remove(), v = null);
+      n && (n.remove(), n = null);
+      window.focus()
+    }
+    const x = new TextDecoder("utf-8");
+    var z = !1,
+      C = !1,
+      G = Ob,
+      X = Pb;
+    if (G) C = z = !0;
+    else {
+      C = z = !1;
+      try {
+        var fa = document.createElement("iframe");
+        z = null != fa && "string" === typeof fa.allow && "object" === typeof fa.sandbox;
+        C = X && z && "string" === typeof fa.csp
+      } catch (k) {
+        f("Error checking iframe support"), f(k)
+      }
+    }
+    z ? !C && X && ka("This browser does not support CSP attribute on iframes! (try Chrome)") :
+      f("This browser does not meet the safety requirements for webview support, this feature will be disabled");
+    const L = location.protocol && "https:" === location.protocol.toLowerCase();
+    var h = 0,
+      n = null,
+      v = null,
+      q = null,
+      y = null;
+    window.addEventListener("message", function(k) {
+      y && k.source !== window && y(k)
+    });
+    Fa.checkSupported = function() {
+      return z
+    };
+    Fa.checkCSPSupported = function() {
+      return C
+    };
+    Fa.sendStringMessage = function(k, u) {
+      try {
+        var w;
+        null != q && null != (w = q.contentWindow) ? w.postMessage({
+            ver: 1,
+            channel: k,
+            type: "string",
+            data: u
+          },
+          "*") : f("Server tried to send the WebView a message, but the message channel is not open!")
+      } catch (E) {
+        ma("Failed to send string message to WebView!", E)
+      }
+    };
+    Fa.sendBinaryMessage = function(k, u, w) {
+      try {
+        var E;
+        null != q && null != (E = q.contentWindow) ? E.postMessage({
+          ver: 1,
+          channel: k,
+          type: "binary",
+          data: Ya.slice(u, u + w)
+        }, "*") : f("Server tried to send the WebView a message, but the message channel is not open!")
+      } catch (K) {
+        ma("Failed to send string message to WebView!", K)
+      }
+    };
+    Fa.beginShowing = function(k, u, w, E, K, Z) {
+      if (z) try {
+        switch (null !==
+          n && B(), n = document.createElement("div"), n.classList.add("_eaglercraftX_webview_container_element"), n.style.border = "5px solid #333333", n.style.zIndex = "11", n.style.position = "absolute", n.style.backgroundColor = "#DDDDDD", n.style.fontFamily = "sans-serif", t(w, E, K, Z), R.appendChild(n), k) {
+          case 0:
+            c(u);
+            break;
+          case 1:
+            if (1 === u.contentMode) {
+              const V = new Uint8Array(u.blob.length);
+              V.set(u.blob, 0);
+              u.blob = V
+            }
+            g(u);
+            break;
+          case 2:
+            if (1 === u.contentMode) {
+              const V = new Uint8Array(u.blob.length);
+              V.set(u.blob, 0);
+              u.blob = V
+            }
+            m(u)
+        }
+      } catch (V) {
+        ma("Failed to begin showing WebView!",
+          V)
+      }
+    };
+    Fa.resize = t;
+    Fa.endShowing = B
+  };
+  var Sc = null,
+    Tc = !1;
+
+  function dc() {
+    var a = null;
+    const b = new sa;
+    var c = null;
+    Ga.startIntegratedServer = new WebAssembly.Suspending(async function() {
+      c ||= URL.createObjectURL(new Blob(['"use strict"; (function(ctx, globals) {globals.__eaglerXOnMessage = function(o) {globals.__eaglerXOnMessage = function(oo) { console.error("Dropped IPC packet that was sent too early!"); };const eagRuntimeJSURL = URL.createObjectURL(new Blob([ o.eagruntimeJS ], { type: "text/javascript;charset=utf-8" }));ctx.getEaglercraftXOpts = function() { return o.eaglercraftXOpts; };ctx.getEagRuntimeJSURL = function() { return eagRuntimeJSURL; };ctx.getClassesWASMURL = function() { return o.classesWASM; };ctx.getClassesDeobfWASMURL = function() { return o.classesDeobfWASM; };ctx.getClassesTEADBGURL = function() { return o.classesTEADBG; };ctx.getEPKFiles = function() { return null; };ctx.getRootElement = function() { return null; };ctx.getMainArgs = function() { return ["_worker_process_"]; };ctx.getImageURL = function(idx) { return null; };ctx.runMain = function(mainFunc) { mainFunc(); };importScripts(eagRuntimeJSURL);};addEventListener("message", function(evt) { globals.__eaglerXOnMessage(evt.data); });})(self.__eaglercraftXLoaderContext = {}, self);'], {
+        type: "text/javascript;charset=utf8"
+      }));
+      try {
+        a = new Worker(c)
+      } catch (t) {
+        return ma("Failed to create worker", t), !1
+      }
+      a.addEventListener("error", function(t) {
+        ma("Worker Error", t.error)
+      });
+      a.addEventListener("message", function(t) {
+        const B = t.data.ch;
+        B ? "~!LOGGER" === B ? Xb(t.data.txt, t.data.err) : (t = t.data.dat) ? jb(B, t) || b.push({
+          ch: B,
+          data: new Uint8Array(t),
+          _next: null
+        }) : f("Recieved IPC packet with null buffer") : f("Recieved IPC packet with null channel")
+      });
+      const d = [];
+      var g = null;
+      Ma && (g = Ma.buffer.slice(Ma.byteOffset, Ma.byteOffset + Ma.byteLength), d.push(g));
+      try {
+        var m =
+          await fetch(Sa, {
+            cache: "force-cache"
+          }).then(t => t.arrayBuffer())
+      } catch (t) {
+        ma("Failed to fetch eagruntime.js contents", t);
+        try {
+          a.terminate()
+        } catch (B) {}
+        return !1
+      }
+      d.push(m);
+      a.postMessage({
+        eaglercraftXOpts: P,
+        eagruntimeJS: m,
+        classesWASM: Ka,
+        classesDeobfWASM: La,
+        classesTEADBG: g
+      }, d);
+      return !0
+    });
+    Ga.sendPacket = function(d, g, m) {
+      a && (g = Ya.slice(g, g + m), a.postMessage({
+        ch: d,
+        dat: g
+      }, [g]))
+    };
+    kb = function(d, g) {
+      a && a.postMessage({
+        ch: d,
+        dat: g
+      }, [g])
+    };
+    Ga.getAvailablePackets = b.L.bind(b);
+    Ga.getNextPacket = b.j.bind(b);
+    Ga.killWorker = function() {
+      a &&
+        (a.terminate(), a = null)
+    };
+    Ga.showCrashReportOverlay = function(d, g, m, t, B) {
+      Sc || (Sc = document.createElement("div"), Sc.setAttribute("style", "z-index:99;position:absolute;background-color:black;color:white;overflow-x:hidden;overflow-y:scroll;overflow-wrap:break-word;white-space:pre-wrap;font:18px sans-serif;padding:20px;display:none;"), Sc.classList.add("_eaglercraftX_integratedserver_crash_element"), R.appendChild(Sc));
+      Sc.innerText = "";
+      Sc.innerText = "CURRENT DATE: " + (new Date).toLocaleString() + "\n\n" + d;
+      d = window.devicePixelRatio;
+      Sc.style.top = "" + m / d + "px";
+      Sc.style.left = "" + g / d + "px";
+      Sc.style.width = "" + (t / d - 20) + "px";
+      Sc.style.height = "" + (B / d - 20) + "px";
+      Sc.style.display = "block";
+      Tc = !0
+    };
+    Ga.hideCrashReportOverlay = function() {
+      Sc && (Sc.style.display = "none");
+      Tc = !1
+    };
+    window.__curEaglerX188UnloadListenerCB = function() {
+      a && a.postMessage({
+        ch: "~!WASM_AUTOSAVE"
+      })
+    }
+  };
+  var sc = null,
+    bd = !1;
+
+  function kc() {
+    const a = new sa;
+    self.__eaglerXOnMessage = function(b) {
+      const c = b.ch;
+      b = b.dat;
+      c ? "~!WASM_AUTOSAVE" === c ? bd = !0 : b ? a.push({
+        ch: c,
+        data: new Uint8Array(b),
+        _next: null
+      }) : f("Recieved IPC packet with null buffer") : f("Recieved IPC packet with null channel")
+    };
+    Ja.sendPacket = function(b, c, d) {
+      c = Ya.slice(c, c + d);
+      postMessage({
+        ch: b,
+        dat: c
+      }, [c])
+    };
+    Ja.getAvailablePackets = a.L.bind(a);
+    Ja.getNextPacket = a.j.bind(a);
+    Ja.setCrashCallback = function() {
+      return {
+        call: function(b) {
+          sc = b
+        }
+      }
+    };
+    Ja.isTabAboutToClose = function() {
+      const b = bd;
+      bd = !1;
+      return b
+    }
+  };
+  ta.getByteBufferView = function(a, b) {
+    return new Int8Array(Ya, a, b)
+  };
+  ta.getUnsignedByteBufferView = function(a, b) {
+    return new Uint8Array(Ya, a, b)
+  };
+  ta.getUnsignedClampedByteBufferView = function(a, b) {
+    return new Uint8ClampedArray(Ya, a, b)
+  };
+  ta.getShortBufferView = function(a, b) {
+    return new Int16Array(Ya, a, b)
+  };
+  ta.getUnsignedShortBufferView = function(a, b) {
+    return new Uint16Array(Ya, a, b)
+  };
+  ta.getIntBufferView = function(a, b) {
+    return new Int32Array(Ya, a, b)
+  };
+  ta.getFloatBufferView = function(a, b) {
+    return new Float32Array(Ya, a, b)
+  };
+  ta.setHeapViewCallback = function(a) {
+    hb = a;
+    mc()
+  };
+  const cd = {
+    172351395: {
+      name: "EBML",
+      type: "Container"
+    },
+    646: {
+      name: "EBMLVersion",
+      type: "Uint"
+    },
+    759: {
+      name: "EBMLReadVersion",
+      type: "Uint"
+    },
+    754: {
+      name: "EBMLMaxIDLength",
+      type: "Uint"
+    },
+    755: {
+      name: "EBMLMaxSizeLength",
+      type: "Uint"
+    },
+    642: {
+      name: "DocType",
+      type: "String"
+    },
+    647: {
+      name: "DocTypeVersion",
+      type: "Uint"
+    },
+    645: {
+      name: "DocTypeReadVersion",
+      type: "Uint"
+    },
+    108: {
+      name: "Void",
+      type: "Binary"
+    },
+    63: {
+      name: "CRC-32",
+      type: "Binary"
+    },
+    190023271: {
+      name: "SignatureSlot",
+      type: "Container"
+    },
+    16010: {
+      name: "SignatureAlgo",
+      type: "Uint"
+    },
+    16026: {
+      name: "SignatureHash",
+      type: "Uint"
+    },
+    16037: {
+      name: "SignaturePublicKey",
+      type: "Binary"
+    },
+    16053: {
+      name: "Signature",
+      type: "Binary"
+    },
+    15963: {
+      name: "SignatureElements",
+      type: "Container"
+    },
+    15995: {
+      name: "SignatureElementList",
+      type: "Container"
+    },
+    9522: {
+      name: "SignedElement",
+      type: "Binary"
+    },
+    139690087: {
+      name: "Segment",
+      type: "Container"
+    },
+    21863284: {
+      name: "SeekHead",
+      type: "Container"
+    },
+    3515: {
+      name: "Seek",
+      type: "Container"
+    },
+    5035: {
+      name: "SeekID",
+      type: "Binary"
+    },
+    5036: {
+      name: "SeekPosition",
+      type: "Uint"
+    },
+    88713574: {
+      name: "Info",
+      type: "Container"
+    },
+    13220: {
+      name: "SegmentUID",
+      type: "Binary"
+    },
+    13188: {
+      name: "SegmentFilename",
+      type: "String"
+    },
+    1882403: {
+      name: "PrevUID",
+      type: "Binary"
+    },
+    1868715: {
+      name: "PrevFilename",
+      type: "String"
+    },
+    2013475: {
+      name: "NextUID",
+      type: "Binary"
+    },
+    1999803: {
+      name: "NextFilename",
+      type: "String"
+    },
+    1092: {
+      name: "SegmentFamily",
+      type: "Binary"
+    },
+    10532: {
+      name: "ChapterTranslate",
+      type: "Container"
+    },
+    10748: {
+      name: "ChapterTranslateEditionUID",
+      type: "Uint"
+    },
+    10687: {
+      name: "ChapterTranslateCodec",
+      type: "Uint"
+    },
+    10661: {
+      name: "ChapterTranslateID",
+      type: "Binary"
+    },
+    710577: {
+      name: "TimecodeScale",
+      type: "Uint"
+    },
+    1161: {
+      name: "Duration",
+      type: "Float"
+    },
+    1121: {
+      name: "DateUTC",
+      type: "Date"
+    },
+    15273: {
+      name: "Title",
+      type: "String"
+    },
+    3456: {
+      name: "MuxingApp",
+      type: "String"
+    },
+    5953: {
+      name: "WritingApp",
+      type: "String"
+    },
+    103: {
+      name: "Timecode",
+      type: "Uint"
+    },
+    6228: {
+      name: "SilentTracks",
+      type: "Container"
+    },
+    6359: {
+      name: "SilentTrackNumber",
+      type: "Uint"
+    },
+    39: {
+      name: "Position",
+      type: "Uint"
+    },
+    43: {
+      name: "PrevSize",
+      type: "Uint"
+    },
+    35: {
+      name: "SimpleBlock",
+      type: "Binary"
+    },
+    32: {
+      name: "BlockGroup",
+      type: "Container"
+    },
+    33: {
+      name: "Block",
+      type: "Binary"
+    },
+    34: {
+      name: "BlockVirtual",
+      type: "Binary"
+    },
+    13729: {
+      name: "BlockAdditions",
+      type: "Container"
+    },
+    38: {
+      name: "BlockMore",
+      type: "Container"
+    },
+    110: {
+      name: "BlockAddID",
+      type: "Uint"
+    },
+    37: {
+      name: "BlockAdditional",
+      type: "Binary"
+    },
+    27: {
+      name: "BlockDuration",
+      type: "Uint"
+    },
+    122: {
+      name: "ReferencePriority",
+      type: "Uint"
+    },
+    123: {
+      name: "ReferenceBlock",
+      type: "Int"
+    },
+    125: {
+      name: "ReferenceVirtual",
+      type: "Int"
+    },
+    36: {
+      name: "CodecState",
+      type: "Binary"
+    },
+    13730: {
+      name: "DiscardPadding",
+      type: "Int"
+    },
+    14: {
+      name: "Slices",
+      type: "Container"
+    },
+    104: {
+      name: "TimeSlice",
+      type: "Container"
+    },
+    76: {
+      name: "LaceNumber",
+      type: "Uint"
+    },
+    77: {
+      name: "FrameNumber",
+      type: "Uint"
+    },
+    75: {
+      name: "BlockAdditionID",
+      type: "Uint"
+    },
+    78: {
+      name: "Delay",
+      type: "Uint"
+    },
+    79: {
+      name: "SliceDuration",
+      type: "Uint"
+    },
+    72: {
+      name: "ReferenceFrame",
+      type: "Container"
+    },
+    73: {
+      name: "ReferenceOffset",
+      type: "Uint"
+    },
+    74: {
+      name: "ReferenceTimeCode",
+      type: "Uint"
+    },
+    47: {
+      name: "EncryptedBlock",
+      type: "Binary"
+    },
+    106212971: {
+      name: "Tracks",
+      type: "Container"
+    },
+    46: {
+      name: "TrackEntry",
+      type: "Container"
+    },
+    87: {
+      name: "TrackNumber",
+      type: "Uint"
+    },
+    13253: {
+      name: "TrackUID",
+      type: "Uint"
+    },
+    3: {
+      name: "TrackType",
+      type: "Uint"
+    },
+    57: {
+      name: "FlagEnabled",
+      type: "Uint"
+    },
+    8: {
+      name: "FlagDefault",
+      type: "Uint"
+    },
+    5546: {
+      name: "FlagForced",
+      type: "Uint"
+    },
+    28: {
+      name: "FlagLacing",
+      type: "Uint"
+    },
+    11751: {
+      name: "MinCache",
+      type: "Uint"
+    },
+    11768: {
+      name: "MaxCache",
+      type: "Uint"
+    },
+    254851: {
+      name: "DefaultDuration",
+      type: "Uint"
+    },
+    216698: {
+      name: "DefaultDecodedFieldDuration",
+      type: "Uint"
+    },
+    209231: {
+      name: "TrackTimecodeScale",
+      type: "Float"
+    },
+    4991: {
+      name: "TrackOffset",
+      type: "Int"
+    },
+    5614: {
+      name: "MaxBlockAdditionID",
+      type: "Uint"
+    },
+    4974: {
+      name: "Name",
+      type: "String"
+    },
+    177564: {
+      name: "Language",
+      type: "String"
+    },
+    6: {
+      name: "CodecID",
+      type: "String"
+    },
+    9122: {
+      name: "CodecPrivate",
+      type: "Binary"
+    },
+    362120: {
+      name: "CodecName",
+      type: "String"
+    },
+    13382: {
+      name: "AttachmentLink",
+      type: "Uint"
+    },
+    1742487: {
+      name: "CodecSettings",
+      type: "String"
+    },
+    1785920: {
+      name: "CodecInfoURL",
+      type: "String"
+    },
+    438848: {
+      name: "CodecDownloadURL",
+      type: "String"
+    },
+    42: {
+      name: "CodecDecodeAll",
+      type: "Uint"
+    },
+    12203: {
+      name: "TrackOverlay",
+      type: "Uint"
+    },
+    5802: {
+      name: "CodecDelay",
+      type: "Uint"
+    },
+    5819: {
+      name: "SeekPreRoll",
+      type: "Uint"
+    },
+    9764: {
+      name: "TrackTranslate",
+      type: "Container"
+    },
+    9980: {
+      name: "TrackTranslateEditionUID",
+      type: "Uint"
+    },
+    9919: {
+      name: "TrackTranslateCodec",
+      type: "Uint"
+    },
+    9893: {
+      name: "TrackTranslateTrackID",
+      type: "Binary"
+    },
+    96: {
+      name: "Video",
+      type: "Container"
+    },
+    26: {
+      name: "FlagInterlaced",
+      type: "Uint"
+    },
+    5048: {
+      name: "StereoMode",
+      type: "Uint"
+    },
+    5056: {
+      name: "AlphaMode",
+      type: "Uint"
+    },
+    5049: {
+      name: "OldStereoMode",
+      type: "Uint"
+    },
+    48: {
+      name: "PixelWidth",
+      type: "Uint"
+    },
+    58: {
+      name: "PixelHeight",
+      type: "Uint"
+    },
+    5290: {
+      name: "PixelCropBottom",
+      type: "Uint"
+    },
+    5307: {
+      name: "PixelCropTop",
+      type: "Uint"
+    },
+    5324: {
+      name: "PixelCropLeft",
+      type: "Uint"
+    },
+    5341: {
+      name: "PixelCropRight",
+      type: "Uint"
+    },
+    5296: {
+      name: "DisplayWidth",
+      type: "Uint"
+    },
+    5306: {
+      name: "DisplayHeight",
+      type: "Uint"
+    },
+    5298: {
+      name: "DisplayUnit",
+      type: "Uint"
+    },
+    5299: {
+      name: "AspectRatioType",
+      type: "Uint"
+    },
+    963876: {
+      name: "ColourSpace",
+      type: "Binary"
+    },
+    1029411: {
+      name: "GammaValue",
+      type: "Float"
+    },
+    230371: {
+      name: "FrameRate",
+      type: "Float"
+    },
+    97: {
+      name: "Audio",
+      type: "Container"
+    },
+    53: {
+      name: "SamplingFrequency",
+      type: "Float"
+    },
+    14517: {
+      name: "OutputSamplingFrequency",
+      type: "Float"
+    },
+    31: {
+      name: "Channels",
+      type: "Uint"
+    },
+    15739: {
+      name: "ChannelPositions",
+      type: "Binary"
+    },
+    8804: {
+      name: "BitDepth",
+      type: "Uint"
+    },
+    98: {
+      name: "TrackOperation",
+      type: "Container"
+    },
+    99: {
+      name: "TrackCombinePlanes",
+      type: "Container"
+    },
+    100: {
+      name: "TrackPlane",
+      type: "Container"
+    },
+    101: {
+      name: "TrackPlaneUID",
+      type: "Uint"
+    },
+    102: {
+      name: "TrackPlaneType",
+      type: "Uint"
+    },
+    105: {
+      name: "TrackJoinBlocks",
+      type: "Container"
+    },
+    109: {
+      name: "TrackJoinUID",
+      type: "Uint"
+    },
+    64: {
+      name: "TrickTrackUID",
+      type: "Uint"
+    },
+    65: {
+      name: "TrickTrackSegmentUID",
+      type: "Binary"
+    },
+    70: {
+      name: "TrickTrackFlag",
+      type: "Uint"
+    },
+    71: {
+      name: "TrickMasterTrackUID",
+      type: "Uint"
+    },
+    68: {
+      name: "TrickMasterTrackSegmentUID",
+      type: "Binary"
+    },
+    11648: {
+      name: "ContentEncodings",
+      type: "Container"
+    },
+    8768: {
+      name: "ContentEncoding",
+      type: "Container"
+    },
+    4145: {
+      name: "ContentEncodingOrder",
+      type: "Uint"
+    },
+    4146: {
+      name: "ContentEncodingScope",
+      type: "Uint"
+    },
+    4147: {
+      name: "ContentEncodingType",
+      type: "Uint"
+    },
+    4148: {
+      name: "ContentCompression",
+      type: "Container"
+    },
+    596: {
+      name: "ContentCompAlgo",
+      type: "Uint"
+    },
+    597: {
+      name: "ContentCompSettings",
+      type: "Binary"
+    },
+    4149: {
+      name: "ContentEncryption",
+      type: "Container"
+    },
+    2017: {
+      name: "ContentEncAlgo",
+      type: "Uint"
+    },
+    2018: {
+      name: "ContentEncKeyID",
+      type: "Binary"
+    },
+    2019: {
+      name: "ContentSignature",
+      type: "Binary"
+    },
+    2020: {
+      name: "ContentSigKeyID",
+      type: "Binary"
+    },
+    2021: {
+      name: "ContentSigAlgo",
+      type: "Uint"
+    },
+    2022: {
+      name: "ContentSigHashAlgo",
+      type: "Uint"
+    },
+    206814059: {
+      name: "Cues",
+      type: "Container"
+    },
+    59: {
+      name: "CuePoint",
+      type: "Container"
+    },
+    51: {
+      name: "CueTime",
+      type: "Uint"
+    },
+    55: {
+      name: "CueTrackPositions",
+      type: "Container"
+    },
+    119: {
+      name: "CueTrack",
+      type: "Uint"
+    },
+    113: {
+      name: "CueClusterPosition",
+      type: "Uint"
+    },
+    112: {
+      name: "CueRelativePosition",
+      type: "Uint"
+    },
+    50: {
+      name: "CueDuration",
+      type: "Uint"
+    },
+    4984: {
+      name: "CueBlockNumber",
+      type: "Uint"
+    },
+    106: {
+      name: "CueCodecState",
+      type: "Uint"
+    },
+    91: {
+      name: "CueReference",
+      type: "Container"
+    },
+    22: {
+      name: "CueRefTime",
+      type: "Uint"
+    },
+    23: {
+      name: "CueRefCluster",
+      type: "Uint"
+    },
+    4959: {
+      name: "CueRefNumber",
+      type: "Uint"
+    },
+    107: {
+      name: "CueRefCodecState",
+      type: "Uint"
+    },
+    155296873: {
+      name: "Attachments",
+      type: "Container"
+    },
+    8615: {
+      name: "AttachedFile",
+      type: "Container"
+    },
+    1662: {
+      name: "FileDescription",
+      type: "String"
+    },
+    1646: {
+      name: "FileName",
+      type: "String"
+    },
+    1632: {
+      name: "FileMimeType",
+      type: "String"
+    },
+    1628: {
+      name: "FileData",
+      type: "Binary"
+    },
+    1710: {
+      name: "FileUID",
+      type: "Uint"
+    },
+    1653: {
+      name: "FileReferral",
+      type: "Binary"
+    },
+    1633: {
+      name: "FileUsedStartTime",
+      type: "Uint"
+    },
+    1634: {
+      name: "FileUsedEndTime",
+      type: "Uint"
+    },
+    4433776: {
+      name: "Chapters",
+      type: "Container"
+    },
+    1465: {
+      name: "EditionEntry",
+      type: "Container"
+    },
+    1468: {
+      name: "EditionUID",
+      type: "Uint"
+    },
+    1469: {
+      name: "EditionFlagHidden",
+      type: "Uint"
+    },
+    1499: {
+      name: "EditionFlagDefault",
+      type: "Uint"
+    },
+    1501: {
+      name: "EditionFlagOrdered",
+      type: "Uint"
+    },
+    54: {
+      name: "ChapterAtom",
+      type: "Container"
+    },
+    13252: {
+      name: "ChapterUID",
+      type: "Uint"
+    },
+    5716: {
+      name: "ChapterStringUID",
+      type: "String"
+    },
+    17: {
+      name: "ChapterTimeStart",
+      type: "Uint"
+    },
+    18: {
+      name: "ChapterTimeEnd",
+      type: "Uint"
+    },
+    24: {
+      name: "ChapterFlagHidden",
+      type: "Uint"
+    },
+    1432: {
+      name: "ChapterFlagEnabled",
+      type: "Uint"
+    },
+    11879: {
+      name: "ChapterSegmentUID",
+      type: "Binary"
+    },
+    11964: {
+      name: "ChapterSegmentEditionUID",
+      type: "Uint"
+    },
+    9155: {
+      name: "ChapterPhysicalEquiv",
+      type: "Uint"
+    },
+    15: {
+      name: "ChapterTrack",
+      type: "Container"
+    },
+    9: {
+      name: "ChapterTrackNumber",
+      type: "Uint"
+    },
+    0: {
+      name: "ChapterDisplay",
+      type: "Container"
+    },
+    5: {
+      name: "ChapString",
+      type: "String"
+    },
+    892: {
+      name: "ChapLanguage",
+      type: "String"
+    },
+    894: {
+      name: "ChapCountry",
+      type: "String"
+    },
+    10564: {
+      name: "ChapProcess",
+      type: "Container"
+    },
+    10581: {
+      name: "ChapProcessCodecID",
+      type: "Uint"
+    },
+    1293: {
+      name: "ChapProcessPrivate",
+      type: "Binary"
+    },
+    10513: {
+      name: "ChapProcessCommand",
+      type: "Container"
+    },
+    10530: {
+      name: "ChapProcessTime",
+      type: "Uint"
+    },
+    10547: {
+      name: "ChapProcessData",
+      type: "Binary"
+    },
+    39109479: {
+      name: "Tags",
+      type: "Container"
+    },
+    13171: {
+      name: "Tag",
+      type: "Container"
+    },
+    9152: {
+      name: "Targets",
+      type: "Container"
+    },
+    10442: {
+      name: "TargetTypeValue",
+      type: "Uint"
+    },
+    9162: {
+      name: "TargetType",
+      type: "String"
+    },
+    9157: {
+      name: "TagTrackUID",
+      type: "Uint"
+    },
+    9161: {
+      name: "TagEditionUID",
+      type: "Uint"
+    },
+    9156: {
+      name: "TagChapterUID",
+      type: "Uint"
+    },
+    9158: {
+      name: "TagAttachmentUID",
+      type: "Uint"
+    },
+    10184: {
+      name: "SimpleTag",
+      type: "Container"
+    },
+    1443: {
+      name: "TagName",
+      type: "String"
+    },
+    1146: {
+      name: "TagLanguage",
+      type: "String"
+    },
+    1156: {
+      name: "TagDefault",
+      type: "Uint"
+    },
+    1159: {
+      name: "TagString",
+      type: "String"
+    },
+    1157: {
+      name: "TagBinary",
+      type: "Binary"
+    }
+  };
+
+  function dd(a, b) {
+    a.prototype = Object.create(b.prototype);
+    a.prototype.constructor = a
+  }
+
+  function ed(a, b) {
+    this.name = a || "Unknown";
+    this.type = b || "Unknown"
+  }
+  ed.prototype.j = function() {};
+  ed.prototype.m = function() {};
+
+  function fd(a, b) {
+    ed.call(this, a, b || "Uint")
+  }
+  dd(fd, ed);
+  fd.prototype.j = function() {
+    this.data = "";
+    for (var a = 0; a < this.source.length; a++) {
+      var b = this.source[a].toString(16);
+      this.data += 1 === b.length % 2 ? "0" + b : b
+    }
+  };
+  fd.prototype.m = function() {
+    var a = this.data.length / 2;
+    this.source = new Uint8Array(a);
+    for (var b = 0; b < a; b++) this.source[b] = parseInt(this.data.substr(2 * b, 2), 16)
+  };
+  fd.prototype.M = function() {
+    return parseInt(this.data, 16)
+  };
+  fd.prototype.H = function(a) {
+    a = a.toString(16);
+    this.data = 1 === a.length % 2 ? "0" + a : a;
+    this.m()
+  };
+
+  function gd(a, b) {
+    ed.call(this, a, b || "Float")
+  }
+  dd(gd, ed);
+  gd.prototype.j = function() {
+    var a = this.source.reverse();
+    this.data = (new(this.source && 4 === this.source.length ? Float32Array : Float64Array)(a.buffer))[0]
+  };
+  gd.prototype.m = function() {
+    var a = new(this.source && 4 === this.source.length ? Float32Array : Float64Array)([this.data]);
+    this.source = (new Uint8Array(a.buffer)).reverse()
+  };
+  gd.prototype.M = function() {
+    return this.data
+  };
+  gd.prototype.H = function(a) {
+    this.data = a;
+    this.m()
+  };
+
+  function hd(a, b) {
+    ed.call(this, a, b || "Container")
+  }
+  dd(hd, ed);
+
+  function id(a) {
+    var b = a.source[a.offset++],
+      c = 8 - b.toString(2).length;
+    b -= 1 << 7 - c;
+    for (var d = 0; d < c; d++) b *= 256, b += a.source[a.offset++];
+    return b
+  }
+  hd.prototype.j = function() {
+    this.data = [];
+    for (this.offset = 0; this.offset < this.source.length; this.offset = b) {
+      var a = id(this);
+      var b = id(this);
+      b = Math.min(this.offset + b, this.source.length);
+      var c = this.source.slice(this.offset, b),
+        d = cd[a] || {
+          name: "Unknown",
+          type: "Unknown"
+        },
+        g = ed;
+      switch (d.type) {
+        case "Container":
+          g = hd;
+          break;
+        case "Uint":
+          g = fd;
+          break;
+        case "Float":
+          g = gd
+      }
+      g = d = new g(d.name, d.type);
+      g.source = c;
+      g.j();
+      this.data.push({
+        id: a,
+        ba: a.toString(16),
+        data: d
+      })
+    }
+  };
+
+  function jd(a, b, c) {
+    for (var d = 1, g = 128; b >= g && 8 > d; d++, g *= 128);
+    if (!c)
+      for (b = g + b, c = d - 1; 0 <= c; c--) g = b % 256, a.source[a.offset + c] = g, b = (b - g) / 256;
+    a.offset += d
+  }
+
+  function kd(a, b) {
+    for (var c = a.offset = 0; c < a.data.length; c++) {
+      var d = a.data[c],
+        g = d.data.source,
+        m = g.length;
+      jd(a, d.id, b);
+      jd(a, m, b);
+      b || a.source.set(g, a.offset);
+      a.offset += m
+    }
+    return a.offset
+  }
+  hd.prototype.m = function() {
+    var a = kd(this, "draft");
+    this.source = new Uint8Array(a);
+    kd(this, null)
+  };
+
+  function ld(a, b) {
+    for (var c = 0; c < a.data.length; c++) {
+      var d = a.data[c];
+      if (d.id === b) return d.data
+    }
+    return null
+  }
+
+  function md(a) {
+    hd.call(this, "File", "File");
+    this.source = a;
+    this.j()
+  }
+  dd(md, hd);
+
+  function nd(a, b, c) {
+    c = c && c.V;
+    void 0 === c ? c = function(B) {
+      console.log(B)
+    } : c ||= function() {};
+    var d = ld(a, 139690087);
+    if (!d) return c("[fix-webm-duration] Segment section is missing"), !1;
+    var g = ld(d, 88713574);
+    if (!g) return c("[fix-webm-duration] Info section is missing"), !1;
+    var m = ld(g, 710577);
+    if (!m) return c("[fix-webm-duration] TimecodeScale section is missing"), !1;
+    var t = ld(g, 1161);
+    if (t)
+      if (0 >= t.M()) c("[fix-webm-duration] Duration section is present, but the value is empty"), t.H(b);
+      else return c("[fix-webm-duration] Duration section is present"),
+        !1;
+    else c("[fix-webm-duration] Duration section is missing"), t = new gd("Duration", "Float"), t.H(b), g.data.push({
+      id: 1161,
+      data: t
+    });
+    m.H(1E6);
+    g.m();
+    d.m();
+    a.m();
+    return !0
+  }
+
+  function ad(a, b, c, d) {
+    try {
+      var g = new FileReader;
+      g.onloadend = function() {
+        try {
+          var m = new md(new Uint8Array(g.result));
+          nd(m, b, d) && (a = new Blob([m.source.buffer], {
+            type: a.type || "video/webm"
+          }))
+        } catch (t) {}
+        c(a)
+      };
+      g.readAsArrayBuffer(a)
+    } catch (m) {
+      c(a)
+    }
+  };
+  var od;
+  (function() {
+    function a(h) {
+      let n = C.get(h);
+      "undefined" === typeof n && (n = new Function("return " + h + ";"), C.set(h, n));
+      return n()
+    }
+
+    function b(h, n) {
+      let v = {
+        exports: null,
+        $: n,
+        B: null,
+        J: null
+      };
+      c(h);
+      d(h);
+      g(h, v);
+      m(h, v);
+      h.teavmMath = Math;
+      return {
+        P(q) {
+          v.exports = q
+        },
+        Z(q) {
+          v.B = q
+        },
+        Y(q) {
+          v.J = q
+        }
+      }
+    }
+
+    function c(h) {
+      h.teavmDate = {
+        currentTimeMillis: () => (new Date).getTime(),
+        dateToString: n => (new Date(n)).toString(),
+        getYear: n => (new Date(n)).getFullYear(),
+        setYear: (n, v) => {
+          n = new Date(n);
+          n.setFullYear(v);
+          return n.getTime()
+        },
+        getMonth: n => (new Date(n)).getMonth(),
+        setMonth: (n, v) => {
+          n = new Date(n);
+          n.setMonth(v);
+          return n.getTime()
+        },
+        getDate: n => (new Date(n)).getDate(),
+        setDate: (n, v) => {
+          n = new Date(n);
+          n.setDate(v);
+          return n.getTime()
+        },
+        create: (n, v, q, y, k, u) => (new Date(n, v, q, y, k, u)).getTime(),
+        createFromUTC: (n, v, q, y, k, u) => Date.UTC(n, v, q, y, k, u)
+      }
+    }
+
+    function d(h) {
+      let n = [],
+        v = [];
+      h.teavmConsole = {
+        putcharStderr: function(q) {
+          10 === q ? (q = String.fromCharCode(...n), console.error(q), ia && ia(q, !0), n.length = 0) : n.push(q)
+        },
+        putcharStdout: function(q) {
+          10 === q ? (q = String.fromCharCode(...v), console.log(q),
+            ia && ia(q, !1), v.length = 0) : v.push(q)
+        }
+      }
+    }
+
+    function g(h, n) {
+      let v = new FinalizationRegistry(y => {
+          let k = n.exports["teavm.reportGarbageCollectedValue"];
+          "undefined" !== typeof k && n.J(function() {
+            k(y.W, y.X)
+          })
+        }),
+        q = new FinalizationRegistry(y => {
+          let k = n.exports["teavm.reportGarbageCollectedString"];
+          "function" === typeof k && n.J(function() {
+            k(y)
+          })
+        });
+      h.teavm = {
+        createWeakRef: (y, k, u) => {
+          null !== u && v.register(y, {
+            X: k,
+            W: u
+          });
+          return new WeakRef(y)
+        },
+        deref: y => {
+          y = y.deref();
+          return void 0 !== y ? y : null
+        },
+        createStringWeakRef: (y, k) => {
+          q.register(y,
+            k);
+          return new WeakRef(y)
+        },
+        stringDeref: y => y.deref(),
+        takeStackTrace: () => {
+          var y = Error().stack;
+          let k = [];
+          for (let u of y.split("\n")) y = G.exec(u), null !== y && 2 <= y.length && k.push(parseInt(y[1], 16));
+          return {
+            getStack: function() {
+              let u;
+              if (n.B) try {
+                u = n.B(k)
+              } catch (w) {
+                console.warn("Could not deobfuscate stack", w)
+              }
+              u ||= k.map(w => ({
+                className: "java.lang.Throwable$FakeClass",
+                method: "fakeMethod",
+                file: "Throwable.java",
+                line: w
+              }));
+              return u
+            }
+          }
+        },
+        decorateException: y => {
+          new fa(n, y)
+        },
+        linearMemory: () => n.exports["teavm.memory"].buffer,
+        notifyHeapResized: () => {}
+      }
+    }
+
+    function m(h, n) {
+      function v(p) {
+        return p
+      }
+
+      function q(p) {
+        var r = p.charAt(0);
+        var F = "" + (y(r) ? r : "_");
+        for (r = 1; r < p.length; ++r) {
+          let S = p.charAt(r);
+          var M = S;
+          M = y(M) || "0" <= M && "9" >= M;
+          F += M ? S : "_"
+        }
+        return F
+      }
+
+      function y(p) {
+        return "A" <= p && "Z" >= p || "a" <= p && "z" >= p || "_" === p || "$" === p
+      }
+
+      function k(p, r, F) {
+        null === p ? (new Function("value", r + " = value;"))(F) : p[r] = F
+      }
+
+      function u(p) {
+        n.exports["teavm.js.throwException"](X in p ? p[X] : n.exports["teavm.js.wrapException"](p))
+      }
+
+      function w(p) {
+        a: {
+          if (p instanceof WebAssembly.Exception) {
+            var r =
+              n.exports["teavm.javaException"];
+            var F = n.exports["teavm.getJsException"];
+            if (p.is(r)) {
+              p = p.getArg(r, 0);
+              r = n.exports["teavm.js.extractException"](p);
+              if (null !== r) {
+                F = r;
+                break a
+              }
+              F = F(p);
+              "undefined" === typeof F && (F = new fa(n, p));
+              break a
+            }
+          }
+          F = p
+        }
+        throw F;
+      }
+
+      function E(p) {
+        var r = [];
+        for (let F = 0; F < p.length; ++F) r.push("p" + F);
+        r = 0 === r.length ? "" : r.join(", ");
+        r = (new Function("rethrowJavaAsJs", "fn", `return function(${r}) {\n` + "    try {\n" + `        return fn(${r});\n` + "    } catch (e) {\n        rethrowJavaAsJs(e);\n    }\n};"))(w,
+          p);
+        r.__impl = p;
+        r.__rethrow = w;
+        return r
+      }
+
+      function K(p, r) {
+        return (new Function("constructor", `return function ${p}(marker, javaObject) {\n` + "    return constructor.call(this, marker, javaObject);\n}\n"))(r)
+      }
+
+      function Z(p) {
+        try {
+          return p()
+        } catch (r) {
+          u(r)
+        }
+      }
+      let V = Symbol("javaObject"),
+        Y = Symbol("functions"),
+        eb = Symbol("functionOrigin"),
+        Ha = Symbol("wrapperCallMarker"),
+        Ca = new WeakMap,
+        Da = new WeakMap,
+        ya = new Map,
+        fb = new FinalizationRegistry(p => ya.delete(p)),
+        va = new WeakMap,
+        Ia = 2463534242;
+      h.teavmJso = {
+        stringBuiltinsSupported: () => {
+          if (null === L) {
+            let p = new Int8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 4, 1, 96, 0, 0, 2, 23, 1, 14, 119, 97, 115, 109, 58, 106, 115, 45, 115, 116, 114, 105, 110, 103, 4, 99, 97, 115, 116, 0, 0, 3, 1, 0, 5, 4, 1, 1, 0, 0, 10, -127, -128, -128, 0, 0]);
+            L = !WebAssembly.validate(p, {
+              builtins: ["js-string"]
+            })
+          }
+          return L
+        },
+        isUndefined: p => "undefined" === typeof p,
+        emptyArray: () => [],
+        appendToArray: (p, r) => p.push(r),
+        unwrapBoolean: p => p ? 1 : 0,
+        wrapBoolean: p => !!p,
+        getProperty: function(p, r) {
+          try {
+            return null !== p ? p[r] : a(r)
+          } catch (F) {
+            u(F)
+          }
+        },
+        setProperty: k,
+        setPropertyPure: k,
+        global: p => {
+          try {
+            return a(p)
+          } catch (r) {
+            u(r)
+          }
+        },
+        createClass: (p, r, F) => {
+          p = q(p || "JavaObject");
+          let M;
+          M = null === r ? function(da) {
+            this[V] = da;
+            this[Y] = null
+          } : function(da) {
+            r.call(this, da)
+          };
+          let S = K(p, function(da, wa) {
+            if (da === Ha) M.call(this, wa);
+            else {
+              if (null === F) throw Error("This class can't be instantiated directly");
+              try {
+                return F.apply(null, arguments)
+              } catch (Ua) {
+                w(Ua)
+              }
+            }
+          });
+          S.prototype = Object.create(r || Object.prototype);
+          S.prototype.constructor = S;
+          p = K(p, function(da) {
+            return S.call(this, Ha, da)
+          });
+          p[Ha] = S;
+          p.prototype = S.prototype;
+          return p
+        },
+        exportClass: p => p[Ha],
+        defineMethod: (p,
+          r, F) => {
+          let M = [];
+          for (let S = 1; S < F.length; ++S) M.push("p" + S);
+          p.prototype[r] = (new Function("rethrowJavaAsJs", "fn", `return function(${0===M.length?"":M.join(", ")}) {\n` + "    try {\n" + `        return fn(${["this",M].join(", ")});\n` + "    } catch (e) {\n        rethrowJavaAsJs(e);\n    }\n};"))(w, F)
+        },
+        defineStaticMethod: (p, r, F) => {
+          p[r] = E(F)
+        },
+        defineFunction: E,
+        defineProperty: (p, r, F, M) => {
+          let S = {
+            get() {
+              try {
+                return F(this)
+              } catch (da) {
+                w(da)
+              }
+            }
+          };
+          null !== M && (S.set = function(da) {
+            try {
+              M(this, da)
+            } catch (wa) {
+              w(wa)
+            }
+          });
+          Object.defineProperty(p.prototype,
+            r, S)
+        },
+        defineStaticProperty: (p, r, F, M) => {
+          let S = {
+            get() {
+              try {
+                return F()
+              } catch (da) {
+                w(da)
+              }
+            }
+          };
+          null !== M && (S.set = function(da) {
+            try {
+              M(da)
+            } catch (wa) {
+              w(wa)
+            }
+          });
+          Object.defineProperty(p, r, S)
+        },
+        javaObjectToJS: (p, r) => {
+          if (null === p) return null;
+          var F = Ca.get(p);
+          if ("undefined" != typeof F && (F = F.deref(), "undefined" !== typeof F)) return F;
+          r = new r(p);
+          Ca.set(p, new WeakRef(r));
+          return r
+        },
+        unwrapJavaObject: p => p[V],
+        asFunction: (p, r) => {
+          let F = p[Y];
+          null === F && (F = Object.create(null), p[Y] = F);
+          let M = F[r];
+          "function" !== typeof M && (M = function() {
+            return p[r].apply(p,
+              arguments)
+          }, M[eb] = p, F[r] = M);
+          return M
+        },
+        functionAsObject: (p, r) => {
+          let F = p[eb];
+          if ("undefined" !== typeof F) {
+            let M = F[Y];
+            if (void 0 !== M && M[r] === p) return F
+          }
+          return {
+            [r]: function(...M) {
+              try {
+                return p(...M)
+              } catch (S) {
+                w(S)
+              }
+            }
+          }
+        },
+        wrapObject: p => {
+          if (null === p) return null;
+          if ("object" === typeof p || "function" === typeof p) {
+            var r = p[V];
+            if ("object" === typeof r) return r;
+            r = Da.get(p);
+            if (void 0 !== r && (r = r.deref(), void 0 !== r)) return r;
+            r = n.exports["teavm.jso.createWrapper"](p);
+            Da.set(p, new WeakRef(r));
+            return r
+          }
+          r = ya.get(p);
+          if (void 0 !== r &&
+            (r = r.deref(), void 0 !== r)) return r;
+          r = n.exports["teavm.jso.createWrapper"](p);
+          ya.set(p, new WeakRef(r));
+          fb.register(r, p);
+          return r
+        },
+        isPrimitive: (p, r) => typeof p === r,
+        instanceOf: (p, r) => p instanceof r,
+        instanceOfOrNull: (p, r) => null === p || p instanceof r,
+        sameRef: (p, r) => p === r,
+        hashCode: p => {
+          if ("object" === typeof p || "function" === typeof p || "symbol" === typeof p) {
+            var r = va.get(p);
+            if ("number" === typeof r) return r;
+            r = Ia;
+            r ^= r << 13;
+            r ^= r >>> 17;
+            Ia = r ^= r << 5;
+            va.set(p, r);
+            return r
+          }
+          return "number" === typeof p ? p | 0 : "bigint" === typeof p ? BigInt.asIntN(32,
+            p) : "boolean" === typeof p ? p ? 1 : 0 : 0
+        },
+        apply: (p, r, F) => {
+          try {
+            return null === p ? a(r)(...F) : p[r](...F)
+          } catch (M) {
+            u(M)
+          }
+        },
+        concatArray: (p, r) => [...p, ...r],
+        getJavaException: p => p[X],
+        getJSException: p => (0, n.exports["teavm.getJsException"])(p),
+        jsExports: () => n.$
+      };
+      for (var ha of "wrapByte wrapShort wrapChar wrapInt wrapLong wrapFloat wrapDouble unwrapByte unwrapShort unwrapChar unwrapInt unwrapLong unwrapFloat unwrapDouble".split(" ")) h.teavmJso[ha] = v;
+      ha = [];
+      for (let p = 0; 32 > p; ++p) {
+        let r = 0 === ha.length ? "" : ha.join(", "),
+          F = [...ha,
+            "body"
+          ].join(", ");
+        h.teavmJso["createFunction" + p] = (new Function("wrapCallFromJavaToJs", ...ha, "body", `return new Function('wrapCallFromJavaToJs', ${F}).bind(this, wrapCallFromJavaToJs);`)).bind(null, Z);
+        h.teavmJso["bindFunction" + p] = (M, ...S) => M.bind(null, ...S);
+        h.teavmJso["callFunction" + p] = (new Function("rethrowJsAsJava", "fn", ...ha, "try {\n" + `    return fn(${r});\n` + "} catch (e) {\n    rethrowJsAsJava(e);\n}")).bind(null, u);
+        h.teavmJso["callMethod" + p] = (new Function("rethrowJsAsJava", "getGlobalName", "instance",
+          "method", ...ha, "try {\n     return instance !== null\n" + `        ? instance[method](${r})\n` + `        : getGlobalName(method)(${r});\n` + "} catch (e) {\n    rethrowJsAsJava(e);\n}")).bind(null, u, a);
+        h.teavmJso["construct" + p] = (new Function("rethrowJsAsJava", "constructor", ...ha, "try {\n" + `    return new constructor(${r});\n` + "} catch (e) {\n    rethrowJsAsJava(e);\n}")).bind(null, u);
+        h.teavmJso["arrayOf" + p] = new Function(...ha, "return [" + r + "]");
+        ha.push("p" + (p + 1))
+      }
+    }
+    async function t(h) {
+      try {
+        const n = {},
+          v = b(n, {}),
+          q = h.path instanceof WebAssembly.Module ? h.path : await WebAssembly.compileStreaming(fetch(h.path), {
+            builtins: ["js-string"]
+          }),
+          y = new WebAssembly.Instance(q, n);
+        v.P(y.exports);
+        return {
+          module: q,
+          instance: y
+        }
+      } catch (n) {
+        return console.warn("Could not load deobfuscator", n), null
+      }
+    }
+
+    function B(h, n, v) {
+      let q = null,
+        y = !1;
+      return k => {
+        if (!y) {
+          y = !0;
+          if (null !== n) try {
+            q = v.exports.createFromExternalFile.value(n)
+          } catch (u) {
+            console.warn("Could not load create deobfuscator", u)
+          }
+          if (null === q && null !== h) try {
+            q = v.exports.createForModule.value(h)
+          } catch (u) {
+            console.warn("Could not create deobfuscator from module data",
+              u)
+          }
+        }
+        return null !== q ? q.deobfuscate(k) : []
+      }
+    }
+    async function x(h, n) {
+      if (!n.enabled || "auto" !== h && "external" !== h) return null;
+      if (n.K instanceof ArrayBuffer) return new Int8Array(n.K);
+      h = await fetch(n.K);
+      return h.ok ? new Int8Array(await h.arrayBuffer()) : null
+    }
+
+    function z(h) {
+      const n = new sa;
+      h.teavm.pollAsyncCallbacks = function() {
+        for (var v; v = n.j();) v.fn()
+      };
+      return function(v) {
+        n.push({
+          fn: v,
+          _next: null
+        })
+      }
+    }
+    let C = new Map,
+      G = /.+:wasm-function\[[0-9]+]:0x([0-9a-f]+).*/,
+      X = Symbol("javaException");
+    class fa extends Error {
+      constructor(h,
+        n) {
+        super();
+        this.j = h;
+        this[X] = n;
+        h.exports["teavm.setJsException"](n, this)
+      }
+      get message() {
+        var h = this.j.exports["teavm.exceptionMessage"];
+        return "function" === typeof h && (h = h(this[X]), null != h) ? h : "(could not fetch message)"
+      }
+    }
+    let L = null;
+    od = {
+      load: async function(h, n) {
+        n ||= {};
+        var v = n.B || {};
+        let [q, y, k] = await Promise.all([v.enabled ? t(v) : Promise.resolve(null), h instanceof WebAssembly.Module ? Promise.resolve(h) : WebAssembly.compileStreaming(fetch(h), {
+          builtins: ["js-string"]
+        }), x(v.U, v)]);
+        var u = {};
+        h = {};
+        v = b(u, h);
+        "undefined" !==
+        typeof n.N && n.N(u);
+        v.Y(z(u));
+        n = await WebAssembly.instantiate(y, u);
+        v.P(n.exports);
+        q && (u = B(null, k, q.instance), null !== u && (v.Z(u), h.deobfuscator = u));
+        v = {
+          exports: h,
+          instance: n,
+          O: {
+            R: y,
+            T: q ? q.module : null
+          }
+        };
+        for (let w in n.exports) {
+          let E = n.exports[w];
+          E instanceof WebAssembly.Global ? Object.defineProperty(h, w, {
+            get: () => E.value
+          }) : "function" === typeof E && (h[w] = E)
+        }
+        h.memory = n.exports["teavm.memory"];
+        h.S = k;
+        return v
+      },
+      aa: b,
+      ca: function(h) {
+        return new Proxy(h, {
+          get(n, v) {
+            return new WebAssembly.Global({
+                value: "externref",
+                mutable: !1
+              },
+              n[v])
+          }
+        })
+      }
+    }
+  })();
+  async function pd() {
+    try {
+      Error.stackTraceLimit = 1024;
+      P = self.__eaglercraftXLoaderContext.getEaglercraftXOpts();
+      Sa = self.__eaglercraftXLoaderContext.getEagRuntimeJSURL();
+      const a = self.__eaglercraftXLoaderContext.getClassesWASMURL(),
+        b = self.__eaglercraftXLoaderContext.getClassesDeobfWASMURL(),
+        c = self.__eaglercraftXLoaderContext.getClassesTEADBGURL();
+      Oa = self.__eaglercraftXLoaderContext.getEPKFiles();
+      Ta = self.__eaglercraftXLoaderContext.getRootElement();
+      self.__eaglercraftXLoaderContext.getImageURL(0);
+      Pa = self.__eaglercraftXLoaderContext.getImageURL(1);
+      Qa = self.__eaglercraftXLoaderContext.getImageURL(2);
+      Ra = self.__eaglercraftXLoaderContext.getImageURL(3);
+      const d = self.__eaglercraftXLoaderContext.getMainArgs();
+      delete self.__eaglercraftXLoaderContext;
+      if ("_worker_process_" !== d[0]) {
+        if (!await Wb()) return
+      } else ea = "worker", await jc();
+      e("Loading EaglercraftX WASM GC binary...");
+      const g = await od.load(a, {
+        B: {
+          enabled: !(!b || !c),
+          path: b,
+          U: "external",
+          K: c
+        },
+        N: function(m) {
+          m.WASMGCBufferAllocator = ta;
+          m.platformApplication = H;
+          m.platformAssets = I;
+          m.platformAudio = ua;
+          m.platformFilesystem =
+            xa;
+          m.platformInput = J;
+          m.platformNetworking = za;
+          m.platformOpenGL = N;
+          m.platformRuntime = Aa;
+          m.platformScreenRecord = Ba;
+          m.platformVoiceClient = Ea;
+          m.platformWebRTC = O;
+          m.platformWebView = Fa;
+          m.clientPlatformSingleplayer = Ga;
+          m.serverPlatformSingleplayer = Ja;
+          m.teavm.notifyHeapResized = function() {
+            lc(g.exports.memory)
+          }
+        }
+      });
+      Ka = g.O.R;
+      La = g.O.T;
+      Ma = g.exports.S;
+      lc(g.exports.memory);
+      Na = g.exports.deobfuscator;
+      e("Calling entry point with args: {}", JSON.stringify(d));
+      try {
+        await WebAssembly.promising(g.exports.main.__impl)(d)
+      } catch (m) {
+        g.exports.main.__rethrow(m)
+      } finally {
+        ka("Main function has returned!")
+      }
+    } catch (a) {
+      qc(a)
+    }
+  }
+  "object" === typeof self.__eaglercraftXLoaderContext ? self.__eaglercraftXLoaderContext.runMain(pd) : console.error("???");
+}).call(this);

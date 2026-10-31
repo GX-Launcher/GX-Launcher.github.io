@@ -641,9 +641,9 @@ function redirectToServers()      { window.location.href = 'servers.html'; }
 function redirectToMods()         { window.location.href = 'mods.html'; }
 function redirectToSkins()        { window.location.href = 'skins.html'; }
 function redirectToMain()         { window.location.href = 'index.html'; }
-function redirectToOtherClients() { window.location.href = 'otherclients.html'; }
 function redirectToDownloads()    { window.location.href = 'downloads.html'; }
 function redirectToSettings()     { window.location.href = 'settings.html'; }
+function redirectToChat()         { window.location.href = 'chat.html'; }
 
 function openBlankPage(link) { window.open(link); }
 

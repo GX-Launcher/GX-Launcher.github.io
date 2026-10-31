@@ -1,0 +1,9 @@
+384	net.lax1dude.eaglercraft.v1_8.client
+414	cl
+421	EaglercraftX
+434	u52
+438	lax1dude
+447	image/png
+457	assets.epk
+468	lang.tmp.epk
+481	assets/minecraft/lang
