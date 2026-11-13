@@ -53,6 +53,22 @@ const DOWNLOAD_GROUPS = [
         ]
       },
       {
+        "folder": "1.19.4-wasm",
+        "label": "1.19.4 WASM (u0)",
+        "multi": false,
+        "files": [
+          "index.html"
+        ]
+      },
+      {
+        "folder": "1.19.4",
+        "label": "1.19.4 (u0)",
+        "multi": false,
+        "files": [
+          "index.html"
+        ]
+      },
+      {
         "folder": "1.17.1-wasm",
         "label": "1.17.1 WASM (u1)",
         "multi": true,
